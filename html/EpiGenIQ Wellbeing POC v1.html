@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EpiGenIQ™ · Cellular Wellbeing Score · POC v1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+.pw-gate{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;background:#0E1214}
+.pw-modal{background:linear-gradient(145deg,#141C13,#1A2418);border:1px solid rgba(184,240,0,.15);padding:40px;border-radius:4px;max-width:360px;text-align:center}
+.pw-modal h1{font-family:'Syne',sans-serif;font-weight:800;font-size:24px;color:#F8FAF2;margin:0 0 12px;letter-spacing:-.5px}
+.pw-modal p{font-size:13px;color:rgba(237,245,208,.72);line-height:1.6;margin:0 0 24px}
+.pw-input{width:100%;font-size:14px;background:#222E20;border:1px solid rgba(184,240,0,.15);color:#F8FAF2;padding:12px 16px;border-radius:2px;outline:none;margin-bottom:16px;font-family:inherit;transition:border-color .2s}
+.pw-input:focus{border-color:rgba(184,240,0,.4)}
+.pw-btn{width:100%;font-family:'Syne',sans-serif;font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.3px;background:#B8F000;color:#0E1214;border:none;padding:13px;border-radius:2px;cursor:pointer;transition:all .2s}
+.pw-btn:hover{background:#D6F566;transform:translateY(-1px)}
+.pw-error{color:#EF4444;font-size:11px;margin-top:8px;font-family:'Space Mono',monospace;letter-spacing:.5px;display:none}
+.pw-error.show{display:block}
+#mainApp.locked{display:none!important}
+</style>
+.ambient-grid {
+  position:absolute; inset:0;
+  ba
+<div class="pw-gate" id="pwGate">
+  <div class="pw-modal">
+    <h1>EpiGenIQ™</h1>
+    <p>Cellular Wellbeing Score<br>POC v1.0</p>
+    <input class="pw-input" id="pwInput" type="password" placeholder="Enter password" autocomplete="off">
+    <button class="pw-btn" onclick="checkPassword()">Unlock →</button>
+    <div class="pw-error" id="pwError">Incorrect password</div>
+  </div>
+</div>
+
+<div id="mainApp" class="locked">
+    linear-gradient(rgba(184,240,0,.028) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(184,240,0,.028) 1px,transparent 1px);
+  background-size:56px 56px;
+}
+.ambient-glow {
+  position:absolute;
+  border-radius:50%;
+  filter:blur(120px);
+  opacity:.18;
+  animation:drift 12s ease-in-out infinite alternate;
+}
+.glow-1 { width:600px;height:600px;background:var(--ch);top:-200px;right:-100px; }
+.glow-2 { width:500px;height:500px;background:var(--vi);bottom:-150px;left:-100px;animation-delay:-6s; }
+.glow-3 { width:300px;height:300px;background:var(--r1);top:40%;left:50%;animation-delay:-3s; }
+@keyframes drift {
+  from { transform:translate(0,0) scale(1); }
+  to   { transform:translate(30px,20px) scale(1.08); }
+}
+
+.scanline {
+  position:fixed;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent 0%,var(--ch) 50%,transparent 100%);
+  animation:scan 8s linear infinite; z-index:1; opacity:.3;
+}
+@keyframes scan{0%{top:-2px}100%{top:100vh}}
+
+/* ── LAYOUT ── */
+.shell {
+  position:relative; z-index:2;
+  min-height:100vh;
+  display:flex; flex-direction:column;
+}
+
+/* ── NAV ── */
+.nav {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 40px;
+  border-bottom:1px solid rgba(42,61,40,.6);
+  backdrop-filter:blur(12px);
+  background:rgba(14,18,20,.7);
+  position:sticky; top:0; z-index:20;
+}
+@media(max-width:600px){.nav{padding:16px 20px;}}
+
+.nav-brand { display:flex; align-items:center; gap:10px; }
+.nav-mark {
+  width:32px; height:32px;
+  border-radius:50%;
+  border:1.5px solid rgba(184,240,0,.5);
+  display:flex; align-items:center; justify-content:center;
+  position:relative;
+}
+.nav-mark::before {
+  content:'';
+  position:absolute; inset:5px;
+  border-radius:50%;
+  border:1px solid var(--vi);
+}
+.nav-mark::after {
+  content:''; width:6px; height:6px;
+  border-radius:50%; background:var(--ch);
+}
+.nav-title {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:17px; letter-spacing:-.4px;
+}
+.nav-title span{color:var(--vi);}
+.nav-badge {
+  font-family:'Space Mono',monospace; font-size:9px;
+  color:var(--dim2); letter-spacing:2px; text-transform:uppercase;
+  background:rgba(42,61,40,.6); border:1px solid var(--mid);
+  padding:3px 10px; border-radius:2px;
+}
+.nav-poc {
+  font-family:'Space Mono',monospace; font-size:9px;
+  color:var(--warn); border:1px solid rgba(245,158,11,.35);
+  background:rgba(245,158,11,.08); padding:3px 10px; border-radius:2px;
+  letter-spacing:1.5px;
+}
+
+/* ── STAGE CONTAINER ── */
+.stage {
+  flex:1; display:flex; flex-direction:column;
+  align-items:center; padding:0 20px 80px;
+}
+
+/* ── PROGRESS RAIL ── */
+.progress-rail {
+  width:100%; max-width:680px;
+  padding:20px 0 0;
+  display:none;
+}
+.rail-track {
+  height:2px; background:var(--mid); border-radius:99px; overflow:hidden;
+}
+.rail-fill {
+  height:100%;
+  background:linear-gradient(90deg,var(--ch),var(--vi));
+  border-radius:99px;
+  transition:width .6s var(--ease);
+  width:0%;
+}
+.rail-pillars {
+  display:flex; justify-content:space-between;
+  margin-top:10px;
+}
+.rail-pillar {
+  font-family:'Space Mono',monospace; font-size:8px;
+  color:var(--dim); letter-spacing:1.5px; text-transform:uppercase;
+  transition:color .3s;
+}
+.rail-pillar.lit { color:var(--ch); }
+
+/* ── SCREEN SYSTEM ── */
+.screen {
+  width:100%; max-width:680px;
+  display:none;
+  padding-top:56px;
+}
+.screen.on {
+  display:block;
+  animation:rise .5s var(--ease) both;
+}
+@keyframes rise {
+  from { opacity:0; transform:translateY(24px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ══════════════════════════════════════════════
+   INTRO SCREEN
+   ══════════════════════════════════════════════ */
+.intro-kicker {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'Space Mono',monospace; font-size:9px;
+  color:var(--ch); letter-spacing:2.5px; text-transform:uppercase;
+  border:1px solid rgba(184,240,0,.3);
+  background:rgba(184,240,0,.05);
+  padding:5px 14px; border-radius:2px;
+  margin-bottom:28px;
+}
+.intro-kicker-dot {
+  width:5px; height:5px; border-radius:50%; background:var(--ch);
+  animation:blink 2s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+.intro-headline {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(36px,7vw,60px);
+  line-height:.97; letter-spacing:-2px;
+  margin-bottom:24px;
+}
+.intro-headline .line-2 {
+  display:block; color:var(--ch);
+  text-shadow:0 0 60px rgba(184,240,0,.25);
+}
+.intro-headline .line-3 { display:block; color:var(--vi); }
+
+.intro-deck {
+  font-size:16px; line-height:1.75; color:var(--dim2);
+  max-width:520px; margin-bottom:40px;
+}
+.intro-deck strong { color:var(--fl); font-weight:500; }
+
+/* pillar strip */
+.pillar-strip {
+  display:flex; gap:6px; flex-wrap:wrap;
+  margin-bottom:40px;
+}
+.ps-chip {
+  display:flex; align-items:center; gap:7px;
+  font-family:'DM Sans',sans-serif; font-size:12px; font-weight:500;
+  color:var(--dim2);
+  background:rgba(28,43,26,.5);
+  border:1px solid var(--mid);
+  padding:7px 14px; border-radius:99px;
+  transition:all .2s;
+}
+.ps-chip:hover { border-color:var(--dim2); color:var(--bo); }
+.ps-icon { font-size:14px; }
+
+/* stats row */
+.stats-row {
+  display:flex; gap:24px; flex-wrap:wrap;
+  margin-bottom:44px; padding-bottom:40px;
+  border-bottom:1px solid var(--mid);
+}
+.stat-item { display:flex; flex-direction:column; gap:4px; }
+.stat-num {
+  font-family:'Space Mono',monospace; font-weight:700;
+  font-size:24px; color:var(--ch);
+}
+.stat-label { font-size:11px; color:var(--dim2); letter-spacing:.5px; }
+
+/* CTA group */
+.cta-group { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+
+.btn-start {
+  font-family:'Syne',sans-serif; font-weight:700; font-size:15px;
+  letter-spacing:.3px; text-transform:uppercase;
+  background:var(--ch); color:var(--ob);
+  border:none; padding:18px 44px; border-radius:2px;
+  cursor:pointer; transition:all .25s;
+  position:relative; overflow:hidden;
+}
+.btn-start::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
+  transform:translateX(-100%);
+  transition:transform .4s;
+}
+.btn-start:hover { background:var(--pu); transform:translateY(-2px); box-shadow:0 12px 40px rgba(184,240,0,.3); }
+.btn-start:hover::after { transform:translateX(100%); }
+
+.intro-footnote {
+  font-size:11px; color:var(--dim);
+  display:flex; align-items:center; gap:6px;
+}
+.fn-lock { font-size:13px; }
+
+/* ══════════════════════════════════════════════
+   QUESTION SCREEN
+   ══════════════════════════════════════════════ */
+.q-meta {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:24px;
+}
+.q-pillar-tag {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'Space Mono',monospace; font-size:9px;
+  letter-spacing:2px; text-transform:uppercase;
+  padding:5px 14px; border-radius:2px; border:1px solid;
+}
+.q-counter {
+  font-family:'Space Mono',monospace; font-size:11px; color:var(--dim2);
+}
+.q-counter strong { color:var(--ch); }
+
+.q-card {
+  background:rgba(28,43,26,.25);
+  border:1px solid var(--mid);
+  border-radius:4px; padding:32px;
+  margin-bottom:20px;
+  position:relative; overflow:hidden;
+}
+.q-card::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--pillar-color,var(--ch)),transparent);
+}
+.q-text {
+  font-family:'Syne',sans-serif; font-weight:700;
+  font-size:clamp(17px,3vw,22px); line-height:1.25;
+  letter-spacing:-.4px; margin-bottom:16px;
+  color:var(--bo);
+}
+.q-science {
+  display:flex; gap:10px;
+  background:rgba(168,85,247,.06); border-left:2px solid rgba(168,85,247,.4);
+  padding:12px 14px; border-radius:0 2px 2px 0;
+}
+.q-science-icon { font-size:12px; margin-top:1px; flex-shrink:0; color:var(--vi); }
+.q-science-text {
+  font-size:12px; line-height:1.6; color:rgba(168,85,247,.85);
+  font-style:italic;
+}
+
+.options { display:flex; flex-direction:column; gap:8px; margin-bottom:28px; }
+
+.opt {
+  display:flex; align-items:flex-start; gap:14px;
+  background:rgba(28,43,26,.35);
+  border:1px solid var(--mid);
+  padding:14px 18px; border-radius:3px;
+  cursor:pointer; transition:all .18s; text-align:left; width:100%;
+  position:relative; overflow:hidden;
+}
+.opt::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,rgba(184,240,0,.06),transparent);
+  transform:translateX(-100%); transition:transform .25s;
+}
+.opt:hover { border-color:rgba(184,240,0,.4); }
+.opt:hover::before { transform:translateX(0); }
+.opt.sel { border-color:var(--ch); background:rgba(184,240,0,.07); }
+.opt.sel::before { transform:translateX(0); background:linear-gradient(90deg,rgba(184,240,0,.1),transparent); }
+
+.opt-glyph {
+  width:30px; height:30px; flex-shrink:0;
+  border:1.5px solid var(--dim); border-radius:3px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Space Mono',monospace; font-size:10px; font-weight:700;
+  color:var(--dim); transition:all .18s; margin-top:1px;
+}
+.opt.sel .opt-glyph {
+  background:var(--ch); border-color:var(--ch); color:var(--ob);
+}
+.opt-body { flex:1; }
+.opt-text { font-size:14px; line-height:1.5; color:var(--bo); }
+.opt-sub { font-size:11px; color:var(--dim2); margin-top:3px; display:none; }
+
+.q-nav {
+  display:flex; align-items:center; justify-content:space-between;
+}
+.btn-back {
+  font-family:'Space Mono',monospace; font-size:10px;
+  letter-spacing:1px;
+  background:transparent; border:1px solid var(--mid);
+  color:var(--dim2); padding:12px 20px; border-radius:2px;
+  cursor:pointer; transition:all .2s;
+}
+.btn-back:hover { border-color:var(--dim2); color:var(--bo); }
+.btn-back:disabled { opacity:0; pointer-events:none; }
+
+.btn-fwd {
+  font-family:'Syne',sans-serif; font-weight:700; font-size:13px;
+  text-transform:uppercase; letter-spacing:.4px;
+  background:var(--ch); color:var(--ob);
+  border:none; padding:13px 32px; border-radius:2px;
+  cursor:pointer; transition:all .2s;
+  opacity:.25; pointer-events:none;
+}
+.btn-fwd.rdy { opacity:1; pointer-events:auto; }
+.btn-fwd.rdy:hover { background:var(--pu); transform:translateY(-1px); }
+
+/* ══════════════════════════════════════════════
+   CAPTURE SCREEN
+   ══════════════════════════════════════════════ */
+.capture-hero {
+  display:flex; align-items:flex-start; gap:24px;
+  margin-bottom:32px; padding-bottom:28px;
+  border-bottom:1px solid var(--mid);
+}
+.score-reveal-box {
+  background:rgba(28,43,26,.6);
+  border:1px solid var(--mid);
+  padding:20px 24px; border-radius:3px;
+  flex-shrink:0; text-align:center; min-width:120px;
+  position:relative; overflow:hidden;
+}
+.srb-locked {
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+}
+.srb-lock-icon {
+  font-size:28px; line-height:1;
+  filter:drop-shadow(0 0 12px rgba(184,240,0,.4));
+  animation:lockpulse 2.5s ease-in-out infinite;
+}
+@keyframes lockpulse {
+  0%,100% { filter:drop-shadow(0 0 8px rgba(184,240,0,.3)); transform:scale(1); }
+  50%      { filter:drop-shadow(0 0 20px rgba(184,240,0,.6)); transform:scale(1.08); }
+}
+.srb-num {
+  font-family:'Space Mono',monospace; font-weight:700;
+  font-size:44px; color:var(--ch); line-height:1;
+  filter:blur(10px); user-select:none; letter-spacing:4px;
+}
+.srb-denom { font-family:'Space Mono',monospace; font-size:11px; color:var(--dim2); }
+.srb-label {
+  font-family:'Space Mono',monospace;
+  font-size:9px; color:var(--ch); margin-top:4px;
+  letter-spacing:2px; text-transform:uppercase;
+}
+
+.capture-copy h2 {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(20px,3.5vw,28px); letter-spacing:-.6px;
+  line-height:1.1; margin-bottom:10px;
+}
+.capture-copy h2 em { font-style:normal; color:var(--ch); }
+.capture-copy p { font-size:13px; line-height:1.65; color:var(--dim2); }
+
+@media(max-width:500px){
+  .capture-hero { flex-direction:column; }
+  .score-reveal-box { min-width:100%; }
+}
+
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px; }
+@media(max-width:520px){ .form-grid { grid-template-columns:1fr; } }
+
+.f-group { display:flex; flex-direction:column; gap:6px; }
+.f-label {
+  font-family:'Space Mono',monospace; font-size:9px;
+  text-transform:uppercase; letter-spacing:1.5px; color:var(--dim2);
+}
+.f-input, .f-select {
+  background:rgba(28,43,26,.7); border:1px solid var(--mid);
+  color:var(--bo); font-family:'DM Sans',sans-serif; font-size:14px;
+  padding:13px 16px; border-radius:2px; outline:none;
+  transition:border-color .2s; width:100%;
+  appearance:none;
+}
+.f-input:focus, .f-select:focus { border-color:rgba(184,240,0,.6); }
+.f-input::placeholder { color:var(--dim); }
+.f-select option { background:var(--ob); }
+
+.privacy-strip {
+  display:flex; gap:10px; align-items:flex-start;
+  background:rgba(42,61,40,.3); border:1px solid var(--mid);
+  padding:12px 16px; border-radius:2px;
+  margin-bottom:20px;
+}
+.privacy-icon { font-size:14px; flex-shrink:0; margin-top:1px; }
+.privacy-text { font-size:11px; color:var(--dim); line-height:1.6; }
+
+.btn-unlock {
+  width:100%; font-family:'Syne',sans-serif; font-weight:700;
+  font-size:15px; text-transform:uppercase; letter-spacing:.5px;
+  background:var(--ch); color:var(--ob); border:none;
+  padding:18px; border-radius:2px; cursor:pointer;
+  transition:all .25s; position:relative; overflow:hidden;
+}
+.btn-unlock:hover:not(:disabled) {
+  background:var(--pu); box-shadow:0 10px 36px rgba(184,240,0,.3);
+}
+.btn-unlock:disabled { background:var(--mid); color:var(--dim); cursor:not-allowed; }
+
+/* ══════════════════════════════════════════════
+   RESULT SCREEN
+   ══════════════════════════════════════════════ */
+.result-eyebrow {
+  font-family:'Space Mono',monospace; font-size:9px;
+  letter-spacing:2.5px; text-transform:uppercase;
+  color:var(--vi); margin-bottom:32px;
+  display:flex; align-items:center; gap:8px;
+}
+.re-line { flex:1; height:1px; background:rgba(168,85,247,.3); }
+
+/* score hero */
+.score-hero {
+  display:flex; align-items:center; gap:32px;
+  margin-bottom:36px; padding-bottom:32px;
+  border-bottom:1px solid var(--mid);
+  flex-wrap:wrap;
+}
+.score-dial { position:relative; flex-shrink:0; }
+.score-dial svg { display:block; }
+.dial-bg { fill:none; stroke:var(--mid); stroke-width:5; }
+.dial-fill {
+  fill:none; stroke-width:5; stroke-linecap:round;
+  stroke-dasharray:502;
+  stroke-dashoffset:502;
+  transition:stroke-dashoffset 1.8s var(--ease) .4s;
+  transform:rotate(-90deg); transform-origin:center;
+}
+.dial-center {
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+}
+.dial-num {
+  font-family:'Space Mono',monospace; font-weight:700;
+  font-size:40px; line-height:1;
+  transition:color .5s;
+}
+.dial-max { font-family:'Space Mono',monospace; font-size:11px; color:var(--dim2); }
+
+.score-meta { flex:1; min-width:200px; }
+.score-profile {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(22px,4vw,32px); letter-spacing:-.8px;
+  line-height:1; margin-bottom:10px;
+}
+.score-tagline { font-size:13px; line-height:1.7; color:var(--dim2); margin-bottom:16px; }
+.score-profile-badge {
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:'Space Mono',monospace; font-size:9px;
+  letter-spacing:1.5px; text-transform:uppercase;
+  padding:5px 14px; border-radius:2px; border:1px solid;
+}
+
+/* pillar breakdown */
+.breakdown-label {
+  font-family:'Space Mono',monospace; font-size:9px;
+  text-transform:uppercase; letter-spacing:2px; color:var(--dim2);
+  margin-bottom:16px;
+}
+.breakdown-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:10px;
+  margin-bottom:28px;
+}
+@media(max-width:480px){ .breakdown-grid { grid-template-columns:1fr; } }
+.bp-card {
+  background:rgba(28,43,26,.3); border:1px solid var(--mid);
+  padding:14px 16px; border-radius:3px;
+  position:relative; overflow:hidden;
+}
+.bp-card::after {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+}
+.bp-name {
+  font-family:'Space Mono',monospace; font-size:8px;
+  text-transform:uppercase; letter-spacing:1.5px;
+  margin-bottom:10px;
+}
+.bp-bar-track { height:3px; background:var(--mid); border-radius:2px; overflow:hidden; margin-bottom:8px; }
+.bp-bar-fill { height:100%; border-radius:2px; transition:width 1.2s var(--ease); }
+.bp-num {
+  font-family:'Space Mono',monospace; font-size:15px; font-weight:700;
+}
+.bp-denom { font-size:10px; color:var(--dim2); }
+
+/* AI narrative */
+.ai-module {
+  background:rgba(14,18,20,.6);
+  border:1px solid rgba(168,85,247,.25);
+  border-left:3px solid var(--vi);
+  padding:24px; border-radius:0 3px 3px 0;
+  margin-bottom:28px;
+  position:relative;
+}
+.ai-header {
+  display:flex; align-items:center; gap:10px; margin-bottom:16px;
+}
+.ai-orb {
+  width:28px; height:28px; border-radius:50%;
+  background:linear-gradient(135deg,var(--vi),var(--ch));
+  display:flex; align-items:center; justify-content:center;
+  font-size:12px; flex-shrink:0;
+  box-shadow:0 0 16px rgba(168,85,247,.4);
+}
+.ai-label {
+  font-family:'Space Mono',monospace; font-size:9px;
+  text-transform:uppercase; letter-spacing:2px; color:var(--vi);
+}
+.ai-sublabel { font-size:11px; color:var(--dim2); }
+
+.ai-typing {
+  display:flex; align-items:center; gap:10px;
+  font-size:13px; color:var(--dim2); font-style:italic;
+}
+.typing-dots { display:flex; gap:4px; }
+.td { width:6px; height:6px; border-radius:50%; background:var(--vi);
+  animation:tdpulse 1.4s ease-in-out infinite; }
+.td:nth-child(2){animation-delay:.2s}
+.td:nth-child(3){animation-delay:.4s}
+@keyframes tdpulse{0%,100%{opacity:.2;transform:scale(.7)}50%{opacity:1;transform:scale(1)}}
+
+.ai-body { font-size:14px; line-height:1.8; color:var(--fl); display:none; }
+.ai-body p { margin-bottom:14px; }
+.ai-body p:last-child { margin-bottom:0; color:var(--dim2); font-style:italic; font-size:13px; }
+
+/* CTA module */
+.result-cta {
+  background:linear-gradient(145deg,rgba(28,43,26,.7),rgba(14,18,20,.8));
+  border:1px solid var(--mid);
+  padding:28px; border-radius:3px;
+  margin-bottom:20px;
+  position:relative; overflow:hidden;
+}
+.result-cta::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--ch),var(--vi));
+}
+.cta-head {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(18px,3vw,24px); letter-spacing:-.5px;
+  line-height:1.15; margin-bottom:10px;
+}
+.cta-head em { font-style:normal; color:var(--ch); }
+.cta-sub { font-size:13px; color:var(--dim2); line-height:1.65; margin-bottom:22px; max-width:480px; }
+.cta-btns { display:flex; gap:12px; flex-wrap:wrap; }
+
+.btn-scan {
+  font-family:'Syne',sans-serif; font-weight:700; font-size:13px;
+  text-transform:uppercase; letter-spacing:.3px;
+  background:var(--ch); color:var(--ob);
+  border:none; padding:14px 28px; border-radius:2px;
+  cursor:pointer; transition:all .2s; flex:1; min-width:160px;
+}
+.btn-scan:hover { background:var(--pu); transform:translateY(-1px); }
+
+.btn-fn {
+  font-family:'Syne',sans-serif; font-weight:600; font-size:13px;
+  background:transparent; color:var(--vi);
+  border:1px solid rgba(168,85,247,.4);
+  padding:14px 28px; border-radius:2px;
+  cursor:pointer; transition:all .2s; flex:1; min-width:160px;
+}
+.btn-fn:hover { border-color:var(--vi); background:rgba(168,85,247,.08); }
+
+.result-footer {
+  text-align:center; margin-top:16px;
+}
+.btn-reset {
+  font-family:'Space Mono',monospace; font-size:10px;
+  background:transparent; border:1px solid var(--mid);
+  color:var(--dim2); padding:9px 20px; border-radius:2px;
+  cursor:pointer; transition:all .2s; letter-spacing:1px;
+}
+.btn-reset:hover { border-color:var(--dim2); color:var(--bo); }
+
+/* ── COMPLIANCE ── */
+.compliance-bar {
+  width:100%; max-width:680px;
+  margin-top:48px; padding:20px 0;
+  border-top:1px solid var(--mid);
+  font-size:10px; color:var(--dim); line-height:1.7;
+}
+
+/* ── POC RIBBON ── */
+.poc-ribbon {
+  position:fixed; bottom:16px; right:16px;
+  font-family:'Space Mono',monospace; font-size:9px;
+  color:var(--ob); background:var(--warn);
+  padding:5px 12px; border-radius:2px;
+  letter-spacing:1.5px; z-index:100;
+  box-shadow:0 4px 16px rgba(245,158,11,.4);
+}
+
+/* ── UTILITIES ── */
+.hidden { display:none !important; }
+</style>
+</head>
+<body>
+
+<!-- AMBIENT -->
+<div class="ambient">
+  <div class="ambient-grid"></div>
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+</div>
+<div class="scanline"></div>
+
+<!-- POC BADGE -->
+<div class="poc-ribbon">POC v1.0</div>
+
+<div class="shell">
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-brand">
+      <div class="nav-mark"></div>
+      <div>
+        <div class="nav-title">EpiGen<span>IQ</span>™</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <div class="nav-badge">Cellular Wellbeing Score</div>
+      <div class="nav-poc">POC v1.0</div>
+    </div>
+  </nav>
+
+  <!-- STAGE -->
+  <div class="stage">
+
+    <!-- PROGRESS RAIL -->
+    <div class="progress-rail" id="rail">
+      <div class="rail-track"><div class="rail-fill" id="railFill"></div></div>
+      <div class="rail-pillars">
+        <span class="rail-pillar" id="rp0">Nutrition</span>
+        <span class="rail-pillar" id="rp1">Movement</span>
+        <span class="rail-pillar" id="rp2">Emotional</span>
+        <span class="rail-pillar" id="rp3">Environment</span>
+        <span class="rail-pillar" id="rp4">Awareness</span>
+      </div>
+    </div>
+
+    <!-- ── INTRO ── -->
+    <div class="screen on" id="s-intro">
+      <div class="intro-kicker"><div class="intro-kicker-dot"></div>AI-Powered · 15 Questions · 4 Minutes</div>
+      <h1 class="intro-headline">
+        Discover Your<br>
+        <span class="line-2">Cellular</span>
+        <span class="line-3">Wellbeing Score™</span>
+      </h1>
+      <p class="intro-deck">
+        Your lifestyle leaves a measurable signature in your cells.<br>
+        EpiGenIQ's AI assesses <strong>five cellular dimensions</strong> — nutrition, movement, emotional resilience, environmental load, and cellular awareness — and generates a personalized Wellbeing Score with an AI-interpreted narrative.
+      </p>
+
+      <div class="pillar-strip">
+        <div class="ps-chip"><span class="ps-icon">🥦</span>Nutritional Signal</div>
+        <div class="ps-chip"><span class="ps-icon">⚡</span>Movement Intelligence</div>
+        <div class="ps-chip"><span class="ps-icon">🧠</span>Emotional Resilience</div>
+        <div class="ps-chip"><span class="ps-icon">🌿</span>Environmental Load</div>
+        <div class="ps-chip"><span class="ps-icon">◎</span>Cellular Awareness</div>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-num">15</div>
+          <div class="stat-label">Questions</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5</div>
+          <div class="stat-label">Dimensions</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">4</div>
+          <div class="stat-label">Result Profiles</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">AI</div>
+          <div class="stat-label">Narrative</div>
+        </div>
+      </div>
+
+      <div class="cta-group">
+        <button class="btn-start" onclick="begin()">Begin Assessment →</button>
+        <div class="intro-footnote">
+          <span class="fn-lock">🔒</span>
+          No health data stored · HIPAA-safe · Anonymous until you choose
+        </div>
+      </div>
+    </div>
+
+    <!-- ── QUESTION ── -->
+    <div class="screen" id="s-q">
+      <div class="q-meta">
+        <div class="q-pillar-tag" id="qTag"></div>
+        <div class="q-counter">Q <strong id="qNum">1</strong> / 15</div>
+      </div>
+
+      <div class="q-card" id="qCard">
+        <div class="q-text" id="qText"></div>
+        <div class="q-science">
+          <div class="q-science-icon">◆</div>
+          <div class="q-science-text" id="qScience"></div>
+        </div>
+      </div>
+
+      <div class="options" id="qOpts"></div>
+
+      <div class="q-nav">
+        <button class="btn-back" id="btnBack" onclick="back()">← Back</button>
+        <button class="btn-fwd" id="btnFwd" onclick="fwd()">Next →</button>
+      </div>
+    </div>
+
+    <!-- ── CAPTURE ── -->
+    <div class="screen" id="s-cap">
+      <div class="capture-hero">
+        <div class="score-reveal-box">
+          <div class="srb-locked">
+            <div class="srb-lock-icon">U0001F512</div>
+            <div class="srb-num">88</div>
+            <div class="srb-denom">/100</div>
+            <div class="srb-label">LOCKED</div>
+          </div>
+        </div>
+        <div class="capture-copy">
+          <h2>Your score is <em>calculated.</em><br>Enter your details to unlock it.</h2>
+          <p>Your EpiGenIQ Wellbeing Score, full pillar breakdown, and AI-generated cellular narrative are ready u2014 submit below to reveal them. We will also send a complimentary scan invitation to your inbox.</p>
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="f-group">
+          <label class="f-label">First Name</label>
+          <input class="f-input" id="fName" type="text" placeholder="First name" autocomplete="given-name">
+        </div>
+        <div class="f-group">
+          <label class="f-label">Email</label>
+          <input class="f-input" id="fEmail" type="email" placeholder="your@email.com" autocomplete="email">
+        </div>
+        <div class="f-group">
+          <label class="f-label">I am a…</label>
+          <select class="f-select" id="fRole">
+            <option value="">— select role —</option>
+            <option value="Consumer">Health-conscious individual</option>
+            <option value="Practitioner">Physician / Healthcare provider</option>
+            <option value="Nutritionist">Nutritionist / Dietitian</option>
+            <option value="Functional Medicine">Functional medicine provider</option>
+            <option value="Entrepreneur">Health entrepreneur</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="f-group">
+          <label class="f-label">Primary Interest</label>
+          <select class="f-select" id="fInterest">
+            <option value="">— select —</option>
+            <option value="Personal wellness">My personal wellness</option>
+            <option value="Patients / clients">For my patients / clients</option>
+            <option value="Business opportunity">Business opportunity</option>
+            <option value="Research / education">Research / education</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="privacy-strip">
+        <div class="privacy-icon">🔒</div>
+        <div class="privacy-text">This is a wellness education tool — not a clinical or medical assessment. No biometric data, medical history, or personal health information is collected or retained. Responses reflect self-reported lifestyle patterns only. #NSBrandAffiliate</div>
+      </div>
+
+      <button class="btn-unlock" id="btnUnlock" onclick="unlock()" disabled>Reveal My Wellbeing Score →</button>
+    </div>
+
+    <!-- ── RESULT ── -->
+    <div class="screen" id="s-res">
+      <div class="result-eyebrow">
+        <div class="re-line"></div>
+        EpiGenIQ™ Cellular Wellbeing Score
+        <div class="re-line"></div>
+      </div>
+
+      <!-- SCORE HERO -->
+      <div class="score-hero">
+        <div class="score-dial">
+          <svg viewBox="0 0 180 180" width="180" height="180">
+            <circle class="dial-bg" cx="90" cy="90" r="80"/>
+            <circle class="dial-fill" id="dialFill" cx="90" cy="90" r="80"/>
+          </svg>
+          <div class="dial-center">
+            <div class="dial-num" id="dialNum">0</div>
+            <div class="dial-max">/100</div>
+          </div>
+        </div>
+        <div class="score-meta">
+          <div class="score-profile" id="resProfile"></div>
+          <div class="score-tagline" id="resTagline"></div>
+          <div class="score-profile-badge" id="resBadge"></div>
+        </div>
+      </div>
+
+      <!-- PILLAR BREAKDOWN -->
+      <div class="breakdown-label">Pillar Breakdown</div>
+      <div class="breakdown-grid" id="breakdownGrid"></div>
+
+      <!-- AI NARRATIVE -->
+      <div class="ai-module">
+        <div class="ai-header">
+          <div class="ai-orb">◆</div>
+          <div>
+            <div class="ai-label">AI Cellular Intelligence</div>
+            <div class="ai-sublabel">Personalized narrative · EpiGenIQ Editorial</div>
+          </div>
+        </div>
+        <div class="ai-typing" id="aiTyping">
+          <div class="typing-dots">
+            <div class="td"></div><div class="td"></div><div class="td"></div>
+          </div>
+          Generating your personalized cellular narrative…
+        </div>
+        <div class="ai-body" id="aiBody"></div>
+      </div>
+
+      <!-- CTA -->
+      <div class="result-cta">
+        <div class="cta-head">The scan shows you <em>exactly</em> where you stand.</div>
+        <p class="cta-sub">Your Wellbeing Score reflects self-reported lifestyle patterns. A complimentary Prysm iO carotenoid scan delivers an objective, real-time cellular baseline — non-invasively, in under 90 seconds. No needles. No labs. No wait.</p>
+        <div class="cta-btns">
+          <button class="btn-scan" onclick="window.open('mailto:hello@epigeniq.tech?subject=Scan%20Request','_blank')">Book a Complimentary Scan →</button>
+          <button class="btn-fn" onclick="window.open('https://epigeniq.substack.com','_blank')">Subscribe to Field Notes</button>
+        </div>
+      </div>
+
+      <div class="result-footer">
+        <button class="btn-reset" onclick="reset()">↺ Retake Assessment</button>
+      </div>
+    </div>
+
+    <!-- COMPLIANCE -->
+    <div class="compliance-bar">
+      <strong>EpiGenIQ™</strong> is an editorial platform published by HealthStartz. This assessment is a wellness education tool — not a medical assessment, diagnostic instrument, or clinical evaluation. Scores are generated from self-reported lifestyle patterns for educational purposes only. Nothing here constitutes medical advice or is intended to diagnose, treat, cure, or prevent any condition. Consult a qualified healthcare professional before making changes to your health regimen. Statements have not been evaluated by the FDA. Operated by an Independent Brand Affiliate of Nu Skin Enterprises. <strong>#NSBrandAffiliate</strong> · © 2026 HealthStartz / EpiGenIQ™ · POC v1.0
+    </div>
+
+  </div><!-- /stage -->
+</div><!-- /shell -->
+
+<script>
+/* ══════════════════════════════════════════
+   DATA LAYER
+   ══════════════════════════════════════════ */
+const PILLARS = [
+  { name:'Nutritional Signal',    color:'#B8F000', icon:'🥦' },
+  { name:'Movement Intelligence', color:'#34D399', icon:'⚡' },
+  { name:'Emotional Resilience',  color:'#A855F7', icon:'🧠' },
+  { name:'Environmental Load',    color:'#60A5FA', icon:'🌿' },
+  { name:'Cellular Awareness',    color:'#D6F566', icon:'◎' },
+];
+
+const Qs = [
+  // ─ NUTRITION ─
+  { p:0, q:'How many servings of deeply colored fruits and vegetables do you eat on a typical day?',
+    sci:'Carotenoids — the compounds measured by active hyperspectral scanning — concentrate in brightly colored plant foods. Dietary density is the most direct input to your cellular antioxidant reserve.',
+    opts:[
+      {t:'7 or more — a genuine daily priority',s:4},
+      {t:'4–6 servings — pretty consistent',s:3},
+      {t:'1–3 servings — variable day to day',s:2},
+      {t:'Rarely — I don\'t track this',s:1},
+    ]},
+  { p:0, q:'How would you describe your relationship with processed and ultra-processed foods?',
+    sci:'Ultra-processed food consumption correlates with elevated oxidative stress markers and reduced circulating antioxidant levels, directly affecting cellular signaling and carotenoid status.',
+    opts:[
+      {t:'Minimal — whole foods most of the time',s:4},
+      {t:'Moderate — a few processed items weekly',s:3},
+      {t:'Regular — convenience foods in my daily routine',s:2},
+      {t:'Frequent — the majority of my diet',s:1},
+    ]},
+  { p:0, q:'Do you currently use targeted nutritional supplementation?',
+    sci:'Nutraceutical support — antioxidants, carotenoids, omega-3s, adaptogens — can meaningfully augment dietary intake, especially for cellular antioxidant defense and epigenetic expression.',
+    opts:[
+      {t:'Yes — a structured, science-informed protocol',s:4},
+      {t:'Yes — a few basics like vitamin D or fish oil',s:3},
+      {t:'Occasionally — inconsistent use',s:2},
+      {t:'No supplements currently',s:1},
+    ]},
+  // ─ MOVEMENT ─
+  { p:1, q:'How many days per week do you engage in intentional physical activity?',
+    sci:'Regular movement upregulates mitochondrial biogenesis and supports epigenetic pathways linked to cellular resilience, metabolic efficiency, and biological age deceleration.',
+    opts:[
+      {t:'5–7 days — movement is non-negotiable',s:4},
+      {t:'3–4 days — consistent weekly routine',s:3},
+      {t:'1–2 days — sporadic',s:2},
+      {t:'Rarely or never',s:1},
+    ]},
+  { p:1, q:'How many hours per day are you in a sedentary position?',
+    sci:'Prolonged sedentary time independently accelerates biological aging markers even in people who exercise regularly — the "active couch potato" effect is among the most replicated findings in epigenetic aging research.',
+    opts:[
+      {t:'Under 4 hours — I move regularly throughout the day',s:4},
+      {t:'4–6 hours — I take intentional breaks',s:3},
+      {t:'6–9 hours — mostly desk and screen-based',s:2},
+      {t:'9+ hours — sedentary the majority of my day',s:1},
+    ]},
+  { p:1, q:'How intentional are you about recovery — sleep, rest days, and active recovery?',
+    sci:'Recovery is where cellular adaptation occurs. Without it, exercise becomes a net oxidative stressor rather than a stimulus for epigenetic resilience and carotenoid replenishment.',
+    opts:[
+      {t:'Very intentional — sleep and rest are prioritized',s:4},
+      {t:'Moderate — I rest when I feel I need it',s:3},
+      {t:'Minimal — rest often feels like lost productivity',s:2},
+      {t:'Poor — chronically underslept and overextended',s:1},
+    ]},
+  // ─ EMOTIONAL ─
+  { p:2, q:'How would you rate your chronic stress load over the past 90 days?',
+    sci:'Chronic cortisol elevation directly modifies epigenetic markers through DNA methylation changes that can alter gene expression patterns — one of the most studied pathways in stress-accelerated biological aging.',
+    opts:[
+      {t:'Low — I manage stress well with consistent practices',s:4},
+      {t:'Moderate — some stress, mostly managed',s:3},
+      {t:'Elevated — stress is a regular presence',s:2},
+      {t:'High — I feel chronically overwhelmed',s:1},
+    ]},
+  { p:2, q:'How consistently do you achieve 7–9 hours of quality sleep?',
+    sci:'Sleep is the primary window for cellular repair, epigenetic resetting, and antioxidant replenishment. Chronic sleep deficit is one of the most studied and most reversible drivers of accelerated biological aging.',
+    opts:[
+      {t:'Almost always — sleep is a genuine priority',s:4},
+      {t:'Most nights — occasional disruptions',s:3},
+      {t:'Inconsistently — under 7 hours is common',s:2},
+      {t:'Rarely — chronic sleep deprivation is my baseline',s:1},
+    ]},
+  { p:2, q:'Do you have consistent nervous system regulation practices?',
+    sci:'Vagal tone and heart rate variability — measurable outputs of nervous system regulation — are now recognized as meaningful epigenetic modulators in the biological resilience literature.',
+    opts:[
+      {t:'Yes — daily structured practice (meditation, breathwork, etc.)',s:4},
+      {t:'Sometimes — a few times per week',s:3},
+      {t:'Occasionally — when things get difficult',s:2},
+      {t:'No consistent practice',s:1},
+    ]},
+  // ─ ENVIRONMENT ─
+  { p:3, q:'How would you rate your daily exposure to environmental toxins?',
+    sci:'Chronic low-level toxin exposure contributes to oxidative burden and depletes circulating carotenoid reserves — the precise reserves that active hyperspectral scanning is designed to measure.',
+    opts:[
+      {t:'Minimal — clean products, monitored air quality',s:4},
+      {t:'Low — mostly clean with some conventional products',s:3},
+      {t:'Moderate — I haven\'t paid much attention to this',s:2},
+      {t:'High — urban/industrial environment, conventional products throughout',s:1},
+    ]},
+  { p:3, q:'How much daily time do you spend in natural environments?',
+    sci:'Nature exposure lowers inflammatory markers and cortisol in controlled trials. Urban environments without green access correlate with measurably higher oxidative stress loads in population studies.',
+    opts:[
+      {t:'1+ hours daily — nature is part of my routine',s:4},
+      {t:'30–60 minutes most days',s:3},
+      {t:'Under 30 minutes — mostly indoor',s:2},
+      {t:'Rarely in meaningful green space',s:1},
+    ]},
+  { p:3, q:'How would you describe your relationship with alcohol and recreational substances?',
+    sci:'Alcohol and substance use are among the most studied drivers of epigenetic age acceleration — particularly through oxidative stress pathways and DNA methylation disruption.',
+    opts:[
+      {t:'None or minimal — rarely if ever',s:4},
+      {t:'Moderate — within social or occasional limits',s:3},
+      {t:'Regular — several times per week',s:2},
+      {t:'Frequent or habitual use',s:1},
+    ]},
+  // ─ AWARENESS ─
+  { p:4, q:'Have you had cellular or biological age testing done?',
+    sci:'Self-knowledge is the foundation of personalized health. The gap between perceived and measured cellular health is often the most actionable insight available to a motivated individual.',
+    opts:[
+      {t:'Yes — multiple tests; I track biomarkers actively',s:4},
+      {t:'Yes — basic blood panels or one biometric tool',s:3},
+      {t:'No — curious but haven\'t taken action yet',s:2},
+      {t:'No — this is new territory for me',s:1},
+    ]},
+  { p:4, q:'How do you stay informed about advances in longevity and epigenetic science?',
+    sci:'Health literacy is a meaningful predictor of health outcomes. Those who engage with emerging science tend to make faster behavioral adjustments when new evidence emerges.',
+    opts:[
+      {t:'Actively — I read primary sources and follow the field',s:4},
+      {t:'Occasionally — quality newsletters or podcasts',s:3},
+      {t:'Passively — mainstream media when it surfaces',s:2},
+      {t:'Rarely — health science isn\'t something I follow',s:1},
+    ]},
+  { p:4, q:'If you had an objective cellular baseline today — a score you could track over time — what would you do with it?',
+    sci:'Readiness to act on data is as important as the data itself. This final question helps EpiGenIQ understand where you are in your cellular health journey.',
+    opts:[
+      {t:'Build a protocol around it immediately — I want the data',s:4},
+      {t:'Share it with my practitioner and adjust my approach',s:3},
+      {t:'Start learning more — not sure what to do with it yet',s:2},
+      {t:'Not sure I\'d do much — I\'m skeptical of this type of data',s:1},
+    ]},
+];
+
+const PROFILES = [
+  { min:0,  max:24, name:'Start Here',      tagline:'Every optimized cellular profile began exactly here. Baseline awareness is the highest-leverage first move.',                      color:'#60A5FA', grad:'#60A5FA,#A855F7' },
+  { min:25, max:49, name:'Recalibrating',   tagline:'Your inputs are competing with your intentions. The science on what shifts this fastest may genuinely surprise you.',             color:'#F59E0B', grad:'#F59E0B,#EF4444' },
+  { min:50, max:74, name:'Signal Building', tagline:'Strong foundation, clear upside. A few targeted, evidence-informed shifts tend to produce disproportionate results at this tier.',color:'#34D399', grad:'#34D399,#B8F000' },
+  { min:75, max:100,name:'Field Ready',     tagline:'Your lifestyle inputs are consistently working in your favor. The question now is measuring what\'s actually happening at the cellular level.', color:'#B8F000', grad:'#B8F000,#D6F566' },
+];
+
+/* ══════════════════════════════════════════
+   STATE
+   ══════════════════════════════════════════ */
+let cur = 0;
+let ans = new Array(15).fill(null);
+let user = {};
+
+/* ══════════════════════════════════════════
+   HELPERS
+   ══════════════════════════════════════════ */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
+  const el = document.getElementById(id);
+  el.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function calcScores() {
+  const ps = [0,0,0,0,0], pm = [0,0,0,0,0];
+  Qs.forEach((q,i) => {
+    if (ans[i] !== null) { ps[q.p] += q.opts[ans[i]].s; pm[q.p] += 4; }
+  });
+  const pn = ps.map((s,i) => pm[i] ? Math.round((s/pm[i])*20) : 0);
+  const total = pn.reduce((a,b) => a+b, 0);
+  const profile = PROFILES.find(p => total >= p.min && total <= p.max) || PROFILES[0];
+  return { total, pn, profile };
+}
+
+/* ══════════════════════════════════════════
+   INTRO → BEGIN
+   ══════════════════════════════════════════ */
+function begin() {
+  document.getElementById('rail').style.display = 'block';
+  show('s-q');
+  render(0);
+}
+
+/* ══════════════════════════════════════════
+   QUESTION RENDER
+   ══════════════════════════════════════════ */
+function render(idx) {
+  cur = idx;
+  const q = Qs[idx];
+
+  // rail
+  const pct = (idx / Qs.length) * 100;
+  document.getElementById('railFill').style.width = pct + '%';
+  document.querySelectorAll('.rail-pillar').forEach((el,i) => {
+    el.classList.toggle('lit', i === q.p);
+  });
+
+  // pillar tag
+  const tag = document.getElementById('qTag');
+  tag.textContent = PILLARS[q.p].icon + '  ' + PILLARS[q.p].name;
+  tag.style.color = PILLARS[q.p].color;
+  tag.style.borderColor = PILLARS[q.p].color;
+  tag.style.background = 'rgba(0,0,0,.15)';
+
+  // card top border color via CSS var
+  document.getElementById('qCard').style.setProperty('--pillar-color', PILLARS[q.p].color);
+
+  // counter
+  document.getElementById('qNum').textContent = idx + 1;
+
+  // text + science
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('qScience').textContent = q.sci;
+
+  // options
+  const wrap = document.getElementById('qOpts');
+  wrap.innerHTML = '';
+  q.opts.forEach((opt, oi) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt' + (ans[idx] === oi ? ' sel' : '');
+    btn.innerHTML = `<span class="opt-glyph">${String.fromCharCode(65+oi)}</span><div class="opt-body"><div class="opt-text">${opt.t}</div></div>`;
+    btn.onclick = () => pick(idx, oi, btn);
+    wrap.appendChild(btn);
+  });
+
+  // nav
+  const bk = document.getElementById('btnBack');
+  bk.disabled = idx === 0;
+
+  const fw = document.getElementById('btnFwd');
+  fw.textContent = idx === Qs.length - 1 ? 'See My Score →' : 'Next →';
+  fw.classList.toggle('rdy', ans[idx] !== null);
+}
+
+function pick(qIdx, optIdx, btn) {
+  ans[qIdx] = optIdx;
+  document.querySelectorAll('.opt').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  document.getElementById('btnFwd').classList.add('rdy');
+}
+
+function back() {
+  if (cur > 0) render(cur - 1);
+}
+function fwd() {
+  if (ans[cur] === null) return;
+  if (cur < Qs.length - 1) { render(cur + 1); }
+  else { showCapture(); }
+}
+
+/* ══════════════════════════════════════════
+   CAPTURE
+   ══════════════════════════════════════════ */
+function showCapture() {
+  // Score intentionally NOT shown here — gated until form submission
+  document.getElementById('railFill').style.width = '95%';
+  ['fName','fEmail','fRole'].forEach(id => {
+    document.getElementById(id).addEventListener('input', checkForm);
+    document.getElementById(id).addEventListener('change', checkForm);
+  });
+  show('s-cap');
+}
+
+function checkForm() {
+  const ok = document.getElementById('fName').value.trim() &&
+             document.getElementById('fEmail').value.includes('@') &&
+             document.getElementById('fRole').value;
+  document.getElementById('btnUnlock').disabled = !ok;
+}
+
+function unlock() {
+  user = {
+    name:     document.getElementById('fName').value.trim(),
+    email:    document.getElementById('fEmail').value.trim(),
+    role:     document.getElementById('fRole').value,
+    interest: document.getElementById('fInterest').value,
+  };
+  document.getElementById('railFill').style.width = '100%';
+  show('s-res');
+  renderResult();
+  notify();
+}
+
+/* ══════════════════════════════════════════
+   RESULT
+   ══════════════════════════════════════════ */
+function renderResult() {
+  const {total, pn, profile} = calcScores();
+
+  // animated dial
+  const dial = document.getElementById('dialFill');
+  const C = 2 * Math.PI * 80; // r=80
+  dial.style.strokeDasharray = C;
+  dial.style.stroke = profile.color;
+  setTimeout(() => {
+    dial.style.strokeDashoffset = C - (total / 100) * C;
+  }, 150);
+
+  // count-up
+  const numEl = document.getElementById('dialNum');
+  numEl.style.color = profile.color;
+  let n = 0;
+  const iv = setInterval(() => {
+    n = Math.min(n + Math.ceil((total - n) / 8 + 1), total);
+    numEl.textContent = n;
+    if (n >= total) clearInterval(iv);
+  }, 35);
+
+  // profile info
+  document.getElementById('resProfile').textContent = profile.name;
+  document.getElementById('resProfile').style.color = profile.color;
+  document.getElementById('resTagline').textContent = profile.tagline;
+  const badge = document.getElementById('resBadge');
+  badge.textContent = '◆  ' + profile.name.toUpperCase();
+  badge.style.color = profile.color;
+  badge.style.borderColor = profile.color;
+  badge.style.background = 'rgba(0,0,0,.2)';
+
+  // pillar breakdown
+  const grid = document.getElementById('breakdownGrid');
+  grid.innerHTML = '';
+  PILLARS.forEach((pl, i) => {
+    const pct = (pn[i] / 20) * 100;
+    const card = document.createElement('div');
+    card.className = 'bp-card';
+    card.innerHTML = `
+      <div class="bp-name" style="color:${pl.color}">${pl.icon} ${pl.name}</div>
+      <div class="bp-bar-track">
+        <div class="bp-bar-fill" id="bpf${i}" style="width:0%;background:${pl.color}"></div>
+      </div>
+      <span class="bp-num" style="color:${pl.color}">${pn[i]}</span><span class="bp-denom">/20</span>`;
+    card.style.setProperty('--pc', pl.color);
+    card.querySelector('::after'); // trigger repaint
+    card.style.cssText += `--pc:${pl.color}`;
+    // top border via inline
+    card.querySelector('.bp-card::after');
+    grid.appendChild(card);
+    // animate bar after DOM
+    setTimeout(() => {
+      const el = document.getElementById('bpf' + i);
+      if (el) el.style.width = pct + '%';
+    }, 500 + i * 120);
+  });
+
+  // AI narrative
+  fetchAI(total, pn, profile, user);
+}
+
+/* ══════════════════════════════════════════
+   AI NARRATIVE
+   ══════════════════════════════════════════ */
+async function fetchAI(total, pn, profile, u) {
+  const pillarSummary = PILLARS.map((pl,i) => `${pl.name}: ${pn[i]}/20`).join(', ');
+
+  const prompt = `You are EpiGenIQ Editorial Intelligence — precise, science-literate, warm. You write for EpiGenIQ™, a cellular health thought leadership platform under HealthStartz.
+
+Assessment results for ${u.name || 'the respondent'} (${u.role || 'health-conscious individual'}):
+- Total Wellbeing Score: ${total}/100
+- Profile: "${profile.name}"
+- Pillars: ${pillarSummary}
+- Interest: ${u.interest || 'personal wellness'}
+
+Write a personalized 3-paragraph result narrative. Rules:
+1. Open by acknowledging their score and profile — no judgment, grounded confidence
+2. Name their 2 strongest pillars and 1 lowest pillar explicitly — be precise, not generic
+3. Close by linking their specific pattern to epigenetic science (carotenoids, DNA methylation, or biological age pacing — use naturally, not as jargon) and bridge softly to objective measurement
+4. Tone: editorial authority meets personal warmth. Never preachy. Never salesy.
+5. Zero health claims, zero diagnostic language, zero treatment suggestions
+6. Never name any specific product
+7. ~180 words total across 3 paragraphs
+8. Final line: "— EpiGenIQ Editorial Intelligence"
+
+Output the narrative only. No preamble.`;
+
+  try {
+    const r = await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        messages:[{role:'user',content:prompt}]
+      })
+    });
+    const data = await r.json();
+    const txt = data.content?.find(b => b.type==='text')?.text || '';
+    showNarrative(txt);
+  } catch(e) {
+    showNarrative(fallbackNarrative(total, pn, profile, u));
+  }
+}
+
+function showNarrative(text) {
+  document.getElementById('aiTyping').style.display = 'none';
+  const body = document.getElementById('aiBody');
+  body.style.display = 'block';
+  // split into paragraphs
+  const paras = text.split('\n').filter(l => l.trim());
+  body.innerHTML = paras.map(p => `<p>${p}</p>`).join('');
+}
+
+function fallbackNarrative(total, pn, profile, u) {
+  const sorted = pn.map((v,i) => ({i,v})).sort((a,b) => b.v - a.v);
+  const top2 = sorted.slice(0,2).map(x => PILLARS[x.i].name).join(' and ');
+  const low  = sorted[sorted.length-1];
+  const lowName = PILLARS[low.i].name;
+
+  const by = { 'Field Ready': `${u.name || 'Your'} score of ${total}/100 places you in Field Ready — the top tier of EpiGenIQ's Cellular Wellbeing framework. Your lifestyle inputs are consistently aligned with what the science says supports cellular resilience.\n\nYour strongest dimensions are ${top2} — both reflecting the kind of sustained, deliberate habits that compound over time in the epigenetic literature. Your ${lowName} score leaves meaningful room for targeted optimisation, which at your overall level tends to produce outsized returns.\n\nThe question at Field Ready isn't whether your habits are working — it's whether they're registering at the cellular level the way you'd expect. DNA methylation and carotenoid status don't always map linearly to perceived health. An objective baseline is the most precise tool available to validate what's actually happening.\n\n— EpiGenIQ Editorial Intelligence`,
+    'Signal Building': `${u.name || 'Your'} score of ${total}/100 places you in Signal Building — a profile defined by genuine foundation with identifiable upside. You have consistent inputs in several dimensions and meaningful opportunity in others.\n\nYour ${top2} dimensions are your strongest assets — the habits embedded there are doing real cellular work. Your ${lowName} score is the highest-leverage target: the research on epigenetic responsiveness shows that addressing the lowest-signal pillar often lifts adjacent markers faster than optimising what's already working.\n\nCarotenoid status and pace-of-aging markers are particularly responsive to the kinds of adjustments your profile suggests. The fastest path to knowing which lever to pull first isn't more self-assessment — it's an objective cellular baseline that shows you where behaviour is and isn't translating.\n\n— EpiGenIQ Editorial Intelligence`,
+    'Recalibrating': `${u.name || 'Your'} score of ${total}/100 places you in Recalibrating — a profile more common than most people realise, and more actionable than the name suggests. Several of your inputs are working against each other.\n\nYour ${top2} dimensions show real foundation. Your ${lowName} score is where the most significant cellular friction is occurring, and the research is specific: epigenetic expression responds to targeted intervention in this dimension within weeks to months, not years.\n\nDNA methylation patterns are dynamic, not fixed. The gap between where your score is today and where you want it to be is a timeline with the right inputs, not a permanent state. An objective cellular baseline is the most useful tool you can have right now — it tells you whether your effort is actually registering at the cellular level.\n\n— EpiGenIQ Editorial Intelligence`,
+    'Start Here': `${u.name || 'Your'} score of ${total}/100 places you at Start Here — and that is a legitimate and useful place to begin. Every optimised cellular profile started from a baseline of self-awareness, and yours is now established.\n\nYour ${top2} dimensions show the most traction. Your ${lowName} score is the dimension with the largest gap between where you are and where the science says the most cellular leverage lives. That's not a problem — that's a clear starting point.\n\nEpigenetics is fundamentally about the dynamic relationship between your inputs and your cellular expression. The most useful next move is an objective measurement of where your cells actually are — independent of self-report. That baseline changes everything that comes after it.\n\n— EpiGenIQ Editorial Intelligence`
+  };
+  return by[profile.name] || by['Signal Building'];
+}
+
+/* ══════════════════════════════════════════
+   NOTIFICATION
+   ══════════════════════════════════════════ */
+function notify() {
+  const {total, pn, profile} = calcScores();
+  const sub = encodeURIComponent(`[EpiGenIQ Assessment] ${user.name||'Anonymous'} · ${total}/100 · ${profile.name}`);
+  const body = encodeURIComponent(
+`EpiGenIQ™ Cellular Wellbeing Assessment — New Submission
+──────────────────────────────────────────────────────
+
+NAME:          ${user.name||'—'}
+EMAIL:         ${user.email||'—'}
+ROLE:          ${user.role||'—'}
+INTEREST:      ${user.interest||'—'}
+
+SCORE:         ${total}/100
+PROFILE:       ${profile.name}
+
+PILLAR SCORES:
+${PILLARS.map((pl,i) => `  ${pl.name}: ${pn[i]}/20`).join('\n')}
+
+──────────────────────────────────────────────────────
+RECOMMENDED ACTION:
+${total>=75?'High-engagement — book scan + consider Roundtable invite':total>=50?'Warm lead — scan invitation + Field Notes subscribe':total>=25?'Nurture — Field Notes sequence + education content':'Early-stage — Start Here resources + scan invitation'}
+
+BLUSUN TAG:
+${['Practitioner','Nutritionist','Functional Medicine'].includes(user.role)?'ICP-MD or ICP-RD':user.role==='Entrepreneur'?'ICP-ENTREPRENEUR':'CONSUMER-LEAD'}
+
+──────────────────────────────────────────────────────
+POC v1.0 · EpiGenIQ™ Wellbeing Assessment
+No health data or biometric information was collected.
+`);
+  try {
+    sessionStorage.setItem('epigeniq-poc-lead', JSON.stringify({
+      ...user, total, profile:profile.name,
+      pillars:pn, ts:new Date().toISOString()
+    }));
+  } catch(e){}
+  // Passive mailto — fires without interrupting flow
+  const a = document.createElement('a');
+  a.href=`mailto:kelly@epigeniq.tech?subject=${sub}&body=${body}`;
+  a.style.display='none';
+  document.body.appendChild(a);
+}
+
+/* ══════════════════════════════════════════
+   RESET
+   ══════════════════════════════════════════ */
+function reset() {
+  ans = new Array(15).fill(null);
+  user = {};
+  cur = 0;
+  document.getElementById('railFill').style.width = '0%';
+  document.getElementById('rail').style.display = 'none';
+  show('s-intro');
+}
+
+/* ══════════════════════════════════════════
+   KEYBOARD
+   ══════════════════════════════════════════ */
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('s-q').classList.contains('on')) return;
+  const map = {'1':0,'2':1,'3':2,'4':3,'a':0,'b':1,'c':2,'d':3};
+  const k = e.key.toLowerCase();
+  if (map[k] !== undefined) {
+    const opts = document.querySelectorAll('.opt');
+    if (opts[map[k]]) opts[map[k]].click();
+  }
+  if (e.key === 'Enter' && document.getElementById('btnFwd').classList.contains('rdy')) fwd();
+  if (e.key === 'ArrowLeft') back();
+});
+</script>
+</body>
+</html>
