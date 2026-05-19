@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EpiGenIQ — Three Palette Options</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #f0ede8;
+  font-family: 'DM Sans', sans-serif;
+  color: #111;
+  padding: 48px 32px 80px;
+}
+
+h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #888;
+  text-align: center;
+  margin-bottom: 8px;
+}
+.subtitle {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 12px;
+  color: #111;
+}
+.context {
+  text-align: center;
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 64px;
+  line-height: 1.6;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.context strong { color: #444; }
+
+/* PALETTE SECTIONS */
+.palette {
+  max-width: 960px;
+  margin: 0 auto 80px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.08);
+}
+
+.palette-header {
+  padding: 36px 40px 28px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.palette-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #bbb;
+  margin-bottom: 6px;
+}
+.palette-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  letter-spacing: -0.5px;
+  margin-bottom: 6px;
+}
+.palette-rationale {
+  font-size: 13px;
+  color: #777;
+  max-width: 440px;
+  line-height: 1.6;
+}
+.palette-tag {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 20px;
+  white-space: nowrap;
+  align-self: flex-start;
+  margin-top: 8px;
+}
+
+/* SWATCHES */
+.swatch-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+.swatch {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 14px;
+  position: relative;
+}
+.swatch-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.swatch-hex {
+  font-size: 11px;
+  font-family: monospace;
+  opacity: 0.7;
+}
+.light-text .swatch-name,
+.light-text .swatch-hex { color: rgba(255,255,255,0.9); }
+.dark-text .swatch-name,
+.dark-text .swatch-hex { color: rgba(0,0,0,0.6); }
+
+/* LOGO PREVIEW */
+.logo-preview-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-top: 1px solid #f0f0f0;
+}
+.logo-tile {
+  padding: 36px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-height: 180px;
+}
+.logo-tile-label {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: 'Syne', sans-serif;
+}
+
+.logo-mark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-wordmark-wrap { display: flex; flex-direction: column; gap: 2px; }
+.logo-line1 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  line-height: 1;
+}
+.logo-line2 {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  font-size: 8px;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+}
+
+/* APPLICATION STRIP */
+.application {
+  padding: 28px 40px;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.app-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #bbb;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+.app-chip {
+  font-size: 12px;
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+}
+
+/* DOES NOT CONFLICT ROW */
+.no-conflict {
+  padding: 20px 40px;
+  background: #fafaf8;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.no-conflict-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #bbb;
+}
+.conflict-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #555;
+}
+.dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ===================== PALETTE 1: ARCTIC INTELLIGENCE ===================== */
+/* Cool ice-blue + deep forest + white — clean, clinical, distinct */
+
+/* ===================== PALETTE 2: SOLAR BIOLOGY ===================== */
+/* Deep terracotta/rust + warm ivory + sage green — organic science */
+
+/* ===================== PALETTE 3: DEEP FIELD ===================== */
+/* Near-black + electric lime + soft coral — bold, future-forward */
+
+</style>
+</head>
+<body>
+
+<h1>EpiGenIQ™ · A HealthStartz SubCo</h1>
+<div class="subtitle">Three Fresh Palette Options</div>
+<p class="context">
+  All three are designed <strong>away from</strong>:
+  KMONE (black + navy + gold) ·
+  GovAlchemy (teal + gold) ·
+  HealthStartz (plum + violet + magenta) ·
+  The Launch Maven (crimson + black)
+</p>
+
+<!-- ====================================================== -->
+<!-- PALETTE 1: ARCTIC INTELLIGENCE -->
+<!-- ====================================================== -->
+<div class="palette">
+  <div class="palette-header">
+    <div>
+      <div class="palette-num">Option 01</div>
+      <div class="palette-name">Arctic Intelligence</div>
+      <div class="palette-rationale">
+        Ice-blue + deep forest green + pure white. Clean, clinical, precise.
+        Feels like a lab that's been beautifully designed. Science-forward without
+        being cold. The green grounds the biological side of epigenetics —
+        nature meeting technology.
+      </div>
+    </div>
+    <div class="palette-tag" style="background:#E8F4F0; color:#1A5C4A;">Precise · Clinical · Alive</div>
+  </div>
+
+  <div class="swatch-row">
+    <div class="swatch light-text" style="background:#0B2D2A;">
+      <div class="swatch-name">Forest</div>
+      <div class="swatch-hex">#0B2D2A</div>
+    </div>
+    <div class="swatch light-text" style="background:#1A5C4A;">
+      <div class="swatch-name">Deep Moss</div>
+      <div class="swatch-hex">#1A5C4A</div>
+    </div>
+    <div class="swatch light-text" style="background:#A8E6D4;">
+      <div class="swatch-name">Glacial</div>
+      <div class="swatch-hex">#A8E6D4</div>
+    </div>
+    <div class="swatch light-text" style="background:#D4F5F0;">
+      <div class="swatch-name">Ice</div>
+      <div class="swatch-hex">#D4F5F0</div>
+    </div>
+    <div class="swatch dark-text" style="background:#E8FBF4;">
+      <div class="swatch-name">Mist</div>
+      <div class="swatch-hex">#E8FBF4</div>
+    </div>
+    <div class="swatch dark-text" style="background:#F7FFFC;">
+      <div class="swatch-name">Clarity</div>
+      <div class="swatch-hex">#F7FFFC</div>
+    </div>
+  </div>
+
+  <!-- LOGO PREVIEW -->
+  <div class="logo-preview-row">
+    <!-- Dark bg -->
+    <div class="logo-tile" style="background:#0B2D2A;">
+      <div class="logo-mark">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#A8E6D4" stroke-width="1" stroke-dasharray="4 2" opacity="0.4"/>
+          <circle cx="24" cy="24" r="16" stroke="#A8E6D4" stroke-width="1.5" opacity="0.8"/>
+          <circle cx="24" cy="24" r="4" fill="#D4F5F0"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#A8E6D4" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#A8E6D4" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#A8E6D4" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#A8E6D4" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="12.7" y1="12.7" x2="17.8" y2="17.8" stroke="#D4F5F0" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+          <line x1="30.2" y1="30.2" x2="35.3" y2="35.3" stroke="#D4F5F0" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+        </svg>
+        <div class="logo-wordmark-wrap">
+          <div class="logo-line1">
+            <span style="color:#F7FFFC;">Epi</span><span style="color:#A8E6D4;">Gen</span><span style="color:#D4F5F0; font-style:italic;">IQ</span>
+          </div>
+          <div class="logo-line2" style="color:rgba(168,230,212,0.5);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="logo-tile-label" style="color:rgba(255,255,255,0.3);">Primary · Dark</div>
+    </div>
+    <!-- Light bg -->
+    <div class="logo-tile" style="background:#F7FFFC;">
+      <div class="logo-mark">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#1A5C4A" stroke-width="1" stroke-dasharray="4 2" opacity="0.3"/>
+          <circle cx="24" cy="24" r="16" stroke="#1A5C4A" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="24" cy="24" r="4" fill="#1A5C4A"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#1A5C4A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#1A5C4A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#1A5C4A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#1A5C4A" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="logo-wordmark-wrap">
+          <div class="logo-line1">
+            <span style="color:#0B2D2A;">Epi</span><span style="color:#1A5C4A;">Gen</span><span style="color:#1A5C4A; font-style:italic;">IQ</span>
+          </div>
+          <div class="logo-line2" style="color:rgba(26,92,74,0.4);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="logo-tile-label" style="color:#aaa;">Reverse · Light</div>
+    </div>
+    <!-- Accent bg -->
+    <div class="logo-tile" style="background:#A8E6D4;">
+      <div class="logo-mark">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#0B2D2A" stroke-width="1" stroke-dasharray="4 2" opacity="0.25"/>
+          <circle cx="24" cy="24" r="16" stroke="#0B2D2A" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="24" cy="24" r="4" fill="#0B2D2A"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#0B2D2A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#0B2D2A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#0B2D2A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#0B2D2A" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="logo-wordmark-wrap">
+          <div class="logo-line1" style="color:#0B2D2A;">EpiGenIQ</div>
+          <div class="logo-line2" style="color:rgba(11,45,42,0.5);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="logo-tile-label" style="color:rgba(11,45,42,0.4);">Accent · Glacial</div>
+    </div>
+  </div>
+
+  <div class="application">
+    <span class="app-label">Applied →</span>
+    <span class="app-chip" style="background:#0B2D2A; color:#A8E6D4;">Primary Button</span>
+    <span class="app-chip" style="background:#A8E6D4; color:#0B2D2A;">Secondary CTA</span>
+    <span class="app-chip" style="background:#1A5C4A; color:white;">LinkedIn Header</span>
+    <span class="app-chip" style="background:#E8FBF4; color:#1A5C4A; border:1px solid #A8E6D4;">Tag / Badge</span>
+    <span class="app-chip" style="background:#0B2D2A; color:#D4F5F0; font-style:italic;">Score Indicator</span>
+  </div>
+
+  <div class="no-conflict">
+    <span class="no-conflict-label">No conflict with →</span>
+    <span class="conflict-badge"><span class="dot" style="background:#1c2951;"></span>KMONE (navy+gold)</span>
+    <span class="conflict-badge"><span class="dot" style="background:#2ABFBF;"></span>GovAlchemy (teal+gold)</span>
+    <span class="conflict-badge"><span class="dot" style="background:#3A1A4A;"></span>HealthStartz (plum)</span>
+    <span class="conflict-badge"><span class="dot" style="background:#8B0000;"></span>Launch Maven (crimson)</span>
+  </div>
+</div>
+
+
+<!-- ====================================================== -->
+<!-- PALETTE 2: SOLAR BIOLOGY -->
+<!-- ====================================================== -->
+<div class="palette">
+  <div class="palette-header">
+    <div>
+      <div class="palette-num">Option 02</div>
+      <div class="palette-name">Solar Biology</div>
+      <div class="palette-rationale">
+        Deep burnt sienna + warm sand + luminous amber-white. Earthy,
+        warm, alive. Evokes carotenoids directly — the pigments in
+        fruits and vegetables that the device measures. Feels premium
+        and biological simultaneously. Nothing like the rest of your portfolio.
+      </div>
+    </div>
+    <div class="palette-tag" style="background:#FEF3E8; color:#7A3010;">Warm · Biological · Premium</div>
+  </div>
+
+  <div class="swatch-row">
+    <div class="swatch light-text" style="background:#2C0F05;">
+      <div class="swatch-name">Dark Earth</div>
+      <div class="swatch-hex">#2C0F05</div>
+    </div>
+    <div class="swatch light-text" style="background:#7A3010;">
+      <div class="swatch-name">Sienna</div>
+      <div class="swatch-hex">#7A3010</div>
+    </div>
+    <div class="swatch light-text" style="background:#D4621A;">
+      <div class="swatch-name">Solar</div>
+      <div class="swatch-hex">#D4621A</div>
+    </div>
+    <div class="swatch dark-text" style="background:#F2B07A;">
+      <div class="swatch-name">Carotene</div>
+      <div class="swatch-hex">#F2B07A</div>
+    </div>
+    <div class="swatch dark-text" style="background:#FAE0C8;">
+      <div class="swatch-name">Sand</div>
+      <div class="swatch-hex">#FAE0C8</div>
+    </div>
+    <div class="swatch dark-text" style="background:#FEF9F5;">
+      <div class="swatch-name">Ivory</div>
+      <div class="swatch-hex">#FEF9F5</div>
+    </div>
+  </div>
+
+  <!-- LOGO PREVIEW -->
+  <div class="logo-preview-row">
+    <div class="logo-tile" style="background:#2C0F05;">
+      <div class="logo-mark">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#F2B07A" stroke-width="1" stroke-dasharray="4 2" opacity="0.4"/>
+          <circle cx="24" cy="24" r="16" stroke="#F2B07A" stroke-width="1.5" opacity="0.8"/>
+          <circle cx="24" cy="24" r="4" fill="#FAE0C8"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#F2B07A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#F2B07A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#F2B07A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#F2B07A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="12.7" y1="12.7" x2="17.8" y2="17.8" stroke="#FAE0C8" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+          <line x1="30.2" y1="30.2" x2="35.3" y2="35.3" stroke="#FAE0C8" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+        </svg>
+        <div class="logo-wordmark-wrap">
+          <div class="logo-line1">
+            <span style="color:#FEF9F5;">Epi</span><span style="color:#F2B07A;">Gen</span><span style="color:#FAE0C8; font-style:italic;">IQ</span>
+          </div>
+          <div class="logo-line2" style="color:rgba(242,176,122,0.5);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="logo-tile-label" style="color:rgba(255,255,255,0.3);">Primary · Dark</div>
+    </div>
+    <div class="logo-tile" style="background:#FEF9F5;">
+      <div class="logo-mark">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#7A3010" stroke-width="1" stroke-dasharray="4 2" opacity="0.2"/>
+          <circle cx="24" cy="24" r="16" stroke="#7A3010" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="24" cy="24" r="4" fill="#D4621A"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#7A3010" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#7A3010" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#7A3010" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#7A3010" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="logo-wordmark-wrap">
+          <div class="logo-line1">
+            <span style="color:#2C0F05;">Epi</span><span style="color:#7A3010;">Gen</span><span style="color:#D4621A; font-style:italic;">IQ</span>
+          </div>
+          <div class="logo-line2" style="color:rgba(122,48,16,0.4);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="logo-tile-label" style="color:#bbb;">Reverse · Light</div>
+    </div>
+    <div class="logo-tile" style="background:#D4621A;">
+      <div class="logo-mark">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#FEF9F5" stroke-width="1" stroke-dasharray="4 2" opacity="0.3"/>
+          <circle cx="24" cy="24" r="16" stroke="#FEF9F5" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="24" cy="24" r="4" fill="#FEF9F5"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#FEF9F5" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#FEF9F5" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#FEF9F5" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#FEF9F5" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="logo-wordmark-wrap">
+          <div class="logo-line1" style="color:#FEF9F5;">EpiGenIQ</div>
+          <div class="logo-line2" style="color:rgba(254,249,245,0.6);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="logo-tile-label" style="color:rgba(254,249,245,0.5);">Accent · Solar</div>
+    </div>
+  </div>
+
+  <div class="application">
+    <span class="app-label">Applied →</span>
+    <span class="app-chip" style="background:#2C0F05; color:#F2B07A;">Primary Button</span>
+    <span class="app-chip" style="background:#D4621A; color:white;">Secondary CTA</span>
+    <span class="app-chip" style="background:#7A3010; color:#FAE0C8;">LinkedIn Header</span>
+    <span class="app-chip" style="background:#FEF3E8; color:#7A3010; border:1px solid #F2B07A;">Tag / Badge</span>
+    <span class="app-chip" style="background:#F2B07A; color:#2C0F05; font-weight:500;">Score Indicator</span>
+  </div>
+
+  <div class="no-conflict">
+    <span class="no-conflict-label">No conflict with →</span>
+    <span class="conflict-badge"><span class="dot" style="background:#1c2951;"></span>KMONE (navy+gold)</span>
+    <span class="conflict-badge"><span class="dot" style="background:#2ABFBF;"></span>GovAlchemy (teal+gold)</span>
+    <span class="conflict-badge"><span class="dot" style="background:#3A1A4A;"></span>HealthStartz (plum)</span>
+    <span class="conflict-badge"><span class="dot" style="background:#8B0000;"></span>Launch Maven (crimson)</span>
+  </div>
+</div>
+
+
+<!-- ====================================================== -->
+<!-- PALETTE 3: DEEP FIELD -->
+<!-- ====================================================== -->
+<div class="palette">
+  <div class="palette-header">
+    <div>
+      <div class="palette-num">Option 03</div>
+      <div class="palette-name">Deep Field</div>
+      <div class="palette-rationale">
+        Near-black slate + electric chartreuse + soft bone white. Bold,
+        unexpected, future-forward. The chartreuse reads as biological energy —
+        the "alive" frequency. Feels like a health-tech company that's also a
+        media brand. Highest visual distinctiveness across your entire portfolio.
+        Zero overlap with any existing brand you own.
+      </div>
+    </div>
+    <div class="palette-tag" style="background:#F0FAE0; color:#3A5C00;">Bold · Future · Distinct</div>
+  </div>
+
+  <div class="swatch-row">
+    <div class="swatch light-text" style="background:#0E1214;">
+      <div class="swatch-name">Obsidian</div>
+      <div class="swatch-hex">#0E1214</div>
+    </div>
+    <div class="swatch light-text" style="background:#1C2B1A;">
+      <div class="swatch-name">Deep Field</div>
+      <div class="swatch-hex">#1C2B1A</div>
+    </div>
+    <div class="swatch dark-text" style="background:#B8F000;">
+      <div class="swatch-name">Charge</div>
+      <div class="swatch-hex">#B8F000</div>
+    </div>
+    <div class="swatch dark-text" style="background:#D6F566;">
+      <div class="swatch-name">Pulse</div>
+      <div class="swatch-hex">#D6F566</div>
+    </div>
+    <div class="swatch dark-text" style="background:#EDF5D0;">
+      <div class="swatch-name">Field</div>
+      <div class="swatch-hex">#EDF5D0</div>
+    </div>
+    <div class="swatch dark-text" style="background:#F8FAF2;">
+      <div class="swatch-name">Bone</div>
+      <div class="swatch-hex">#F8FAF2</div>
+    </div>
+  </div>
+
+  <!-- LOGO PREVIEW -->
+  <div class="logo-preview-row">
+    <div class="logo-tile" style="background:#0E1214;">
+      <div class="logo-mark">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity="0.35"/>
+          <circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity="0.7"/>
+          <circle cx="24" cy="24" r="4" fill="#D6F566"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="12.7" y1="12.7" x2="17.8" y2="17.8" stroke="#D6F566" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+          <line x1="30.2" y1="30.2" x2="35.3" y2="35.3" stroke="#D6F566" stroke-width="1" opacity="0.5" stroke-linecap="round"/>
+        </svg>
+        <div class="logo-wordmark-wrap">
+          <div class="logo-line1">
+            <span style="color:#F8FAF2;">Epi</span><span style="color:#B8F000;">Gen</span><span style="color:#D6F566; font-style:italic;">IQ</span>
+          </div>
+          <div class="logo-line2" style="color:rgba(184,240,0,0.4);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="logo-tile-label" style="color:rgba(255,255,255,0.25);">Primary · Dark</div>
+    </div>
+    <div class="logo-tile" style="background:#F8FAF2;">
+      <div class="logo-mark">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#1C2B1A" stroke-width="1" stroke-dasharray="4 2" opacity="0.2"/>
+          <circle cx="24" cy="24" r="16" stroke="#1C2B1A" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="24" cy="24" r="4" fill="#1C2B1A"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="logo-wordmark-wrap">
+          <div class="logo-line1">
+            <span style="color:#0E1214;">Epi</span><span style="color:#3A5C00;">Gen</span><span style="color:#1C2B1A; font-style:italic;">IQ</span>
+          </div>
+          <div class="logo-line2" style="color:rgba(28,43,26,0.35);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="logo-tile-label" style="color:#bbb;">Reverse · Light</div>
+    </div>
+    <div class="logo-tile" style="background:#B8F000;">
+      <div class="logo-mark">
+        <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#0E1214" stroke-width="1" stroke-dasharray="4 2" opacity="0.2"/>
+          <circle cx="24" cy="24" r="16" stroke="#0E1214" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="24" cy="24" r="4" fill="#0E1214"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#0E1214" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#0E1214" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#0E1214" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#0E1214" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="logo-wordmark-wrap">
+          <div class="logo-line1" style="color:#0E1214;">EpiGenIQ</div>
+          <div class="logo-line2" style="color:rgba(14,18,20,0.45);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="logo-tile-label" style="color:rgba(14,18,20,0.35);">Accent · Charge</div>
+    </div>
+  </div>
+
+  <div class="application">
+    <span class="app-label">Applied →</span>
+    <span class="app-chip" style="background:#0E1214; color:#B8F000;">Primary Button</span>
+    <span class="app-chip" style="background:#B8F000; color:#0E1214; font-weight:600;">Secondary CTA</span>
+    <span class="app-chip" style="background:#1C2B1A; color:#D6F566;">LinkedIn Header</span>
+    <span class="app-chip" style="background:#EDF5D0; color:#1C2B1A; border:1px solid #B8F000;">Tag / Badge</span>
+    <span class="app-chip" style="background:#B8F000; color:#0E1214; font-weight:700;">Score Indicator</span>
+  </div>
+
+  <div class="no-conflict">
+    <span class="no-conflict-label">No conflict with →</span>
+    <span class="conflict-badge"><span class="dot" style="background:#1c2951;"></span>KMONE (navy+gold)</span>
+    <span class="conflict-badge"><span class="dot" style="background:#2ABFBF;"></span>GovAlchemy (teal+gold)</span>
+    <span class="conflict-badge"><span class="dot" style="background:#3A1A4A;"></span>HealthStartz (plum)</span>
+    <span class="conflict-badge"><span class="dot" style="background:#8B0000;"></span>Launch Maven (crimson)</span>
+  </div>
+</div>
+
+<!-- FOOTER NOTE -->
+<p style="text-align:center; font-size:12px; color:#aaa; margin-top:40px; font-family:'DM Sans',sans-serif; letter-spacing:0.5px;">
+  EpiGenIQ™ · A HealthStartz SubCo · Kelly O'Neill · 2026<br>
+  All three palettes use the same logo mark and typography system. Only the color tokens change.
+</p>
+
+</body>
+</html>

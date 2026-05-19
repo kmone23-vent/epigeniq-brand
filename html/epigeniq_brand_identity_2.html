@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EpiGenIQ — Brand Identity System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #070810;
+  --deep: #0d0f1e;
+  --surface: #13162a;
+  --border: rgba(255,255,255,0.07);
+  --cyan: #00e5cc;
+  --cyan-dim: rgba(0,229,204,0.15);
+  --gold: #e8b84b;
+  --gold-dim: rgba(232,184,75,0.12);
+  --white: #f0f2ff;
+  --muted: rgba(240,242,255,0.45);
+  --bio-green: #3ddc97;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--void);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* GRID OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,229,204,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,204,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wrapper { max-width: 1100px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+/* NAV */
+nav {
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative; z-index: 1;
+}
+.nav-brand { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan); }
+.nav-sub { font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+
+/* HERO */
+.hero {
+  padding: 100px 0 80px;
+  text-align: center;
+  position: relative;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse, rgba(0,229,204,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 32px;
+  opacity: 0; animation: up 0.8s 0.2s ease forwards;
+}
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(52px, 8vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -2px;
+  margin-bottom: 24px;
+  opacity: 0; animation: up 0.8s 0.4s ease forwards;
+}
+.hero h1 .epi { color: var(--white); }
+.hero h1 .gen { color: var(--cyan); font-style: italic; }
+.hero h1 .iq { color: var(--gold); }
+.hero-tagline {
+  font-size: 16px; color: var(--muted); max-width: 520px; margin: 0 auto 48px;
+  opacity: 0; animation: up 0.8s 0.6s ease forwards;
+  line-height: 1.7;
+}
+
+/* LOGO SHOWCASE */
+.logo-section { padding: 80px 0; border-top: 1px solid var(--border); }
+.section-label {
+  font-family: 'Syne', sans-serif; font-size: 11px;
+  letter-spacing: 4px; text-transform: uppercase;
+  color: var(--cyan); margin-bottom: 48px;
+  display: flex; align-items: center; gap: 16px;
+}
+.section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.logo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px; margin-bottom: 48px; }
+
+.logo-tile {
+  padding: 48px 32px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 16px; min-height: 200px;
+}
+.logo-tile.dark { background: var(--deep); }
+.logo-tile.light { background: #f0f2ff; }
+.logo-tile.cyan-bg { background: var(--cyan); }
+.logo-tile-label {
+  font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--muted); font-family: 'Syne', sans-serif;
+}
+.logo-tile.light .logo-tile-label { color: rgba(7,8,16,0.4); }
+.logo-tile.cyan-bg .logo-tile-label { color: rgba(7,8,16,0.5); }
+
+/* THE ACTUAL LOGO SVG MARK */
+.logo-mark-wrap { display: flex; align-items: center; gap: 14px; }
+.logo-icon {
+  width: 48px; height: 48px; flex-shrink: 0;
+}
+.logo-wordmark {
+  display: flex; flex-direction: column; gap: 1px;
+  line-height: 1;
+}
+.logo-wordmark .line1 {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 22px; letter-spacing: 1px;
+  display: flex; gap: 0;
+}
+.logo-wordmark .line2 {
+  font-family: 'DM Sans', sans-serif; font-weight: 300;
+  font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+}
+
+/* Logo on dark */
+.dark .epi-w { color: #f0f2ff; }
+.dark .gen-w { color: #00e5cc; }
+.dark .iq-w { color: #e8b84b; }
+.dark .line2 { color: rgba(240,242,255,0.4); }
+
+/* Logo on light */
+.light .epi-w { color: #070810; }
+.light .gen-w { color: #00a896; }
+.light .iq-w { color: #c4922a; }
+.light .line2 { color: rgba(7,8,16,0.4); }
+
+/* Logo on cyan */
+.cyan-bg .epi-w { color: #070810; }
+.cyan-bg .gen-w { color: #070810; font-style: italic; }
+.cyan-bg .iq-w { color: #070810; }
+.cyan-bg .line2 { color: rgba(7,8,16,0.5); }
+
+/* ICON MARK variations */
+.icon-only-row {
+  display: flex; gap: 24px; align-items: center;
+  padding: 40px 0; border-top: 1px solid var(--border);
+}
+.icon-badge {
+  width: 64px; height: 64px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+}
+.icon-badge.v1 { background: var(--deep); border: 1px solid var(--border); }
+.icon-badge.v2 { background: var(--cyan); }
+.icon-badge.v3 { background: var(--gold); }
+.icon-badge.v4 { background: var(--void); border: 1px solid var(--cyan); }
+
+/* COLOR SYSTEM */
+.color-section { padding: 80px 0; border-top: 1px solid var(--border); }
+.color-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; margin-bottom: 32px; }
+.color-swatch {
+  border-radius: 4px; overflow: hidden;
+}
+.swatch-block { height: 80px; }
+.swatch-info { padding: 12px; background: var(--surface); }
+.swatch-name { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+.swatch-hex { font-size: 10px; color: var(--muted); letter-spacing: 1px; font-family: 'DM Sans', sans-serif; }
+
+/* TYPOGRAPHY */
+.type-section { padding: 80px 0; border-top: 1px solid var(--border); }
+.type-specimen { margin-bottom: 48px; padding: 40px; background: var(--deep); border: 1px solid var(--border); border-radius: 4px; }
+.type-label { font-family: 'Syne', sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--cyan); margin-bottom: 16px; }
+.type-h1 { font-family: 'DM Serif Display', serif; font-size: 56px; line-height: 1; letter-spacing: -1px; color: var(--white); margin-bottom: 8px; }
+.type-h2 { font-family: 'DM Serif Display', serif; font-style: italic; font-size: 36px; color: var(--cyan); margin-bottom: 8px; }
+.type-h3 { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.type-body { font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 560px; }
+
+/* USAGE */
+.usage-section { padding: 80px 0; border-top: 1px solid var(--border); }
+.usage-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.usage-card {
+  padding: 32px; border: 1px solid var(--border);
+  border-radius: 4px; background: var(--deep);
+}
+.usage-card.do { border-left: 3px solid var(--bio-green); }
+.usage-card.dont { border-left: 3px solid #ff4757; }
+.usage-title {
+  font-family: 'Syne', sans-serif; font-size: 11px;
+  letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.usage-card.do .usage-title { color: var(--bio-green); }
+.usage-card.dont .usage-title { color: #ff4757; }
+.usage-list { list-style: none; }
+.usage-list li { font-size: 13px; color: var(--muted); padding: 6px 0; border-bottom: 1px solid var(--border); line-height: 1.5; }
+.usage-list li:last-child { border-bottom: none; }
+.usage-list li::before { content: '→ '; color: var(--cyan); }
+.usage-card.dont .usage-list li::before { content: '✕ '; color: #ff4757; }
+
+/* VOICE */
+.voice-section { padding: 80px 0; border-top: 1px solid var(--border); }
+.voice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.voice-card {
+  padding: 28px 24px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 4px;
+  border-top: 2px solid var(--cyan);
+}
+.voice-word { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--white); margin-bottom: 8px; }
+.voice-not { font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+.voice-not span { color: #ff4757; }
+.voice-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* FOOTER */
+.brand-footer {
+  padding: 48px 0; border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-brand { font-family: 'Syne', sans-serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); }
+.footer-parent { font-size: 11px; color: rgba(240,242,255,0.2); letter-spacing: 2px; text-transform: uppercase; }
+
+@keyframes up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .logo-grid { grid-template-columns: 1fr; }
+  .color-row { grid-template-columns: repeat(3, 1fr); }
+  .usage-grid { grid-template-columns: 1fr; }
+  .voice-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 52px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+  <nav>
+    <div class="nav-brand">EpiGenIQ™</div>
+    <div class="nav-sub">Brand Identity System · v1.0 · 2026</div>
+  </nav>
+</div>
+
+<!-- HERO -->
+<div class="wrapper">
+<div class="hero">
+  <div class="hero-eyebrow">A HealthStartz SubCo · Brand Identity System</div>
+  <h1>
+    <span class="epi">Epi</span><span class="gen">Gen</span><span class="iq">IQ</span>
+  </h1>
+  <p class="hero-tagline">
+    AI converging nutraceutical science, epigenetic research, and carotenoid technology into a single health intelligence score.
+  </p>
+</div>
+</div>
+
+<!-- LOGO SYSTEM -->
+<div class="wrapper">
+<div class="logo-section">
+  <div class="section-label">01 — Logo System <span></span></div>
+
+  <div class="logo-grid">
+
+    <!-- DARK VERSION -->
+    <div class="logo-tile dark">
+      <div class="logo-mark-wrap">
+        <!-- SVG Icon Mark -->
+        <svg class="logo-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer ring - epigenetic helix suggestion -->
+          <circle cx="24" cy="24" r="22" stroke="#00e5cc" stroke-width="1" stroke-dasharray="4 2" opacity="0.4"/>
+          <!-- Inner filled ring -->
+          <circle cx="24" cy="24" r="16" stroke="#00e5cc" stroke-width="1.5" opacity="0.7"/>
+          <!-- Center dot - the score -->
+          <circle cx="24" cy="24" r="4" fill="#e8b84b"/>
+          <!-- Scan lines - spectral measurement -->
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#00e5cc" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#00e5cc" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#00e5cc" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#00e5cc" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Diagonal scan accents -->
+          <line x1="12.7" y1="12.7" x2="17.8" y2="17.8" stroke="#e8b84b" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+          <line x1="30.2" y1="30.2" x2="35.3" y2="35.3" stroke="#e8b84b" stroke-width="1" stroke-linecap="round" opacity="0.6"/>
+        </svg>
+        <div class="logo-wordmark dark">
+          <div class="line1">
+            <span class="epi-w">Epi</span><span class="gen-w">Gen</span><span class="iq-w">IQ</span>
+          </div>
+          <div class="line2">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="logo-tile-label">Primary · Dark</div>
+    </div>
+
+    <!-- LIGHT VERSION -->
+    <div class="logo-tile light">
+      <div class="logo-mark-wrap">
+        <svg class="logo-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="24" r="22" stroke="#00a896" stroke-width="1" stroke-dasharray="4 2" opacity="0.3"/>
+          <circle cx="24" cy="24" r="16" stroke="#00a896" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="24" cy="24" r="4" fill="#c4922a"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#00a896" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#00a896" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#00a896" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#00a896" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="12.7" y1="12.7" x2="17.8" y2="17.8" stroke="#c4922a" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+          <line x1="30.2" y1="30.2" x2="35.3" y2="35.3" stroke="#c4922a" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+        <div class="logo-wordmark light">
+          <div class="line1">
+            <span class="epi-w">Epi</span><span class="gen-w">Gen</span><span class="iq-w">IQ</span>
+          </div>
+          <div class="line2">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="logo-tile-label">Reverse · Light</div>
+    </div>
+
+    <!-- CYAN BG VERSION -->
+    <div class="logo-tile cyan-bg">
+      <div class="logo-mark-wrap">
+        <svg class="logo-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="24" r="22" stroke="#070810" stroke-width="1" stroke-dasharray="4 2" opacity="0.25"/>
+          <circle cx="24" cy="24" r="16" stroke="#070810" stroke-width="1.5" opacity="0.5"/>
+          <circle cx="24" cy="24" r="4" fill="#070810"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#070810" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#070810" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#070810" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#070810" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="logo-wordmark cyan-bg">
+          <div class="line1">
+            <span class="epi-w">Epi</span><span class="gen-w">Gen</span><span class="iq-w">IQ</span>
+          </div>
+          <div class="line2">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="logo-tile-label">Accent · Cyan</div>
+    </div>
+  </div>
+
+  <!-- ICON ONLY -->
+  <div class="icon-only-row">
+    <div class="icon-badge v1">
+      <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="22" stroke="#00e5cc" stroke-width="1" stroke-dasharray="4 2" opacity="0.4"/>
+        <circle cx="24" cy="24" r="16" stroke="#00e5cc" stroke-width="1.5" opacity="0.7"/>
+        <circle cx="24" cy="24" r="4" fill="#e8b84b"/>
+        <line x1="8" y1="24" x2="16" y2="24" stroke="#00e5cc" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="32" y1="24" x2="40" y2="24" stroke="#00e5cc" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="24" y1="8" x2="24" y2="16" stroke="#00e5cc" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="24" y1="32" x2="24" y2="40" stroke="#00e5cc" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="icon-badge v2">
+      <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="16" stroke="#070810" stroke-width="1.5"/>
+        <circle cx="24" cy="24" r="4" fill="#070810"/>
+        <line x1="8" y1="24" x2="16" y2="24" stroke="#070810" stroke-width="2" stroke-linecap="round"/>
+        <line x1="32" y1="24" x2="40" y2="24" stroke="#070810" stroke-width="2" stroke-linecap="round"/>
+        <line x1="24" y1="8" x2="24" y2="16" stroke="#070810" stroke-width="2" stroke-linecap="round"/>
+        <line x1="24" y1="32" x2="24" y2="40" stroke="#070810" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="icon-badge v3">
+      <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="16" stroke="#070810" stroke-width="1.5"/>
+        <circle cx="24" cy="24" r="4" fill="#070810"/>
+        <line x1="8" y1="24" x2="16" y2="24" stroke="#070810" stroke-width="2" stroke-linecap="round"/>
+        <line x1="32" y1="24" x2="40" y2="24" stroke="#070810" stroke-width="2" stroke-linecap="round"/>
+        <line x1="24" y1="8" x2="24" y2="16" stroke="#070810" stroke-width="2" stroke-linecap="round"/>
+        <line x1="24" y1="32" x2="24" y2="40" stroke="#070810" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="icon-badge v4">
+      <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="22" stroke="#00e5cc" stroke-width="1" stroke-dasharray="4 2" opacity="0.5"/>
+        <circle cx="24" cy="24" r="16" stroke="#00e5cc" stroke-width="1.5"/>
+        <circle cx="24" cy="24" r="4" fill="#e8b84b"/>
+        <line x1="8" y1="24" x2="16" y2="24" stroke="#00e5cc" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="32" y1="24" x2="40" y2="24" stroke="#00e5cc" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="24" y1="8" x2="24" y2="16" stroke="#00e5cc" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="24" y1="32" x2="24" y2="40" stroke="#00e5cc" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div style="font-size:12px; color: var(--muted); font-family: 'Syne', sans-serif; letter-spacing: 2px; text-transform: uppercase;">Icon mark · Four colorway variants</div>
+  </div>
+</div>
+</div>
+
+<!-- COLOR SYSTEM -->
+<div class="wrapper">
+<div class="color-section">
+  <div class="section-label">02 — Color System <span></span></div>
+  <div class="color-row">
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#070810;"></div>
+      <div class="swatch-info"><div class="swatch-name">Void</div><div class="swatch-hex">#070810</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#0d0f1e;"></div>
+      <div class="swatch-info"><div class="swatch-name">Deep</div><div class="swatch-hex">#0D0F1E</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#00e5cc;"></div>
+      <div class="swatch-info"><div class="swatch-name">Spectral</div><div class="swatch-hex">#00E5CC</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#e8b84b;"></div>
+      <div class="swatch-info"><div class="swatch-name">Intelligence</div><div class="swatch-hex">#E8B84B</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#3ddc97;"></div>
+      <div class="swatch-info"><div class="swatch-name">Bio</div><div class="swatch-hex">#3DDC97</div></div>
+    </div>
+    <div class="color-swatch">
+      <div class="swatch-block" style="background:#f0f2ff;"></div>
+      <div class="swatch-info"><div class="swatch-name">Clarity</div><div class="swatch-hex">#F0F2FF</div></div>
+    </div>
+  </div>
+  <p style="font-size:13px; color: var(--muted); max-width: 600px; line-height: 1.7;">
+    <strong style="color:var(--cyan);">Spectral (#00E5CC)</strong> = the hyperspectral light technology. Primary accent. Use for CTAs, highlights, interactive states.<br>
+    <strong style="color:var(--gold);">Intelligence (#E8B84B)</strong> = the IQ score. The output. Use for data, scores, key metrics.<br>
+    <strong style="color:var(--bio-green);">Bio (#3DDC97)</strong> = biological health. Use for positive outcomes, improvement indicators.
+  </p>
+</div>
+</div>
+
+<!-- TYPOGRAPHY -->
+<div class="wrapper">
+<div class="type-section">
+  <div class="section-label">03 — Typography <span></span></div>
+  <div class="type-specimen">
+    <div class="type-label">Display · DM Serif Display</div>
+    <div class="type-h1">Wellbeing Score<br>for the Human Body.</div>
+  </div>
+  <div class="type-specimen">
+    <div class="type-label">Display Italic · DM Serif Display Italic</div>
+    <div class="type-h2">Where biology meets intelligence.</div>
+  </div>
+  <div class="type-specimen">
+    <div class="type-label">Eyebrow / Label · Syne 700</div>
+    <div class="type-h3">Nobel Prize-Winning Science · AI-Powered · 30M+ Scans</div>
+  </div>
+  <div class="type-specimen">
+    <div class="type-label">Body · DM Sans 300</div>
+    <div class="type-body">Carotenoids are the measurable bridge between what you eat, what you absorb, and how your cells age. For the first time, AI can read that bridge through your skin — in under 60 seconds — and tell you exactly what to do next.</div>
+  </div>
+</div>
+</div>
+
+<!-- VOICE -->
+<div class="wrapper">
+<div class="voice-section">
+  <div class="section-label">04 — Brand Voice <span></span></div>
+  <div class="voice-grid">
+    <div class="voice-card">
+      <div class="voice-word">Precise</div>
+      <div class="voice-not">Not <span>vague</span></div>
+      <div class="voice-desc">Every claim is sourced. Nobel science. NIH funding. 30M scans. Numbers over adjectives. Data over inspiration.</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-word">Provocative</div>
+      <div class="voice-not">Not <span>preachy</span></div>
+      <div class="voice-desc">Ask the uncomfortable question. "What if your supplements aren't absorbing?" Reframe before you educate.</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-word">Intelligent</div>
+      <div class="voice-not">Not <span>academic</span></div>
+      <div class="voice-desc">Translate the science into plain language without dumbing it down. Treat the audience like they're smart and curious.</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-word">Confident</div>
+      <div class="voice-not">Not <span>arrogant</span></div>
+      <div class="voice-desc">State the thesis clearly. Don't hedge with "maybe" or "might." The science is real. Own it.</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-word">Warm</div>
+      <div class="voice-not">Not <span>clinical</span></div>
+      <div class="voice-desc">This is about human longevity. Real people. Real biology. The warmth is in the mission, not the marketing.</div>
+    </div>
+    <div class="voice-card">
+      <div class="voice-word">Early</div>
+      <div class="voice-not">Not <span>trendy</span></div>
+      <div class="voice-desc">EpiGenIQ was paying attention before this was mainstream. That credibility compounds. Never chase the moment.</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- USAGE -->
+<div class="wrapper">
+<div class="usage-section">
+  <div class="section-label">05 — Usage Guidelines <span></span></div>
+  <div class="usage-grid">
+    <div class="usage-card do">
+      <div class="usage-title">✓ Do</div>
+      <ul class="usage-list">
+        <li>Always capitalize as EpiGenIQ (never Epigeniq or EPIGENIQ)</li>
+        <li>Use the ™ symbol on first mention in every document</li>
+        <li>Lead with education before invitation</li>
+        <li>Always attribute science claims to their source</li>
+        <li>Pair the icon mark with the wordmark on first use</li>
+        <li>Use Spectral cyan as the primary CTA color</li>
+        <li>Include HealthStartz parent attribution in footer</li>
+        <li>Use "active scanning device" not "wearable"</li>
+        <li>Include Nu Skin compliance disclaimer on commercial content</li>
+      </ul>
+    </div>
+    <div class="usage-card dont">
+      <div class="usage-title">✕ Don't</div>
+      <ul class="usage-list">
+        <li>Never use the logo on a busy photographic background</li>
+        <li>Never stretch or distort the icon mark proportions</li>
+        <li>Never call Prysm iO a "wearable" or "medical device"</li>
+        <li>Never make income claims in public-facing content</li>
+        <li>Never use Nu Skin name/logo without company approval</li>
+        <li>Never use purple gradients (generic AI aesthetic)</li>
+        <li>Never write in all caps for body text</li>
+        <li>Never promise specific health outcomes</li>
+        <li>Never use the brand for TikTok opportunity promotion</li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+
+<div class="wrapper">
+  <div class="brand-footer">
+    <div class="footer-brand">EpiGenIQ™ Brand Identity System · v1.0 · 2026</div>
+    <div class="footer-parent">A HealthStartz SubCo · Kelly O'Neill</div>
+  </div>
+</div>
+
+</body>
+</html>

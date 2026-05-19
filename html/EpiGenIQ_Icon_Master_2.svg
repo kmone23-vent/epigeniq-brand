@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- EpiGenIQ™ Master Icon Mark — No Background — Use on any surface -->
+<!-- Kelly O'Neill · Founder · kelly@healthstartz.com · EpiGenIQ.tech -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <!-- outer orbit ring -->
+  <circle cx="40.0" cy="40.0" r="21.00" stroke="#B8F000" stroke-width="0.80" stroke-dasharray="4.0 2.0" fill="none" opacity="0.38"/>
+  <!-- inner scan ring -->
+  <circle cx="40.0" cy="40.0" r="15.00" stroke="#B8F000" stroke-width="1.50" fill="none" opacity="0.85"/>
+  <!-- cardinal arms -->
+  <line x1="25.00" y1="40.0" x2="32.00" y2="40.0" stroke="#B8F000" stroke-width="1.50" stroke-linecap="round"/>
+  <line x1="48.00" y1="40.0" x2="55.00" y2="40.0" stroke="#B8F000" stroke-width="1.50" stroke-linecap="round"/>
+  <line x1="40.0" y1="25.00" x2="40.0" y2="32.00" stroke="#B8F000" stroke-width="1.50" stroke-linecap="round"/>
+  <line x1="40.0" y1="48.00" x2="40.0" y2="55.00" stroke="#B8F000" stroke-width="1.50" stroke-linecap="round"/>
+  <!-- diagonal AI accents -->
+  <line x1="29.39" y1="29.39" x2="33.39" y2="33.39" stroke="#A855F7" stroke-width="1.20" stroke-linecap="round" opacity="0.9"/>
+  <line x1="50.61" y1="50.61" x2="46.61" y2="46.61" stroke="#A855F7" stroke-width="1.20" stroke-linecap="round" opacity="0.9"/>
+  <!-- violet nucleus -->
+  <circle cx="40.0" cy="40.0" r="3.60" fill="#A855F7"/>
+</svg>

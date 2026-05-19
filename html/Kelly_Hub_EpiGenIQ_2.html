@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kelly O'Neill — EpiGenIQ™ · Wellbeing Score</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --obs:#0E1214;--field:#1C2B1A;
+  --ch:#B8F000;--vi:#A855F7;--pulse:#D6F566;--fl:#EDF5D0;
+  --bg:#F7F5F0;--bg2:#EFEDE7;--bg3:#E6E3DC;--W:#FFFFFF;
+  --ink:#1A1E1A;--med:#3E4238;--mut:#6E7266;--rule:#D4D1C9;
+  --ch-dk:#4E6800;--vi-dk:#6B21A8;
+  --ch-bg:rgba(184,240,0,.09);--vi-bg:rgba(168,85,247,.07);
+  --ch-bd:rgba(184,240,0,.22);--vi-bd:rgba(168,85,247,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.65;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(28,43,26,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(28,43,26,.018) 1px,transparent 1px);background-size:48px 48px}
+.wrap{max-width:520px;margin:0 auto;padding:48px 24px 96px;position:relative;z-index:1}
+
+/* BRAND BAR */
+.bb{display:flex;align-items:center;gap:9px;margin-bottom:32px;padding:10px 16px;background:var(--W);border-radius:10px;border:1px solid var(--rule);box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.bwm{font-family:'Syne',sans-serif;font-weight:800;font-size:14px}
+.be{color:var(--ink)}.bg{color:var(--ch-dk)}.bi{color:var(--vi);font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:15px}
+.bsub{margin-left:auto;font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mut)}
+
+/* IDENTITY */
+.id-card{text-align:center;margin-bottom:24px;padding:30px 24px 24px;background:var(--W);border-radius:14px;border:1px solid var(--rule);box-shadow:0 2px 12px rgba(0,0,0,.06);position:relative;overflow:hidden}
+.id-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--vi),var(--ch))}
+.av{width:88px;height:88px;border-radius:50%;margin:0 auto 14px;border:3px solid var(--W);outline:2px solid var(--ch-bd);background:var(--bg2);overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+.av-init{font-family:'Syne',sans-serif;font-weight:800;font-size:28px;color:var(--vi)}
+.av-badge{position:absolute;bottom:2px;right:2px;width:22px;height:22px;background:var(--ch);border-radius:50%;border:2px solid var(--W);display:flex;align-items:center;justify-content:center}
+.av-badge svg{width:11px;height:11px}
+.nm{font-family:'DM Serif Display',serif;font-size:24px;color:var(--ink);margin-bottom:3px}
+.rl{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--ch-dk);margin-bottom:10px}
+.tg{font-size:13px;color:var(--mut);line-height:1.6;max-width:320px;margin:0 auto 16px;font-style:italic}
+.chips{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;background:var(--bg2);border:1px solid var(--rule);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--med)}
+.chip.g{background:var(--ch-bg);border-color:var(--ch-bd);color:var(--ch-dk)}
+.chip.v{background:var(--vi-bg);border-color:var(--vi-bd);color:var(--vi-dk)}
+
+/* SCORE (dark island) */
+.score{margin-bottom:22px;padding:20px;background:var(--obs);border-radius:12px;text-align:center;position:relative;overflow:hidden}
+.score::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(184,240,0,.07),transparent 70%)}
+.score::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--vi),var(--ch))}
+.sc-lbl{font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(248,250,242,.3);margin-bottom:8px;position:relative}
+.sc-num{font-family:'Syne',sans-serif;font-weight:800;font-size:58px;line-height:1;color:var(--ch);margin-bottom:4px;position:relative}
+.sc-cap{font-size:11px;color:rgba(248,250,242,.38);position:relative}
+.sc-ph{font-size:11.5px;color:rgba(184,240,0,.42);font-style:italic;padding:6px 0;position:relative}
+
+/* SECTION LABEL */
+.sl{font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--mut);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sl::after{content:'';flex:1;height:1px;background:var(--rule)}
+
+/* BUTTONS */
+.bstack{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+.btn{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:10px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;transition:transform .14s,box-shadow .14s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.11)}
+.btn:active{transform:translateY(0);box-shadow:none}
+.btn-cta{background:var(--ch);color:var(--obs);box-shadow:0 2px 8px rgba(184,240,0,.22)}
+.btn-vi{background:var(--vi);color:#fff;box-shadow:0 2px 8px rgba(168,85,247,.18)}
+.btn-dk{background:var(--obs);color:var(--ch);border:1px solid rgba(184,240,0,.18)}
+.btn-wh{background:var(--W);color:var(--ink);border:1px solid var(--rule);box-shadow:0 1px 4px rgba(0,0,0,.05)}
+.bi2{width:34px;height:34px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.btn-cta .bi2{background:rgba(14,18,20,.14)}
+.btn-vi .bi2{background:rgba(255,255,255,.14)}
+.btn-dk .bi2{background:rgba(184,240,0,.1)}
+.btn-wh .bi2{background:var(--bg2)}
+.bt{flex:1;text-align:left}
+.bt-t{display:block;font-size:11px;font-weight:700;letter-spacing:.5px}
+.bt-s{display:block;font-size:9.5px;font-weight:400;opacity:.6;margin-top:1px;text-transform:none;letter-spacing:.3px;font-family:'DM Sans',sans-serif}
+.barr{margin-left:auto;font-size:16px;opacity:.45}
+
+/* FIELD NOTES */
+.fn{margin-bottom:22px;padding:20px;background:var(--W);border-radius:12px;border:1px solid var(--rule);border-left:3px solid var(--ch);box-shadow:0 1px 5px rgba(0,0,0,.05)}
+.fn-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--ch-bg);border:1px solid var(--ch-bd);border-radius:4px;font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ch-dk);margin-bottom:11px}
+.fn-t{font-family:'DM Serif Display',serif;font-size:18px;color:var(--ink);margin-bottom:5px}
+.fn-d{font-size:12.5px;color:var(--mut);margin-bottom:14px;line-height:1.6}
+.fn-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:12px;background:var(--obs);border-radius:8px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ch);text-decoration:none;transition:opacity .14s}
+.fn-btn:hover{opacity:.88}
+
+/* CARDS */
+.card{background:var(--W);border-radius:12px;border:1px solid var(--rule);box-shadow:0 1px 5px rgba(0,0,0,.05);padding:18px 18px 14px;margin-bottom:10px;position:relative;overflow:hidden}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--ch)}
+.card.v::before{background:var(--vi)}
+.card.p::before{background:var(--pulse)}
+.c-eye{font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ch-dk);margin-bottom:4px}
+.card.v .c-eye{color:var(--vi-dk)}
+.card.p .c-eye{color:#4E6800}
+.c-t{font-family:'DM Serif Display',serif;font-size:16px;line-height:1.35;margin-bottom:4px;color:var(--ink)}
+.c-d{font-size:12.5px;color:var(--mut);line-height:1.6}
+.c-lnk{font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ch-dk);text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-top:10px}
+.card.v .c-lnk{color:var(--vi-dk)}
+
+/* SOCIAL */
+.srow{display:flex;justify-content:center;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.sbtn{width:44px;height:44px;border-radius:10px;background:var(--W);border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--mut);transition:all .14s;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.sbtn:hover{background:var(--ch-bg);border-color:var(--ch-bd);color:var(--ch-dk);transform:translateY(-1px)}
+.sbtn svg{width:18px;height:18px}
+
+/* QUICK CONTACT */
+.qrow{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.qc{flex:1;min-width:140px;padding:11px 14px;background:var(--W);border:1px solid var(--rule);border-radius:8px;text-decoration:none;display:flex;align-items:center;gap:8px;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:box-shadow .14s,transform .14s}
+.qc:hover{box-shadow:0 3px 10px rgba(0,0,0,.08);transform:translateY(-1px)}
+.qc.g{border-left:2px solid var(--ch);background:var(--ch-bg)}
+.qc-lbl{font-family:'Syne',sans-serif;font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--med)}
+.qc.g .qc-lbl{color:var(--ch-dk)}
+
+/* PLACEHOLDER */
+.ph{display:inline-block;background:rgba(168,85,247,.06);border:1px dashed rgba(168,85,247,.22);border-radius:3px;padding:2px 7px;font-size:10px;color:var(--vi-dk);font-style:italic}
+
+/* FOOTER */
+.ftr{text-align:center;padding-top:22px;border-top:1px solid var(--rule);margin-top:28px}
+.ftr-brand{display:flex;align-items:center;justify-content:center;gap:7px;margin-bottom:8px;opacity:.5}
+.ftr-wm{font-family:'Syne',sans-serif;font-weight:800;font-size:12px;color:var(--med)}
+.ftr-txt{font-size:10px;color:var(--mut);line-height:1.75;max-width:380px;margin:0 auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- BRAND BAR -->
+  <div class="bb">
+    <svg width="19" height="19" viewBox="0 0 48 48" fill="none">
+      <circle cx="24" cy="24" r="21" stroke="#1C2B1A" stroke-width="1" stroke-dasharray="4 2" opacity=".2" fill="none"/>
+      <circle cx="24" cy="24" r="15" stroke="#1C2B1A" stroke-width="1.5" opacity=".36" fill="none"/>
+      <circle cx="24" cy="24" r="4" fill="#A855F7" opacity=".7"/>
+      <line x1="9" y1="24" x2="15" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="33" y1="24" x2="39" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="24" y1="9" x2="24" y2="15" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="24" y1="33" x2="24" y2="39" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <div class="bwm"><span class="be">Epi</span><span class="bg">Gen</span><span class="bi">IQ</span>&#8482;</div>
+    <div class="bsub">Wellbeing Score</div>
+  </div>
+
+  <!-- IDENTITY -->
+  <div class="id-card">
+    <div class="av">
+      <!-- SWAP: replace placeholder with <img src="kelly.jpg" alt="Kelly O'Neill"> -->
+      <div class="av-init">K</div>
+      <div class="av-badge">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9 12l2 2 4-4" stroke="#0E1214" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="nm">Kelly O'Neill</div>
+    <div class="rl">Founder · EpiGenIQ&#8482; · HealthStartz</div>
+    <div class="tg">
+      <span class="ph">[Your personal tagline — one powerful sentence about why you believe in health intelligence]</span>
+    </div>
+    <div class="chips">
+      <span class="chip g">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        Nu Skin Brand Affiliate
+      </span>
+      <span class="chip v">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2 2"/></svg>
+        Denver · 2013
+      </span>
+      <span class="chip">
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        HealthStartz Founder
+      </span>
+    </div>
+  </div>
+
+  <!-- PRYSM SCORE — dark island for contrast & impact -->
+  <div class="score">
+    <div class="sc-lbl">My Prysm iO Score</div>
+    <!-- OPTION A — swap in your real score:
+    <div class="sc-num">[###]</div>
+    <div class="sc-cap">Carotenoid health intelligence · Last scan: [Date]</div> -->
+    <!-- OPTION B — placeholder (delete once you have a score): -->
+    <div class="sc-ph">[ Add your Prysm iO score here to make this personal and real ]</div>
+    <div class="sc-cap" style="margin-top:6px">AI-powered · Nobel science · 30M+ validated scans · Non-invasive</div>
+  </div>
+
+  <!-- START HERE -->
+  <div class="sl">Start Here</div>
+  <div class="bstack">
+
+    <!-- CTA 1 — 8-min video -->
+    <a id="btn-video" href="#" class="btn btn-cta"
+       onclick="var url='[YOUR-GOPRYSM-LINK]';if(url.includes('[')){alert('Placeholder: add your GOPRYSM video link to href');return false;}window.open(url,'_blank');return false">
+      <div class="bi2">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0E1214" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="5 3 19 12 5 21 5 3"/>
+        </svg>
+      </div>
+      <div class="bt">
+        <span class="bt-t">Watch the 8-Minute Overview</span>
+        <span class="bt-s">See how Prysm iO measures your biology in 60 seconds</span>
+      </div>
+      <span class="barr">→</span>
+    </a>
+
+    <!-- CTA 2 — Book call -->
+    <a id="btn-call" href="#" class="btn btn-vi"
+       onclick="var url='[YOUR-CALENDAR-LINK]';if(url.includes('[')){alert('Placeholder: add your Calendly or booking link to href');return false;}window.open(url,'_blank');return false">
+      <div class="bi2">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </div>
+      <div class="bt">
+        <span class="bt-t">Book a 15-Minute Call</span>
+        <span class="bt-s">I listen first — no pitch, no pressure</span>
+      </div>
+      <span class="barr">→</span>
+    </a>
+
+    <!-- CTA 3 — Webinar -->
+    <a id="btn-webinar" href="#" class="btn btn-dk"
+       onclick="var url='[YOUR-WEBINAR-LINK]';if(url.includes('[')){alert('Placeholder: add your webinar registration link');return false;}window.open(url,'_blank');return false">
+      <div class="bi2">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B8F000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+        </svg>
+      </div>
+      <div class="bt">
+        <span class="bt-t">Join the Free Webinar</span>
+        <span class="bt-s">The Wellbeing Score Revolution · <span class="ph" style="font-size:9px;border:none;background:none;color:rgba(184,240,0,.5)">[Date/Time]</span></span>
+      </div>
+      <span class="barr">→</span>
+    </a>
+
+    <!-- CTA 4 — Shop Pharmanex -->
+    <a id="btn-shop" href="#" class="btn btn-wh"
+       onclick="var url='[YOUR-NUSKIN-MYSITE-URL]';if(url.includes('[')){alert('Placeholder: add your Nu Skin mysite URL');return false;}window.open(url,'_blank');return false">
+      <div class="bi2">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6E7266" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </div>
+      <div class="bt">
+        <span class="bt-t">Shop Pharmanex Products</span>
+        <span class="bt-s">SCS-certified nutraceuticals · My Nu Skin mysite</span>
+      </div>
+      <span class="barr">→</span>
+    </a>
+
+  </div>
+
+  <!-- FIELD NOTES -->
+  <div class="fn">
+    <div class="fn-tag">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+      EpiGenIQ Field Notes
+    </div>
+    <div class="fn-t">600 words. One insight. Every Friday.</div>
+    <div class="fn-d">Editorial intelligence at the convergence of AI, epigenetics, and cellular health science. Written for practitioners, operators, and the deeply curious. No product pitches — ever.</div>
+    <a href="#" class="fn-btn"
+       onclick="var url='[YOUR-SUBSTACK-LINK]';if(url.includes('[')){alert('Placeholder: add your Substack or newsletter URL');return false;}window.open(url,'_blank');return false">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+      Subscribe to Field Notes — Free
+    </a>
+  </div>
+
+  <!-- FOR PRACTITIONERS -->
+  <div class="sl">For Practitioners</div>
+
+  <div class="card">
+    <div class="c-eye">Functional Medicine · Nutritionists · Physicians</div>
+    <div class="c-t">What if you could show patients measurable proof their protocol is working?</div>
+    <div class="c-d">Prysm iO measures carotenoid absorption through the skin in 60 seconds. AI health intelligence score. Non-invasive. Nobel Prize science. 30M+ validated scans. No lab. No wait.</div>
+    <a href="#" class="c-lnk"
+       onclick="var url='[YOUR-PRACTITIONER-LINK]';if(url.includes('[')){alert('Placeholder: add your practitioner info link');return false;}window.open(url,'_blank');return false">
+      Learn how it works for your practice →
+    </a>
+  </div>
+
+  <div class="card v">
+    <div class="c-eye">Non-Insurance Revenue Stream</div>
+    <div class="c-t">A revenue model aligned with your preventive health philosophy</div>
+    <div class="c-d">
+      <span class="ph">[Your specific message about Prysm iO + Pharmanex protocol as complementary practice revenue — structure/function language only]</span>
+    </div>
+    <a href="#" class="c-lnk"
+       onclick="var url='[YOUR-CALENDAR-LINK]';if(url.includes('[')){alert('Placeholder: add your calendar link');return false;}window.open(url,'_blank');return false">
+      Book 15 minutes — I listen first →
+    </a>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="sl" style="margin-top:8px">About EpiGenIQ</div>
+
+  <div class="card p">
+    <div class="c-eye">Wellbeing Score · AI · Epigenetics · Carotenoids</div>
+    <div class="c-t">The convergence that is changing preventive medicine</div>
+    <div class="c-d">EpiGenIQ is an editorial thought leadership brand documenting the convergence of AI, epigenetic science, and carotenoid technology. A HealthStartz SubCo. Powered by Pharmanex and the Prysm iO active scanning device — not a wearable.</div>
+    <a href="#" class="c-lnk"
+       onclick="var url='[YOUR-ABOUT-LINK]';if(url.includes('[')){alert('Placeholder: add your about page or story URL');return false;}window.open(url,'_blank');return false">
+      Read the full story →
+    </a>
+  </div>
+
+  <!-- FOUNDING PARTNER -->
+  <div class="sl" style="margin-top:8px">For Entrepreneurs</div>
+
+  <div class="card">
+    <div class="c-eye">Founding Partner · First-Mover Position</div>
+    <div class="c-t">A franchise in your pocket. No inventory. Compounding residuals.</div>
+    <div class="c-d">
+      EpiGenIQ is building a network of Founding Partners — health professionals and entrepreneurs ready to lead in precision health measurement.
+      <span class="ph" style="display:block;margin-top:8px">[Your specific Founding Partner invitation and value proposition here]</span>
+    </div>
+    <a href="#" class="c-lnk"
+       onclick="var url='[YOUR-PARTNER-LINK]';if(url.includes('[')){alert('Placeholder: add your Founding Partner info link');return false;}window.open(url,'_blank');return false">
+      Explore the Founding Partner opportunity →
+    </a>
+  </div>
+
+  <!-- SOCIAL ROW -->
+  <div class="sl" style="margin-top:8px">Connect</div>
+  <div class="srow">
+
+    <a href="#" class="sbtn" title="LinkedIn"
+       onclick="var url='[YOUR-LINKEDIN-URL]';if(url.includes('[')){alert('Add your LinkedIn profile URL');return false;}window.open(url,'_blank');return false">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
+        <rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+      </svg>
+    </a>
+
+    <a href="mailto:kelly@healthstartz.com" class="sbtn" title="Email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+    </a>
+
+    <a href="#" class="sbtn" title="Field Notes Newsletter"
+       onclick="var url='[YOUR-SUBSTACK-LINK]';if(url.includes('[')){alert('Add your Substack URL');return false;}window.open(url,'_blank');return false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+      </svg>
+    </a>
+
+    <a href="#" class="sbtn" title="Twitter / X"
+       onclick="var url='[YOUR-TWITTER-URL]';if(url.includes('[')){alert('Add your Twitter/X URL');return false;}window.open(url,'_blank');return false">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+      </svg>
+    </a>
+
+    <a href="https://HealthStartZ.com" class="sbtn" title="HealthStartz" target="_blank">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+    </a>
+
+    <a href="#" class="sbtn" title="Nu Skin mysite"
+       onclick="var url='[YOUR-NUSKIN-MYSITE-URL]';if(url.includes('[')){alert('Add your Nu Skin mysite URL');return false;}window.open(url,'_blank');return false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+      </svg>
+    </a>
+
+  </div>
+
+  <!-- QUICK CONTACT -->
+  <div class="qrow">
+    <a href="mailto:kelly@healthstartz.com" class="qc g">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4E6800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+        <polyline points="22,6 12,13 2,6"/>
+      </svg>
+      <span class="qc-lbl">kelly@healthstartz.com</span>
+    </a>
+    <a href="#" class="qc"
+       onclick="var url='[YOUR-CALENDAR-LINK]';if(url.includes('[')){alert('Add your Calendly or booking link');return false;}window.open(url,'_blank');return false">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6E7266" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      <span class="qc-lbl">Book a 15-Min Call</span>
+    </a>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="ftr">
+    <div class="ftr-brand">
+      <svg width="13" height="13" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="15" stroke="#6E7266" stroke-width="1.5" opacity=".5" fill="none"/>
+        <circle cx="24" cy="24" r="4" fill="#A855F7" opacity=".5"/>
+        <line x1="9" y1="24" x2="15" y2="24" stroke="#6E7266" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="33" y1="24" x2="39" y2="24" stroke="#6E7266" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="24" y1="9" x2="24" y2="15" stroke="#6E7266" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="24" y1="33" x2="24" y2="39" stroke="#6E7266" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span class="ftr-wm">EpiGenIQ&#8482; · A HealthStartz SubCo</span>
+    </div>
+    <div class="ftr-txt">
+      Independent Brand Affiliate Produced Website — Not produced or approved by Nu Skin Enterprises, Inc. or its affiliated companies. #NSBrandAffiliate<br><br>
+      Kelly O'Neill is an Independent Brand Affiliate of Nu Skin Enterprises. Editorial content does not constitute product endorsement. Statements have not been evaluated by the FDA. Nothing here is intended to diagnose, treat, cure, or prevent any disease. Results vary. Consult your physician before making changes to your health regimen.<br><br>
+      © 2026 HealthStartz / EpiGenIQ&#8482;. All rights reserved.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

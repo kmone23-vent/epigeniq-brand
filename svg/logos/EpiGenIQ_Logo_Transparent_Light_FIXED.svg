@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 220" width="880" height="220">
+  <g transform="translate(32,50)">
+  <circle cx="60" cy="60" r="31.50" stroke="#1C2B1A" stroke-width="1.2" stroke-dasharray="6 3" fill="none" opacity="0.38"/>
+  <circle cx="60" cy="60" r="22.50" stroke="#1C2B1A" stroke-width="2.25" fill="none" opacity="0.85"/>
+  <line x1="28.50" y1="60" x2="48.30" y2="60" stroke="#1C2B1A" stroke-width="2.25" stroke-linecap="round"/>
+  <line x1="71.70" y1="60" x2="91.50" y2="60" stroke="#1C2B1A" stroke-width="2.25" stroke-linecap="round"/>
+  <line x1="60" y1="28.50" x2="60" y2="48.30" stroke="#1C2B1A" stroke-width="2.25" stroke-linecap="round"/>
+  <line x1="60" y1="71.70" x2="60" y2="91.50" stroke="#1C2B1A" stroke-width="2.25" stroke-linecap="round"/>
+  <line x1="42.67" y1="42.67" x2="49.61" y2="49.61" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round" opacity="0.9"/>
+  <line x1="77.33" y1="77.33" x2="70.39" y2="70.39" stroke="#A855F7" stroke-width="1.8" stroke-linecap="round" opacity="0.9"/>
+  <circle cx="60" cy="60" r="5.40" fill="#A855F7"/>
+  </g>
+  <text font-family="'Syne', 'Arial Black', Impact, sans-serif" font-weight="800" font-size="52" y="128">
+    <tspan x="158" fill="#1C2B1A">Epi</tspan><tspan fill="#1A1E1A">Gen</tspan><tspan font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="55" fill="#1C2B1A">IQ</tspan>
+  </text>
+  <text x="158" y="151" font-family="'DM Sans', 'Helvetica Neue', Arial, sans-serif" font-weight="300" font-size="14" fill="rgba(28,43,26,0.28)" letter-spacing="3.5">HEALTH INTELLIGENCE</text>
+  <rect x="0" y="198" width="880" height="22" fill="rgba(0,0,0,0.06)"/>
+  <text x="440" y="212" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="1.5" fill="#1A1E1A" opacity="0.65">07 · TRANSPARENT · DARK TEXT</text>
+</svg>

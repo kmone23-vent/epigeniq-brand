@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EpiGenIQ™ — Complete Logo System & One-Pager Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600&display=swap" rel="stylesheet">
+<style>
+/* ─── TOKENS ─────────────────────────────────────── */
+:root {
+  --obs:   #0E1214; --field: #1C2B1A; --surf: #141A13;
+  --ch:    #B8F000; --ch10:  rgba(184,240,0,.10); --ch25: rgba(184,240,0,.25);
+  --vi:    #A855F7; --vi10:  rgba(168,85,247,.10); --vi25: rgba(168,85,247,.25);
+  --pulse: #D6F566; --fl:    #EDF5D0; --bone: #F8FAF2;
+  --dark:  #1A1E1A; --med:   #383C35; --muted:#6A7268;
+  --rule:  #CDD4C8; --bg2:   #F4F6F0; --white:#FFFFFF;
+  /* HealthStartz reference */
+  --hs-plum: #3A1A4A; --hs-violet: #7B3FA0; --hs-mag: #C84B8A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--dark);font-size:15px;line-height:1.6;overflow-x:hidden}
+
+/* ─── NAV ────────────────────────────────────────── */
+.nav{background:var(--obs);padding:16px 48px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(184,240,0,.12)}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-wm{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;letter-spacing:.3px}
+.nav-wm .e{color:var(--bone)}.nav-wm .g{color:var(--ch)}.nav-wm .i{color:var(--vi);font-family:'DM Serif Display',serif;font-style:italic;font-weight:400}
+.nav-meta{font-size:10px;color:rgba(248,250,242,.4);letter-spacing:2px;text-transform:uppercase}
+.nav-pill{padding:5px 14px;border:1px solid rgba(184,240,0,.3);border-radius:20px;font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ch)}
+
+/* ─── SECTIONS ───────────────────────────────────── */
+.section{padding:72px 48px;border-bottom:1px solid var(--rule)}
+.section.dark{background:var(--obs);color:var(--bone)}
+.section.light{background:var(--white)}
+.section.tint{background:var(--bg2)}
+.section-head{margin-bottom:48px}
+.sec-num{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--ch);margin-bottom:6px}
+.sec-title{font-family:'DM Serif Display',serif;font-size:32px;letter-spacing:-.3px;margin-bottom:8px}
+.sec-sub{font-size:13px;color:var(--muted);max-width:600px}
+.section.dark .sec-title{color:var(--bone)}
+.section.dark .sec-sub{color:rgba(248,250,242,.5)}
+
+/* ─── THE ICON MARK SVG ──────────────────────────── */
+/* Inline SVG approach for all variants */
+
+/* ─── LOGO GRID ──────────────────────────────────── */
+.logo-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-bottom:32px}
+.logo-tile{padding:48px 40px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:20px;min-height:160px;position:relative;overflow:hidden}
+.logo-tile::after{content:attr(data-label);position:absolute;bottom:14px;left:40px;font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;opacity:.45}
+
+/* Dark tile label */
+.lt-obs::after,.lt-field::after,.lt-ch-inv::after,.lt-vi-inv::after{color:var(--bone)}
+.lt-bone::after,.lt-fl::after,.lt-ch::after,.lt-vi::after{color:var(--dark)}
+
+/* Backgrounds */
+.lt-obs{background:var(--obs)}
+.lt-field{background:var(--field)}
+.lt-bone{background:var(--bone);border:1px solid var(--rule)}
+.lt-fl{background:var(--fl);border:1px solid rgba(0,0,0,.06)}
+.lt-ch{background:var(--ch)}
+.lt-vi{background:var(--vi)}
+.lt-ch-inv{background:var(--obs)}  /* charge text on dark */
+.lt-vi-inv{background:var(--obs)}  /* violet text on dark */
+
+/* ─── LOGO COMPONENTS ────────────────────────────── */
+.logo-comp{display:flex;align-items:center;gap:13px}
+.logo-wm{display:flex;flex-direction:column;gap:3px;line-height:1}
+.logo-wm-l1{font-family:'Syne',sans-serif;font-weight:800;font-size:22px;letter-spacing:.5px}
+.logo-wm-l2{font-family:'DM Sans',sans-serif;font-weight:300;font-size:8px;letter-spacing:3.5px;text-transform:uppercase}
+
+/* Color variants for wordmark */
+/* Primary dark: bone epi, charge gen, violet IQ, muted sub */
+.v-prim-dark .e1{fill:#F8FAF2}.v-prim-dark .e2{fill:#B8F000}.v-prim-dark .e3{fill:#A855F7}
+.v-prim-dark .sub-text{color:rgba(184,240,0,.45)}
+/* Surface deep field: same */
+.v-field .e1{fill:#F8FAF2}.v-field .e2{fill:#B8F000}.v-field .e3{fill:#A855F7}
+.v-field .sub-text{color:rgba(184,240,0,.35)}
+/* Reverse light: dark epi, field gen, violet IQ */
+.v-rev-light .e1{fill:#1A1E1A}.v-rev-light .e2{fill:#1C2B1A}.v-rev-light .e3{fill:#A855F7}
+.v-rev-light .sub-text{color:rgba(28,43,26,.35)}
+/* Charge bg: obsidian all */
+.v-ch .e1{fill:#0E1214}.v-ch .e2{fill:#0E1214}.v-ch .e3{fill:#0E1214}
+.v-ch .sub-text{color:rgba(14,18,20,.4)}
+/* Violet bg: bone epi, charge gen, white IQ */
+.v-vi .e1{fill:#F8FAF2}.v-vi .e2{fill:#B8F000}.v-vi .e3{fill:#F8FAF2}
+.v-vi .sub-text{color:rgba(248,250,242,.5)}
+/* Charge text variant (on dark) */
+.v-ch-dark .e1{fill:#F8FAF2}.v-ch-dark .e2{fill:#B8F000}.v-ch-dark .e3{fill:#B8F000}
+.v-ch-dark .sub-text{color:rgba(184,240,0,.4)}
+/* Violet text variant (on dark) */
+.v-vi-dark .e1{fill:#F8FAF2}.v-vi-dark .e2{fill:#A855F7}.v-vi-dark .e3{fill:#A855F7}
+.v-vi-dark .sub-text{color:rgba(168,85,247,.4)}
+/* Mono dark */
+.v-mono-d .e1{fill:#F8FAF2}.v-mono-d .e2{fill:#F8FAF2}.v-mono-d .e3{fill:#F8FAF2}
+.v-mono-d .sub-text{color:rgba(248,250,242,.3)}
+
+/* ─── SOCIAL SQUARE GRID ─────────────────────────── */
+.social-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.sq-tile{border-radius:16px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:28px 20px;position:relative}
+.sq-tile.border{border:1px solid var(--rule)}
+.sq-label{font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-align:center;margin-top:4px}
+.sq-sizes{font-family:'DM Sans',sans-serif;font-size:8px;color:var(--muted);text-align:center}
+
+/* ─── SIZE SPECIMENS ─────────────────────────────── */
+.size-row{display:flex;gap:24px;align-items:flex-end;padding:32px;background:var(--bg2);border-radius:6px;border:1px solid var(--rule);flex-wrap:wrap}
+.size-item{display:flex;flex-direction:column;align-items:center;gap:8px}
+.size-lbl{font-family:'Syne',sans-serif;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+
+/* ─── ONE PAGER ───────────────────────────────────── */
+.one-pager{background:var(--white);border:1px solid var(--rule);border-radius:8px;overflow:hidden;max-width:840px}
+.op-header{background:var(--obs);padding:40px 48px;display:flex;justify-content:space-between;align-items:flex-start}
+.op-body{padding:40px 48px}
+.op-section{margin-bottom:32px}
+.op-sec-title{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--ch);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--ch25)}
+.op-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.op-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.op-card{background:var(--bg2);border:1px solid var(--rule);border-radius:4px;padding:16px 18px}
+.op-card-title{font-family:'Syne',sans-serif;font-weight:700;font-size:12px;margin-bottom:4px}
+.op-card-body{font-size:12px;color:var(--muted);line-height:1.55}
+.op-chip{display:inline-block;padding:4px 10px;border-radius:3px;font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin:3px 3px 3px 0}
+
+/* ─── VARIANT LABEL ──────────────────────────────── */
+.v-badge{position:absolute;top:14px;right:14px;font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;border-radius:2px}
+
+/* ─── RULES GRID ─────────────────────────────────── */
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rule-card{padding:20px 22px;border-radius:4px}
+.rule-card.do{background:#F0FAF0;border-left:3px solid var(--ch)}
+.rule-card.dont{background:#FDF0FF;border-left:3px solid var(--vi)}
+.rule-card-title{font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.rule-card.do .rule-card-title{color:#2E7D32}
+.rule-card.dont .rule-card-title{color:var(--vi)}
+.rule-list{list-style:none}
+.rule-list li{font-size:12px;color:var(--med);padding:4px 0;border-bottom:1px solid rgba(0,0,0,.06);line-height:1.5}
+.rule-list li:last-child{border:none}
+
+/* ─── COLOR CHIPS ────────────────────────────────── */
+.color-strip{display:flex;gap:4px;margin-top:14px;flex-wrap:wrap}
+.cs{width:40px;height:40px;border-radius:4px;display:flex;flex-direction:column;justify-content:flex-end;padding:3px;font-size:6px;font-family:'DM Sans',monospace;font-weight:500;letter-spacing:.3px}
+.cs.light{color:var(--dark)}
+.cs.dark2{color:rgba(255,255,255,.7)}
+
+/* PRINT SECTION */
+@media print{
+  .nav{display:none}
+  .section{padding:40px 32px}
+  .logo-grid{grid-template-columns:1fr 1fr}
+  .social-grid{grid-template-columns:repeat(4,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <!-- Icon mark inline -->
+    <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
+      <circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity=".38" fill="none"/>
+      <circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity=".75" fill="none"/>
+      <circle cx="24" cy="24" r="4" fill="#A855F7"/>
+      <line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="11.5" y1="11.5" x2="15.8" y2="15.8" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/>
+      <line x1="32.2" y1="32.2" x2="36.5" y2="36.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/>
+    </svg>
+    <div class="nav-wm"><span class="e">Epi</span><span class="g">Gen</span><span class="i">IQ</span>™</div>
+  </div>
+  <div class="nav-meta">Logo System & Brief · v1.0 · 2026</div>
+  <div class="nav-pill">A HealthStartz SubCo</div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 01: HORIZONTAL LOGO LOCKUP — 8 VARIANTS -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section light">
+  <div class="section-head">
+    <div class="sec-num">01 — Logo Suite · Horizontal Lockup</div>
+    <h2 class="sec-title">Eight Color Variants</h2>
+    <p class="sec-sub">Mirroring the HealthStartz 8-variant system. Primary · Secondary · Accent · Reverse · Transparent. All use the same icon mark geometry — only color tokens change.</p>
+  </div>
+
+  <div class="logo-grid">
+
+    <!-- 1. Primary Dark: Obsidian bg -->
+    <div class="logo-tile lt-obs" data-label="01 — Primary · Obsidian bg">
+      <div class="v-badge" style="background:rgba(184,240,0,.15);color:var(--ch)">PRIMARY</div>
+      <div class="logo-comp">
+        <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity=".38" fill="none"/>
+          <circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity=".8" fill="none"/>
+          <circle cx="24" cy="24" r="4" fill="#A855F7"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="11.5" y1="11.5" x2="15.8" y2="15.8" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/>
+          <line x1="32.2" y1="32.2" x2="36.5" y2="36.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/>
+        </svg>
+        <div class="logo-wm">
+          <div class="logo-wm-l1"><span style="color:#F8FAF2">Epi</span><span style="color:#B8F000">Gen</span><span style="color:#A855F7;font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:23px">IQ</span></div>
+          <div class="logo-wm-l2" style="color:rgba(184,240,0,.4)">Wellbeing Score</div>
+        </div>
+      </div>
+      <div style="font-size:10px;color:rgba(248,250,242,.35);font-family:'Syne',sans-serif;letter-spacing:1.5px;text-transform:uppercase">Dark presentations · Email headers · Hero sections<br>SVG + PNG (4400×880 @ 300 DPI)</div>
+    </div>
+
+    <!-- 2. Surface: Deep Field bg -->
+    <div class="logo-tile lt-field" data-label="02 — Surface · Deep Field bg">
+      <div class="v-badge" style="background:rgba(184,240,0,.12);color:var(--ch)">SECONDARY</div>
+      <div class="logo-comp">
+        <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity=".32" fill="none"/>
+          <circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity=".65" fill="none"/>
+          <circle cx="24" cy="24" r="4" fill="#A855F7"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="11.5" y1="11.5" x2="15.8" y2="15.8" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".85"/>
+          <line x1="32.2" y1="32.2" x2="36.5" y2="36.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".85"/>
+        </svg>
+        <div class="logo-wm">
+          <div class="logo-wm-l1"><span style="color:#F8FAF2">Epi</span><span style="color:#B8F000">Gen</span><span style="color:#A855F7;font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:23px">IQ</span></div>
+          <div class="logo-wm-l2" style="color:rgba(184,240,0,.35)">Wellbeing Score</div>
+        </div>
+      </div>
+      <div style="font-size:10px;color:rgba(248,250,242,.3);font-family:'Syne',sans-serif;letter-spacing:1.5px;text-transform:uppercase">Navigation · Banners · Dark slides<br>SVG + PNG (4400×880 @ 300 DPI)</div>
+    </div>
+
+    <!-- 3. Reverse Light: Bone bg -->
+    <div class="logo-tile lt-bone" data-label="03 — Reverse · Bone / White bg">
+      <div class="v-badge" style="background:var(--bg2);color:var(--dark)">PRIMARY</div>
+      <div class="logo-comp">
+        <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#1C2B1A" stroke-width="1" stroke-dasharray="4 2" opacity=".2" fill="none"/>
+          <circle cx="24" cy="24" r="16" stroke="#1C2B1A" stroke-width="1.5" opacity=".4" fill="none"/>
+          <circle cx="24" cy="24" r="4" fill="#A855F7"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="11.5" y1="11.5" x2="15.8" y2="15.8" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".8"/>
+          <line x1="32.2" y1="32.2" x2="36.5" y2="36.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".8"/>
+        </svg>
+        <div class="logo-wm">
+          <div class="logo-wm-l1"><span style="color:#1A1E1A">Epi</span><span style="color:#1C2B1A">Gen</span><span style="color:#A855F7;font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:23px">IQ</span></div>
+          <div class="logo-wm-l2" style="color:rgba(28,43,26,.35)">Wellbeing Score</div>
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--muted);font-family:'Syne',sans-serif;letter-spacing:1.5px;text-transform:uppercase">Print · Light backgrounds · Letterhead<br>SVG + PNG (4400×880 @ 300 DPI)</div>
+    </div>
+
+    <!-- 4. Field Light bg -->
+    <div class="logo-tile lt-fl" data-label="04 — Light Tint · Field bg">
+      <div class="v-badge" style="background:rgba(28,43,26,.1);color:#2E5C1A">SECONDARY</div>
+      <div class="logo-comp">
+        <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#1C2B1A" stroke-width="1" stroke-dasharray="4 2" opacity=".15" fill="none"/>
+          <circle cx="24" cy="24" r="16" stroke="#1C2B1A" stroke-width="1.5" opacity=".3" fill="none"/>
+          <circle cx="24" cy="24" r="4" fill="#A855F7"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="11.5" y1="11.5" x2="15.8" y2="15.8" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".7"/>
+          <line x1="32.2" y1="32.2" x2="36.5" y2="36.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".7"/>
+        </svg>
+        <div class="logo-wm">
+          <div class="logo-wm-l1"><span style="color:#1A1E1A">Epi</span><span style="color:#2E5C1A">Gen</span><span style="color:#A855F7;font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:23px">IQ</span></div>
+          <div class="logo-wm-l2" style="color:rgba(28,43,26,.3)">Wellbeing Score</div>
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--muted);font-family:'Syne',sans-serif;letter-spacing:1.5px;text-transform:uppercase">Proposals · Decks · Light editorial<br>SVG + PNG (4400×880 @ 300 DPI)</div>
+    </div>
+
+    <!-- 5. Charge Accent bg -->
+    <div class="logo-tile lt-ch" data-label="05 — Accent · Charge bg">
+      <div class="v-badge" style="background:rgba(14,18,20,.15);color:#0E1214">ACCENT</div>
+      <div class="logo-comp">
+        <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#0E1214" stroke-width="1" stroke-dasharray="4 2" opacity=".2" fill="none"/>
+          <circle cx="24" cy="24" r="16" stroke="#0E1214" stroke-width="1.5" opacity=".4" fill="none"/>
+          <circle cx="24" cy="24" r="4" fill="#0E1214"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#0E1214" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#0E1214" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#0E1214" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#0E1214" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="logo-wm">
+          <div class="logo-wm-l1"><span style="color:#0E1214">EpiGen</span><span style="color:#0E1214;font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:23px">IQ</span></div>
+          <div class="logo-wm-l2" style="color:rgba(14,18,20,.4)">Wellbeing Score</div>
+        </div>
+      </div>
+      <div style="font-size:10px;color:rgba(14,18,20,.5);font-family:'Syne',sans-serif;letter-spacing:1.5px;text-transform:uppercase">CTAs · Campaign moments · High energy<br>SVG + PNG (4400×880 @ 300 DPI)</div>
+    </div>
+
+    <!-- 6. Violet Accent bg -->
+    <div class="logo-tile lt-vi" data-label="06 — Accent · Violet bg">
+      <div class="v-badge" style="background:rgba(248,250,242,.2);color:#F8FAF2">ACCENT</div>
+      <div class="logo-comp">
+        <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#F8FAF2" stroke-width="1" stroke-dasharray="4 2" opacity=".22" fill="none"/>
+          <circle cx="24" cy="24" r="16" stroke="#F8FAF2" stroke-width="1.5" opacity=".48" fill="none"/>
+          <circle cx="24" cy="24" r="4" fill="#B8F000"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#F8FAF2" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#F8FAF2" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#F8FAF2" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#F8FAF2" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="11.5" y1="11.5" x2="15.8" y2="15.8" stroke="#B8F000" stroke-width="1.2" stroke-linecap="round" opacity=".9"/>
+          <line x1="32.2" y1="32.2" x2="36.5" y2="36.5" stroke="#B8F000" stroke-width="1.2" stroke-linecap="round" opacity=".9"/>
+        </svg>
+        <div class="logo-wm">
+          <div class="logo-wm-l1"><span style="color:#F8FAF2">Epi</span><span style="color:#B8F000">Gen</span><span style="color:#F8FAF2;font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:23px">IQ</span></div>
+          <div class="logo-wm-l2" style="color:rgba(248,250,242,.45)">Wellbeing Score</div>
+        </div>
+      </div>
+      <div style="font-size:10px;color:rgba(248,250,242,.35);font-family:'Syne',sans-serif;letter-spacing:1.5px;text-transform:uppercase">Intelligence layer · AI outputs · Score display<br>SVG + PNG (4400×880 @ 300 DPI)</div>
+    </div>
+
+    <!-- 7. Transparent (dark) -->
+    <div class="logo-tile" style="background:repeating-conic-gradient(#e8e8e8 0% 25%,#f8f8f8 0% 50%) 0 0/16px 16px" data-label="07 — Transparent · Dark version">
+      <div class="v-badge" style="background:rgba(14,18,20,.12);color:var(--dark)">FLEXIBLE</div>
+      <div class="logo-comp">
+        <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#1C2B1A" stroke-width="1" stroke-dasharray="4 2" opacity=".35" fill="none"/>
+          <circle cx="24" cy="24" r="16" stroke="#1C2B1A" stroke-width="1.5" opacity=".6" fill="none"/>
+          <circle cx="24" cy="24" r="4" fill="#A855F7"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="11.5" y1="11.5" x2="15.8" y2="15.8" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".8"/>
+          <line x1="32.2" y1="32.2" x2="36.5" y2="36.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".8"/>
+        </svg>
+        <div class="logo-wm">
+          <div class="logo-wm-l1"><span style="color:#1A1E1A">Epi</span><span style="color:#1C2B1A">Gen</span><span style="color:#A855F7;font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:23px">IQ</span></div>
+          <div class="logo-wm-l2" style="color:rgba(28,43,26,.35)">Wellbeing Score</div>
+        </div>
+      </div>
+      <div style="font-size:10px;color:var(--muted);font-family:'Syne',sans-serif;letter-spacing:1.5px;text-transform:uppercase">Overlays on photography · Color fills<br>SVG + PNG (transparent background)</div>
+    </div>
+
+    <!-- 8. Transparent (light/bone) -->
+    <div class="logo-tile" style="background:repeating-conic-gradient(#ccc 0% 25%,#e8e8e8 0% 50%) 0 0/16px 16px" data-label="08 — Transparent · Light version">
+      <div class="v-badge" style="background:rgba(248,250,242,.85);color:var(--dark)">FLEXIBLE</div>
+      <div class="logo-comp">
+        <svg width="52" height="52" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#F8FAF2" stroke-width="1" stroke-dasharray="4 2" opacity=".5" fill="none"/>
+          <circle cx="24" cy="24" r="16" stroke="#F8FAF2" stroke-width="1.5" opacity=".75" fill="none"/>
+          <circle cx="24" cy="24" r="4" fill="#A855F7"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#F8FAF2" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#F8FAF2" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#F8FAF2" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#F8FAF2" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="11.5" y1="11.5" x2="15.8" y2="15.8" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/>
+          <line x1="32.2" y1="32.2" x2="36.5" y2="36.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/>
+        </svg>
+        <div class="logo-wm">
+          <div class="logo-wm-l1"><span style="color:#F8FAF2">Epi</span><span style="color:#F8FAF2">Gen</span><span style="color:#A855F7;font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:23px">IQ</span></div>
+          <div class="logo-wm-l2" style="color:rgba(248,250,242,.4)">Wellbeing Score</div>
+        </div>
+      </div>
+      <div style="font-size:10px;color:rgba(248,250,242,.7);font-family:'Syne',sans-serif;letter-spacing:1.5px;text-transform:uppercase">Overlays on dark photography<br>SVG + PNG (transparent background)</div>
+    </div>
+
+  </div><!-- /logo-grid -->
+
+  <!-- Icon Anatomy -->
+  <div style="background:var(--bg2);border:1px solid var(--rule);border-radius:6px;padding:28px 32px;display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center">
+    <div>
+      <svg width="110" height="110" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity=".38" fill="none"/>
+        <circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity=".75" fill="none"/>
+        <circle cx="24" cy="24" r="4" fill="#A855F7"/>
+        <line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="11.5" y1="11.5" x2="15.8" y2="15.8" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/>
+        <line x1="32.2" y1="32.2" x2="36.5" y2="36.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/>
+      </svg>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ch);margin-bottom:4px">Outer Dashed Ring</div><div style="font-size:12px;color:var(--muted)">Epigenetic influence orbit — the environmental and nutritional forces that orbit and shape gene expression.</div></div>
+      <div><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ch);margin-bottom:4px">Cardinal Scan Arms</div><div style="font-size:12px;color:var(--muted)">Hyperspectral light beams — the four-direction scan that reads carotenoid absorption in the skin.</div></div>
+      <div><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--vi);margin-bottom:4px">Diagonal Accents</div><div style="font-size:12px;color:var(--muted)">AI and intelligence processing layer — the machine learning that converts raw data into a score.</div></div>
+      <div><div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--vi);margin-bottom:4px">Violet Nucleus</div><div style="font-size:12px;color:var(--muted)">The IQ score output — where all data converges. Violet = intelligence and the HealthStartz lineage.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 02: ICON MARK — SQUARE / SOCIAL FORMAT  -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section tint">
+  <div class="section-head">
+    <div class="sec-num">02 — Icon Mark · Square & LinkedIn Format</div>
+    <h2 class="sec-title">Eight Square Variants</h2>
+    <p class="sec-sub">For LinkedIn profile, app icons, favicons, social avatars, and all square placements. Same 8-variant system as HealthStartz. 1600×1600px for social profiles.</p>
+  </div>
+
+  <div class="social-grid" style="grid-template-columns:repeat(4,1fr)">
+
+    <!-- 1 Obsidian -->
+    <div>
+      <div class="sq-tile" style="background:var(--obs);aspect-ratio:1">
+        <svg width="72" height="72" viewBox="0 0 120 120" fill="none">
+          <circle cx="60" cy="60" r="55" stroke="#B8F000" stroke-width="2" stroke-dasharray="7 3.5" opacity=".38" fill="none"/>
+          <circle cx="60" cy="60" r="38" stroke="#B8F000" stroke-width="3" opacity=".8" fill="none"/>
+          <circle cx="60" cy="60" r="10" fill="#A855F7"/>
+          <line x1="18" y1="60" x2="22" y2="60" stroke="#B8F000" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="98" y1="60" x2="102" y2="60" stroke="#B8F000" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="18" x2="60" y2="22" stroke="#B8F000" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="98" x2="60" y2="102" stroke="#B8F000" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="26" y1="26" x2="33" y2="33" stroke="#A855F7" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+          <line x1="87" y1="87" x2="94" y2="94" stroke="#A855F7" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+        </svg>
+      </div>
+      <div class="sq-label" style="color:var(--dark)">Obsidian · Primary</div>
+      <div class="sq-sizes">1600×1600 · LinkedIn · Profile</div>
+    </div>
+
+    <!-- 2 Deep Field -->
+    <div>
+      <div class="sq-tile" style="background:var(--field);aspect-ratio:1">
+        <svg width="72" height="72" viewBox="0 0 120 120" fill="none">
+          <circle cx="60" cy="60" r="55" stroke="#B8F000" stroke-width="2" stroke-dasharray="7 3.5" opacity=".3" fill="none"/>
+          <circle cx="60" cy="60" r="38" stroke="#B8F000" stroke-width="3" opacity=".65" fill="none"/>
+          <circle cx="60" cy="60" r="10" fill="#A855F7"/>
+          <line x1="18" y1="60" x2="22" y2="60" stroke="#B8F000" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="98" y1="60" x2="102" y2="60" stroke="#B8F000" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="18" x2="60" y2="22" stroke="#B8F000" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="98" x2="60" y2="102" stroke="#B8F000" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="26" y1="26" x2="33" y2="33" stroke="#A855F7" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+          <line x1="87" y1="87" x2="94" y2="94" stroke="#A855F7" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+        </svg>
+      </div>
+      <div class="sq-label" style="color:var(--dark)">Deep Field · Secondary</div>
+      <div class="sq-sizes">1600×1600 · App Icon</div>
+    </div>
+
+    <!-- 3 Bone/White -->
+    <div>
+      <div class="sq-tile border" style="background:var(--bone);aspect-ratio:1">
+        <svg width="72" height="72" viewBox="0 0 120 120" fill="none">
+          <circle cx="60" cy="60" r="55" stroke="#1C2B1A" stroke-width="2" stroke-dasharray="7 3.5" opacity=".2" fill="none"/>
+          <circle cx="60" cy="60" r="38" stroke="#1C2B1A" stroke-width="3" opacity=".4" fill="none"/>
+          <circle cx="60" cy="60" r="10" fill="#A855F7"/>
+          <line x1="18" y1="60" x2="22" y2="60" stroke="#1C2B1A" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="98" y1="60" x2="102" y2="60" stroke="#1C2B1A" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="18" x2="60" y2="22" stroke="#1C2B1A" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="98" x2="60" y2="102" stroke="#1C2B1A" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="26" y1="26" x2="33" y2="33" stroke="#A855F7" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+          <line x1="87" y1="87" x2="94" y2="94" stroke="#A855F7" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+        </svg>
+      </div>
+      <div class="sq-label" style="color:var(--dark)">Bone · Reverse</div>
+      <div class="sq-sizes">1600×1600 · Twitter / X</div>
+    </div>
+
+    <!-- 4 Field Light -->
+    <div>
+      <div class="sq-tile" style="background:var(--fl);border:1px solid rgba(0,0,0,.06);aspect-ratio:1">
+        <svg width="72" height="72" viewBox="0 0 120 120" fill="none">
+          <circle cx="60" cy="60" r="55" stroke="#1C2B1A" stroke-width="2" stroke-dasharray="7 3.5" opacity=".15" fill="none"/>
+          <circle cx="60" cy="60" r="38" stroke="#1C2B1A" stroke-width="3" opacity=".3" fill="none"/>
+          <circle cx="60" cy="60" r="10" fill="#A855F7"/>
+          <line x1="18" y1="60" x2="22" y2="60" stroke="#1C2B1A" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="98" y1="60" x2="102" y2="60" stroke="#1C2B1A" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="18" x2="60" y2="22" stroke="#1C2B1A" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="98" x2="60" y2="102" stroke="#1C2B1A" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="26" y1="26" x2="33" y2="33" stroke="#A855F7" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+          <line x1="87" y1="87" x2="94" y2="94" stroke="#A855F7" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+        </svg>
+      </div>
+      <div class="sq-label" style="color:var(--dark)">Field Light · Secondary</div>
+      <div class="sq-sizes">1600×1600 · Email avatar</div>
+    </div>
+
+    <!-- 5 Charge -->
+    <div>
+      <div class="sq-tile" style="background:var(--ch);aspect-ratio:1">
+        <svg width="72" height="72" viewBox="0 0 120 120" fill="none">
+          <circle cx="60" cy="60" r="55" stroke="#0E1214" stroke-width="2" stroke-dasharray="7 3.5" opacity=".2" fill="none"/>
+          <circle cx="60" cy="60" r="38" stroke="#0E1214" stroke-width="3" opacity=".4" fill="none"/>
+          <circle cx="60" cy="60" r="10" fill="#0E1214"/>
+          <line x1="18" y1="60" x2="22" y2="60" stroke="#0E1214" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="98" y1="60" x2="102" y2="60" stroke="#0E1214" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="18" x2="60" y2="22" stroke="#0E1214" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="98" x2="60" y2="102" stroke="#0E1214" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="sq-label" style="color:var(--dark)">Charge · Accent</div>
+      <div class="sq-sizes">1600×1600 · Campaign</div>
+    </div>
+
+    <!-- 6 Violet -->
+    <div>
+      <div class="sq-tile" style="background:var(--vi);aspect-ratio:1">
+        <svg width="72" height="72" viewBox="0 0 120 120" fill="none">
+          <circle cx="60" cy="60" r="55" stroke="#F8FAF2" stroke-width="2" stroke-dasharray="7 3.5" opacity=".22" fill="none"/>
+          <circle cx="60" cy="60" r="38" stroke="#F8FAF2" stroke-width="3" opacity=".48" fill="none"/>
+          <circle cx="60" cy="60" r="10" fill="#B8F000"/>
+          <line x1="18" y1="60" x2="22" y2="60" stroke="#F8FAF2" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="98" y1="60" x2="102" y2="60" stroke="#F8FAF2" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="18" x2="60" y2="22" stroke="#F8FAF2" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="98" x2="60" y2="102" stroke="#F8FAF2" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="26" y1="26" x2="33" y2="33" stroke="#B8F000" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+          <line x1="87" y1="87" x2="94" y2="94" stroke="#B8F000" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+        </svg>
+      </div>
+      <div class="sq-label" style="color:var(--dark)">Violet · Intelligence</div>
+      <div class="sq-sizes">1600×1600 · AI content</div>
+    </div>
+
+    <!-- 7 Transparent Dark -->
+    <div>
+      <div class="sq-tile" style="background:repeating-conic-gradient(#ddd 0% 25%,#f0f0f0 0% 50%) 0 0/18px 18px;aspect-ratio:1">
+        <svg width="72" height="72" viewBox="0 0 120 120" fill="none">
+          <circle cx="60" cy="60" r="55" stroke="#1C2B1A" stroke-width="2" stroke-dasharray="7 3.5" opacity=".4" fill="none"/>
+          <circle cx="60" cy="60" r="38" stroke="#1C2B1A" stroke-width="3" opacity=".65" fill="none"/>
+          <circle cx="60" cy="60" r="10" fill="#A855F7"/>
+          <line x1="18" y1="60" x2="22" y2="60" stroke="#1C2B1A" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="98" y1="60" x2="102" y2="60" stroke="#1C2B1A" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="18" x2="60" y2="22" stroke="#1C2B1A" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="98" x2="60" y2="102" stroke="#1C2B1A" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="26" y1="26" x2="33" y2="33" stroke="#A855F7" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+          <line x1="87" y1="87" x2="94" y2="94" stroke="#A855F7" stroke-width="3" stroke-linecap="round" opacity=".85"/>
+        </svg>
+      </div>
+      <div class="sq-label" style="color:var(--dark)">Transparent · Dark mark</div>
+      <div class="sq-sizes">SVG · Overlays</div>
+    </div>
+
+    <!-- 8 Transparent Light -->
+    <div>
+      <div class="sq-tile" style="background:repeating-conic-gradient(#aaa 0% 25%,#ccc 0% 50%) 0 0/18px 18px;aspect-ratio:1">
+        <svg width="72" height="72" viewBox="0 0 120 120" fill="none">
+          <circle cx="60" cy="60" r="55" stroke="#F8FAF2" stroke-width="2" stroke-dasharray="7 3.5" opacity=".5" fill="none"/>
+          <circle cx="60" cy="60" r="38" stroke="#F8FAF2" stroke-width="3" opacity=".75" fill="none"/>
+          <circle cx="60" cy="60" r="10" fill="#A855F7"/>
+          <line x1="18" y1="60" x2="22" y2="60" stroke="#F8FAF2" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="98" y1="60" x2="102" y2="60" stroke="#F8FAF2" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="18" x2="60" y2="22" stroke="#F8FAF2" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="60" y1="98" x2="60" y2="102" stroke="#F8FAF2" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="26" y1="26" x2="33" y2="33" stroke="#A855F7" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+          <line x1="87" y1="87" x2="94" y2="94" stroke="#A855F7" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+        </svg>
+      </div>
+      <div class="sq-label" style="color:var(--dark)">Transparent · Light mark</div>
+      <div class="sq-sizes">SVG · Dark overlays</div>
+    </div>
+  </div>
+
+  <!-- Size scale -->
+  <div style="margin-top:32px">
+    <div style="font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">Icon Mark · Size Scale (Primary Dark variant shown)</div>
+    <div class="size-row">
+      <div class="size-item">
+        <div style="width:128px;height:128px;background:var(--obs);border-radius:24px;display:flex;align-items:center;justify-content:center">
+          <svg width="88" height="88" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity=".38" fill="none"/><circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity=".8" fill="none"/><circle cx="24" cy="24" r="4" fill="#A855F7"/><line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/><line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/><line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/><line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/><line x1="11.5" y1="11.5" x2="15.8" y2="15.8" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/><line x1="32.2" y1="32.2" x2="36.5" y2="36.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/></svg>
+        </div>
+        <div class="size-lbl">512px · App Store</div>
+      </div>
+      <div class="size-item">
+        <div style="width:96px;height:96px;background:var(--obs);border-radius:18px;display:flex;align-items:center;justify-content:center">
+          <svg width="68" height="68" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity=".38" fill="none"/><circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity=".8" fill="none"/><circle cx="24" cy="24" r="4" fill="#A855F7"/><line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/><line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/><line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/><line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/><line x1="11.5" y1="11.5" x2="15.8" y2="15.8" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/><line x1="32.2" y1="32.2" x2="36.5" y2="36.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/></svg>
+        </div>
+        <div class="size-lbl">180px · Apple Touch</div>
+      </div>
+      <div class="size-item">
+        <div style="width:72px;height:72px;background:var(--obs);border-radius:14px;display:flex;align-items:center;justify-content:center">
+          <svg width="52" height="52" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity=".8" fill="none"/><circle cx="24" cy="24" r="4" fill="#A855F7"/><line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/><line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/><line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/><line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="size-lbl">64px · Android PWA</div>
+      </div>
+      <div class="size-item">
+        <div style="width:52px;height:52px;background:var(--obs);border-radius:10px;display:flex;align-items:center;justify-content:center">
+          <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="2" opacity=".8" fill="none"/><circle cx="24" cy="24" r="5" fill="#A855F7"/><line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="2" stroke-linecap="round"/><line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="2" stroke-linecap="round"/><line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="2" stroke-linecap="round"/><line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="size-lbl">48px · Email sig</div>
+      </div>
+      <div class="size-item">
+        <div style="width:38px;height:38px;background:var(--obs);border-radius:7px;display:flex;align-items:center;justify-content:center">
+          <svg width="26" height="26" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="2.5" opacity=".8" fill="none"/><circle cx="24" cy="24" r="6" fill="#A855F7"/><line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="2.5" stroke-linecap="round"/><line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="2.5" stroke-linecap="round"/><line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="2.5" stroke-linecap="round"/><line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="2.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="size-lbl">32px · Browser tab</div>
+      </div>
+      <div class="size-item">
+        <div style="width:26px;height:26px;background:var(--obs);border-radius:4px;display:flex;align-items:center;justify-content:center">
+          <svg width="18" height="18" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="3" opacity=".8" fill="none"/><circle cx="24" cy="24" r="8" fill="#A855F7"/></svg>
+        </div>
+        <div class="size-lbl">20px · Min size</div>
+      </div>
+      <div class="size-item">
+        <div style="width:18px;height:18px;background:var(--obs);border-radius:3px;display:flex;align-items:center;justify-content:center">
+          <svg width="12" height="12" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="#B8F000" stroke-width="4" opacity=".8" fill="none"/><circle cx="24" cy="24" r="9" fill="#A855F7"/></svg>
+        </div>
+        <div class="size-lbl">16px · ICO</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 03: ASSET FILE INDEX                    -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section light">
+  <div class="section-head">
+    <div class="sec-num">03 — Complete Asset File Index</div>
+    <h2 class="sec-title">Production-Ready File Inventory</h2>
+    <p class="sec-sub">Matching the HealthStartz 34-file standard. SVG preferred — infinitely scalable. PNG provided for contexts where SVG is not supported.</p>
+  </div>
+  <div style="overflow-x:auto">
+    <table style="width:100%;border-collapse:collapse;font-size:12px">
+      <thead>
+        <tr style="background:var(--obs);color:var(--bone)">
+          <th style="padding:10px 14px;text-align:left;font-family:'Syne',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700">File Name</th>
+          <th style="padding:10px 14px;text-align:left;font-family:'Syne',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700">Format</th>
+          <th style="padding:10px 14px;text-align:left;font-family:'Syne',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700">Dimensions</th>
+          <th style="padding:10px 14px;text-align:left;font-family:'Syne',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:700">Category</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:var(--ch10)"><td colspan="4" style="padding:8px 14px;font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ch)">Horizontal Logo Lockup — 8 Variants</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Logo_Primary_on_Obsidian.svg</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable</td><td style="padding:9px 14px;color:var(--muted)">Logo · Horizontal · Primary</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Logo_Primary_on_DeepField.svg</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable</td><td style="padding:9px 14px;color:var(--muted)">Logo · Horizontal · Secondary</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Logo_Reverse_on_Bone.svg</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable</td><td style="padding:9px 14px;color:var(--muted)">Logo · Horizontal · Primary Reverse</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Logo_Reverse_on_FieldLight.svg</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable</td><td style="padding:9px 14px;color:var(--muted)">Logo · Horizontal · Secondary Reverse</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Logo_Accent_on_Charge.svg</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable</td><td style="padding:9px 14px;color:var(--muted)">Logo · Horizontal · Accent</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Logo_Accent_on_Violet.svg</td><td style="padding:9px 14px"><span style="background:var(--vi10);color:var(--vi);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable</td><td style="padding:9px 14px;color:var(--muted)">Logo · Horizontal · Accent</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Logo_Transparent_DarkMark.svg</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable</td><td style="padding:9px 14px;color:var(--muted)">Logo · Horizontal · Flexible</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Logo_Transparent_LightMark.svg</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable</td><td style="padding:9px 14px;color:var(--muted)">Logo · Horizontal · Flexible</td></tr>
+        <!-- PNGs -->
+        <tr><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Logo_Primary_on_Obsidian.png</td><td style="padding:9px 14px"><span style="background:var(--vi10);color:var(--vi);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">PNG</span></td><td style="padding:9px 14px;color:var(--muted)">4400×880 @ 300 DPI</td><td style="padding:9px 14px;color:var(--muted)">Logo · Horizontal · Primary</td></tr>
+        <tr><td colspan="4" style="padding:4px 14px 4px;font-size:10px;color:var(--muted);font-style:italic">+ 7 additional PNG variants at 4400×880 @ 300 DPI (one per SVG variant)</td></tr>
+
+        <tr style="background:var(--vi10)"><td colspan="4" style="padding:8px 14px;font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--vi)">Icon Mark — Master + 8 Square Variants</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Icon_Master.svg</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable · Master source</td><td style="padding:9px 14px;color:var(--muted)">Icon · Master</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Icon_Square_Obsidian.svg</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable</td><td style="padding:9px 14px;color:var(--muted)">Icon · Square / LinkedIn</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Icon_Square_DeepField.svg</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable</td><td style="padding:9px 14px;color:var(--muted)">Icon · Square / LinkedIn</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Icon_Square_Bone.svg</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable</td><td style="padding:9px 14px;color:var(--muted)">Icon · Square / LinkedIn</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Icon_Square_Charge.svg + Violet.svg + Transparent variants (×2)</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable</td><td style="padding:9px 14px;color:var(--muted)">Icon · Square</td></tr>
+        <tr><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_Icon_Square_[Variant].png (×8)</td><td style="padding:9px 14px"><span style="background:var(--vi10);color:var(--vi);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">PNG</span></td><td style="padding:9px 14px;color:var(--muted)">1600×1600px</td><td style="padding:9px 14px;color:var(--muted)">Icon · Square / LinkedIn</td></tr>
+
+        <tr style="background:var(--ch10)"><td colspan="4" style="padding:8px 14px;font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ch)">Favicon Package</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">favicon.svg · favicon-light.svg · favicon-charge.svg · favicon-violet.svg</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">Scalable</td><td style="padding:9px 14px;color:var(--muted)">Favicon · 4 colorways</td></tr>
+        <tr style="border-bottom:1px solid var(--rule)"><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">favicon-32.png · favicon-64.png · apple-touch-icon.png · favicon.ico</td><td style="padding:9px 14px"><span style="background:var(--vi10);color:var(--vi);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">PNG</span></td><td style="padding:9px 14px;color:var(--muted)">32 · 64 · 180px</td><td style="padding:9px 14px;color:var(--muted)">Favicon · Raster</td></tr>
+        <tr><td style="padding:9px 14px;font-family:'DM Sans',monospace;color:var(--dark)">EpiGenIQ_LinkedIn_Banner.svg + .png</td><td style="padding:9px 14px"><span style="background:var(--ch10);color:var(--ch);font-family:'Syne',sans-serif;font-size:8px;font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px">SVG</span></td><td style="padding:9px 14px;color:var(--muted)">1584×396px</td><td style="padding:9px 14px;color:var(--muted)">Social Banner</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 04: USAGE RULES                         -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section tint">
+  <div class="section-head">
+    <div class="sec-num">04 — Logo Usage Rules</div>
+    <h2 class="sec-title">Do & Never Do</h2>
+  </div>
+  <div class="rules-grid">
+    <div class="rule-card do">
+      <div class="rule-card-title">✓ Always Do</div>
+      <ul class="rule-list">
+        <li>Use only the approved SVG source files — never recreate the wordmark</li>
+        <li>Maintain minimum clear space equal to the height of the icon mark on all sides</li>
+        <li>Use the primary dark variant on all dark backgrounds by default</li>
+        <li>Use the reverse light variant on white, bone, or light grey backgrounds</li>
+        <li>Apply the charge accent variant for campaign CTAs and high-energy moments</li>
+        <li>Apply the violet accent variant for AI outputs, scores, and intelligence content</li>
+        <li>Use the transparent versions when placing on photography with a color overlay</li>
+        <li>Include "™" symbol on first mention in every document, post, and page</li>
+        <li>Scale proportionally — never break the horizontal lockup proportions</li>
+        <li>Minimum size: 120px wide digital / 1.25 inches wide print</li>
+      </ul>
+    </div>
+    <div class="rule-card dont">
+      <div class="rule-card-title">✕ Never Do</div>
+      <ul class="rule-list">
+        <li>Never stretch, skew, rotate, or distort the logo in any direction</li>
+        <li>Never apply drop shadows, glows, or gradients to the logo</li>
+        <li>Never use unapproved color combinations — only the 8 approved variants</li>
+        <li>Never place on a busy photographic background without a solid color overlay</li>
+        <li>Never retype or recreate the wordmark in any other font</li>
+        <li>Never crowd the logo — always maintain clear space</li>
+        <li>Never reproduce smaller than 120px wide (digital) / 1.25" wide (print)</li>
+        <li>Never use the violet-only variant as a standalone brand color without approval</li>
+        <li>Never use the HealthStartz Plum Vitality colors (#3A1A4A, #7B3FA0) in EpiGenIQ materials</li>
+        <li>Never combine EpiGenIQ and HealthStartz logos without explicit co-brand authorization</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 05: ONE-PAGER BRIEF                     -->
+<!-- ═══════════════════════════════════════════════ -->
+<div class="section light">
+  <div class="section-head">
+    <div class="sec-num">05 — One-Pager Brand Brief</div>
+    <h2 class="sec-title">EpiGenIQ™ — The Designer Brief</h2>
+    <p class="sec-sub">Share this with graphic designers, web developers, social media managers, and team members. Everything needed to produce compliant EpiGenIQ materials.</p>
+  </div>
+
+  <div class="one-pager">
+    <!-- Header -->
+    <div class="op-header">
+      <div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <svg width="44" height="44" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity=".38" fill="none"/>
+            <circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity=".8" fill="none"/>
+            <circle cx="24" cy="24" r="4" fill="#A855F7"/>
+            <line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="11.5" y1="11.5" x2="15.8" y2="15.8" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/>
+            <line x1="32.2" y1="32.2" x2="36.5" y2="36.5" stroke="#A855F7" stroke-width="1.2" stroke-linecap="round" opacity=".9"/>
+          </svg>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:28px;letter-spacing:-.3px">
+            <span style="color:#F8FAF2">Epi</span><span style="color:#B8F000">Gen</span><span style="color:#A855F7;font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:30px">IQ</span>™
+          </div>
+        </div>
+        <div style="font-family:'DM Serif Display',serif;font-style:italic;font-size:16px;color:rgba(248,250,242,.6);margin-bottom:6px">"Your biology has a score. Now read it."</div>
+        <div style="font-family:'Syne',sans-serif;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(184,240,0,.5)">Wellbeing Score · A HealthStartz SubCo · 2026</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-family:'Syne',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(248,250,242,.4);margin-bottom:6px">Brand Brief</div>
+        <div style="font-size:11px;color:rgba(248,250,242,.6);line-height:1.7">Kelly O'Neill<br>954.614.6540<br>kelly@healthstartz.com</div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="op-body">
+
+      <!-- Identity -->
+      <div class="op-section">
+        <div class="op-sec-title">Brand Identity</div>
+        <div class="op-grid-2">
+          <div>
+            <div class="op-card">
+              <div class="op-card-title">Company Name</div>
+              <div class="op-card-body">EpiGenIQ™ — one word. Capital E, G, I, Q. The "IQ" is always set in italic (DM Serif Display Italic). The trademark symbol appears on first mention only.</div>
+            </div>
+          </div>
+          <div>
+            <div class="op-card">
+              <div class="op-card-title">Legal & Structure</div>
+              <div class="op-card-body">Independent editorial brand and thought leadership entity. SubCo under HealthStartz (KMONE Ventures, LLC). Independent Nu Skin Brand Affiliate for Pharmanex distribution.</div>
+            </div>
+          </div>
+          <div>
+            <div class="op-card">
+              <div class="op-card-title">Primary Taglines</div>
+              <div class="op-card-body">"Your biology has a score. Now read it." (hero/evergreen)<br>"AI converging epigenetics, carotenoids & nutraceuticals into one score." (category)<br>"Your wearable infers. This device reads." (distinction)</div>
+            </div>
+          </div>
+          <div>
+            <div class="op-card">
+              <div class="op-card-title">Brand System</div>
+              <div class="op-card-body">Deep Field — the color system name. Defined by Obsidian (#0E1214), Charge (#B8F000), and Electric Violet (#A855F7). Print-safe variant uses white/light grey backgrounds.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Colors -->
+      <div class="op-section">
+        <div class="op-sec-title">Color System — Deep Field</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div style="flex:1;min-width:120px">
+            <div style="background:#0E1214;border-radius:4px;height:48px;margin-bottom:6px"></div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:11px">#0E1214 Obsidian</div>
+            <div style="font-size:10px;color:var(--muted)">Background · Primary dark</div>
+          </div>
+          <div style="flex:1;min-width:120px">
+            <div style="background:#1C2B1A;border-radius:4px;height:48px;margin-bottom:6px"></div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:11px">#1C2B1A Deep Field</div>
+            <div style="font-size:10px;color:var(--muted)">Surface · Card backgrounds</div>
+          </div>
+          <div style="flex:1;min-width:120px">
+            <div style="background:#B8F000;border-radius:4px;height:48px;margin-bottom:6px"></div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:11px">#B8F000 Charge</div>
+            <div style="font-size:10px;color:var(--muted)">Biology · Primary CTA</div>
+          </div>
+          <div style="flex:1;min-width:120px">
+            <div style="background:#A855F7;border-radius:4px;height:48px;margin-bottom:6px"></div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:11px">#A855F7 Electric Violet</div>
+            <div style="font-size:10px;color:var(--muted)">Intelligence · IQ · Score</div>
+          </div>
+          <div style="flex:1;min-width:120px">
+            <div style="background:#D6F566;border-radius:4px;height:48px;margin-bottom:6px"></div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:11px">#D6F566 Pulse</div>
+            <div style="font-size:10px;color:var(--muted)">Improvement · Progress</div>
+          </div>
+          <div style="flex:1;min-width:120px">
+            <div style="background:#EDF5D0;border-radius:4px;height:48px;margin-bottom:6px;border:1px solid #CDD4C8"></div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:11px">#EDF5D0 Field Light</div>
+            <div style="font-size:10px;color:var(--muted)">Tags · Badge backgrounds</div>
+          </div>
+          <div style="flex:1;min-width:120px">
+            <div style="background:#F8FAF2;border-radius:4px;height:48px;margin-bottom:6px;border:1px solid #CDD4C8"></div>
+            <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:11px">#F8FAF2 Bone</div>
+            <div style="font-size:10px;color:var(--muted)">Body text · Light BG</div>
+          </div>
+        </div>
+        <div style="margin-top:14px;padding:12px 16px;background:var(--bg2);border:1px solid var(--rule);border-radius:4px;font-size:11px;color:var(--muted)">
+          <strong style="color:var(--dark)">Do not use</strong> HealthStartz Plum Vitality colors (#3A1A4A · #7B3FA0 · #C84B8A) in EpiGenIQ materials. The Electric Violet (#A855F7) is EpiGenIQ's brighter derivation — distinct from the parent brand's deep plum.
+        </div>
+      </div>
+
+      <!-- Typography -->
+      <div class="op-section">
+        <div class="op-sec-title">Typography</div>
+        <div class="op-grid-3">
+          <div class="op-card">
+            <div class="op-card-title" style="font-family:'DM Serif Display',serif;font-size:18px;font-weight:400">Display</div>
+            <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--ch);margin-bottom:4px">DM Serif Display</div>
+            <div class="op-card-body">Hero headlines, section titles, italic emphasis, pull quotes. Google Fonts — free.</div>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title" style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase">LABEL</div>
+            <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--vi);margin-bottom:4px">Syne 700–800</div>
+            <div class="op-card-body">All labels, CTAs, eyebrows, navigation, data callouts. Google Fonts — free.</div>
+          </div>
+          <div class="op-card">
+            <div class="op-card-title" style="font-family:'DM Sans',sans-serif;font-weight:300">Body</div>
+            <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">DM Sans 300–500</div>
+            <div class="op-card-body">All body copy, descriptions, articles. 15–17px / 1.65 leading. Google Fonts — free.</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;padding:10px 14px;background:var(--bg2);border:1px solid var(--rule);border-radius:4px;font-size:11px;color:var(--muted)">
+          <strong style="color:var(--dark)">Print / PDF fallback:</strong> Helvetica Neue (display) → Helvetica (body) → Georgia (italic accent). Never use Inter, Roboto, Arial, or system fonts as primary typeface.
+        </div>
+      </div>
+
+      <!-- Voice -->
+      <div class="op-section">
+        <div class="op-sec-title">Brand Voice</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span class="op-chip" style="background:var(--ch10);color:#2E5C1A;border:1px solid var(--ch25)">Precise — not vague wellness-speak</span>
+          <span class="op-chip" style="background:var(--ch10);color:#2E5C1A;border:1px solid var(--ch25)">Provocative — not preachy</span>
+          <span class="op-chip" style="background:var(--vi10);color:#6B21A8;border:1px solid var(--vi25)">Intelligent — not academic</span>
+          <span class="op-chip" style="background:var(--vi10);color:#6B21A8;border:1px solid var(--vi25)">Confident — not arrogant</span>
+          <span class="op-chip" style="background:var(--ch10);color:#2E5C1A;border:1px solid var(--ch25)">Warm — not clinical</span>
+          <span class="op-chip" style="background:var(--vi10);color:#6B21A8;border:1px solid var(--vi25)">Early — not trendy</span>
+        </div>
+        <div style="margin-top:12px;padding:12px 16px;background:var(--bg2);border-left:3px solid var(--ch);border-radius:0 4px 4px 0;font-size:12px;color:var(--med);font-style:italic">
+          "AI is converging nutraceutical science, epigenetic research, and carotenoid technology into a single health intelligence score — for the first time, at the consumer level."
+        </div>
+      </div>
+
+      <!-- Compliance -->
+      <div class="op-section">
+        <div class="op-sec-title">Compliance Rules for All Materials</div>
+        <div class="op-grid-2">
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2E7D32;margin-bottom:8px">Always Include</div>
+            <ul style="list-style:none;font-size:11px;color:var(--med);line-height:2">
+              <li>✓ #NSBrandAffiliate on all commercial social posts</li>
+              <li>✓ "Active scanning device" (never "wearable" or "medical device")</li>
+              <li>✓ "Results vary" near any testimonial or outcome claim</li>
+              <li>✓ Nu Skin affiliate disclaimer on all websites</li>
+              <li>✓ HealthStartz SubCo attribution in footers</li>
+            </ul>
+          </div>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#9333EA;margin-bottom:8px">Never Include</div>
+            <ul style="list-style:none;font-size:11px;color:var(--med);line-height:2">
+              <li>✕ Specific income figures in public posts</li>
+              <li>✕ "Diagnoses", "treats", "cures", "prevents disease"</li>
+              <li>✕ Nu Skin name/logo without prior approval</li>
+              <li>✕ Opportunity promotion on TikTok</li>
+              <li>✕ HealthStartz Plum Vitality colors in EpiGenIQ assets</li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top:12px;padding:10px 14px;background:#FFFBE6;border:1px solid var(--ch25);border-radius:4px;font-size:11px;color:var(--dark)">
+          <strong>Website disclaimer (required):</strong> "Independent Brand Affiliate Produced Website — This website is not produced or approved by Nu Skin Enterprises, Inc. or its affiliated companies."
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div style="border-top:1px solid var(--rule);padding-top:20px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px">
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;letter-spacing:-.2px;margin-bottom:3px">
+            <span style="color:var(--dark)">Epi</span><span style="color:var(--ch)">Gen</span><span style="color:var(--vi);font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:16px">IQ</span>™
+          </div>
+          <div style="font-size:10px;color:var(--muted)">A HealthStartz SubCo · Kelly O'Neill · 2026</div>
+        </div>
+        <div style="text-align:right;font-size:10px;color:var(--muted);line-height:1.7">
+          954.614.6540 · kelly@healthstartz.com<br>
+          Independent Brand Affiliate<br>
+          Not produced or approved by Nu Skin Enterprises, Inc.
+        </div>
+      </div>
+
+    </div><!-- /op-body -->
+  </div><!-- /one-pager -->
+</div>
+
+<!-- FOOTER -->
+<div style="background:var(--obs);padding:32px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+  <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px"><span style="color:var(--bone)">Epi</span><span style="color:var(--ch)">Gen</span><span style="color:var(--vi);font-family:'DM Serif Display',serif;font-style:italic;font-weight:400;font-size:16px">IQ</span>™ &nbsp;<span style="font-weight:400;font-size:11px;color:rgba(248,250,242,.3);letter-spacing:2px;text-transform:uppercase">Logo System & Brief · v1.0 · 2026</span></div>
+  <div style="font-size:10px;color:rgba(248,250,242,.3);text-align:right;line-height:1.8">A HealthStartz SubCo · Kelly O'Neill · 954.614.6540<br>Independent Brand Affiliate — Not produced or approved by Nu Skin Enterprises, Inc.</div>
+</div>
+
+</body>
+</html>

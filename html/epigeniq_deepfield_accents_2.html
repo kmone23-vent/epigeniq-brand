@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EpiGenIQ — Deep Field + Accent</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0E1214;
+  font-family: 'DM Sans', sans-serif;
+  color: #F8FAF2;
+  padding: 56px 32px 100px;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 72px;
+}
+.page-eyebrow {
+  font-family: 'Syne', sans-serif;
+  font-size: 11px; letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #B8F000;
+  margin-bottom: 12px;
+}
+.page-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 42px;
+  color: #F8FAF2;
+  margin-bottom: 10px;
+  letter-spacing: -0.5px;
+}
+.page-sub {
+  font-size: 14px;
+  color: rgba(248,250,242,0.45);
+  line-height: 1.6;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* BASE PALETTE STRIP - always shown */
+.base-strip {
+  max-width: 880px;
+  margin: 0 auto 64px;
+}
+.base-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(248,250,242,0.3);
+  margin-bottom: 16px;
+}
+.base-swatches {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.base-swatch {
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.sw-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.sw-hex {
+  font-size: 10px;
+  font-family: monospace;
+  opacity: 0.6;
+}
+
+/* ACCENT SECTIONS */
+.accent-block {
+  max-width: 880px;
+  margin: 0 auto 64px;
+  border: 1px solid rgba(248,250,242,0.08);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.accent-header {
+  padding: 32px 36px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(248,250,242,0.07);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.accent-num {
+  font-family: 'Syne', sans-serif;
+  font-size: 10px; letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(248,250,242,0.3);
+  margin-bottom: 6px;
+}
+.accent-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  letter-spacing: -0.3px;
+  margin-bottom: 6px;
+}
+.accent-rationale {
+  font-size: 13px;
+  color: rgba(248,250,242,0.5);
+  max-width: 400px;
+  line-height: 1.6;
+}
+.accent-chip-big {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  align-self: flex-start;
+  white-space: nowrap;
+}
+.accent-dot {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* FULL PALETTE ROW */
+.full-palette {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-bottom: 1px solid rgba(248,250,242,0.07);
+}
+.fp-swatch {
+  padding: 24px 12px 16px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.fp-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.fp-hex { font-size: 9px; font-family: monospace; opacity: 0.6; }
+.fp-tag {
+  font-size: 8px; letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.5; margin-top: 2px;
+}
+
+/* LOGO IN CONTEXT */
+.logo-in-context {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1px solid rgba(248,250,242,0.07);
+}
+.lic-tile {
+  padding: 32px 24px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 18px; min-height: 160px;
+}
+.lic-label {
+  font-size: 9px; letter-spacing: 2px;
+  text-transform: uppercase;
+  font-family: 'Syne', sans-serif;
+  opacity: 0.4;
+}
+.logo-mark {
+  display: flex; align-items: center; gap: 11px;
+}
+.lw { display: flex; flex-direction: column; gap: 2px; }
+.lw-line1 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 18px;
+  letter-spacing: 0.5px; line-height: 1;
+}
+.lw-line2 {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300; font-size: 7.5px;
+  letter-spacing: 3px; text-transform: uppercase;
+}
+
+/* UI MOCKUP */
+.ui-mockup {
+  padding: 28px 36px;
+  border-bottom: 1px solid rgba(248,250,242,0.07);
+  display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+}
+.ui-label {
+  font-family: 'Syne', sans-serif; font-size: 10px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(248,250,242,0.3); margin-right: 8px;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  padding: 10px 22px; border-radius: 3px;
+  font-family: 'Syne', sans-serif; font-size: 11px;
+  font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; border: none; cursor: pointer;
+}
+.btn-secondary {
+  padding: 9px 20px; border-radius: 3px;
+  font-family: 'Syne', sans-serif; font-size: 11px;
+  font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; cursor: pointer;
+}
+.score-badge {
+  padding: 8px 16px; border-radius: 3px;
+  font-family: 'Syne', sans-serif; font-size: 13px;
+  font-weight: 800; letter-spacing: 1px;
+}
+.tag-chip {
+  padding: 5px 12px; border-radius: 2px;
+  font-size: 11px; font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+}
+.headline-preview {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px; line-height: 1.2;
+}
+
+/* RECOMMENDATION STRIP */
+.rec-strip {
+  padding: 20px 36px;
+  display: flex; align-items: center; gap: 12px;
+  flex-wrap: wrap;
+}
+.rec-label {
+  font-family: 'Syne', sans-serif; font-size: 10px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(248,250,242,0.3);
+}
+.rec-text {
+  font-size: 13px; color: rgba(248,250,242,0.6);
+  line-height: 1.5;
+}
+
+/* WINNER BADGE */
+.winner {
+  border: 1px solid #B8F000 !important;
+  position: relative;
+}
+.winner-tag {
+  position: absolute;
+  top: -1px; right: 24px;
+  background: #B8F000;
+  color: #0E1214;
+  font-family: 'Syne', sans-serif;
+  font-size: 9px; font-weight: 800;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 0 0 4px 4px;
+}
+
+@media (max-width: 640px) {
+  .full-palette { grid-template-columns: repeat(4, 1fr); }
+  .logo-in-context { grid-template-columns: 1fr; }
+  .base-swatches { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-eyebrow">EpiGenIQ™ · Deep Field — Accent Exploration</div>
+  <div class="page-title">Pick Your Third Color</div>
+  <p class="page-sub">Obsidian + Charge (chartreuse) is locked. Three accent options below — each changes the personality of the brand.</p>
+</div>
+
+<!-- BASE PALETTE -->
+<div class="base-strip">
+  <div class="base-label">Base · Locked ↓</div>
+  <div class="base-swatches">
+    <div class="base-swatch" style="background:#0E1214;">
+      <div class="sw-name" style="color:rgba(248,250,242,0.7);">Obsidian</div>
+      <div class="sw-hex" style="color:rgba(248,250,242,0.4);">#0E1214</div>
+    </div>
+    <div class="base-swatch" style="background:#1C2B1A;">
+      <div class="sw-name" style="color:rgba(248,250,242,0.7);">Deep Field</div>
+      <div class="sw-hex" style="color:rgba(248,250,242,0.4);">#1C2B1A</div>
+    </div>
+    <div class="base-swatch" style="background:#B8F000;">
+      <div class="sw-name" style="color:rgba(14,18,20,0.7);">Charge</div>
+      <div class="sw-hex" style="color:rgba(14,18,20,0.5);">#B8F000</div>
+    </div>
+    <div class="base-swatch" style="background:#D6F566;">
+      <div class="sw-name" style="color:rgba(14,18,20,0.7);">Pulse</div>
+      <div class="sw-hex" style="color:rgba(14,18,20,0.5);">#D6F566</div>
+    </div>
+    <div class="base-swatch" style="background:#EDF5D0;">
+      <div class="sw-name" style="color:rgba(14,18,20,0.6);">Field</div>
+      <div class="sw-hex" style="color:rgba(14,18,20,0.4);">#EDF5D0</div>
+    </div>
+    <div class="base-swatch" style="background:#F8FAF2;">
+      <div class="sw-name" style="color:rgba(14,18,20,0.6);">Bone</div>
+      <div class="sw-hex" style="color:rgba(14,18,20,0.4);">#F8FAF2</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ACCENT A: BIOLUMINESCENT CORAL -->
+<!-- ============================================================ -->
+<div class="accent-block" style="position:relative;">
+  <div class="accent-header" style="background:#111518;">
+    <div>
+      <div class="accent-num">Accent A</div>
+      <div class="accent-name">Bioluminescent Coral</div>
+      <div class="accent-rationale">
+        A vivid, warm coral-orange that creates electric tension
+        against the chartreuse. In nature, bioluminescence — living
+        organisms producing light. Perfect metaphor for what the
+        device does: revealing the light your biology is producing
+        (or not). Warm without being gold. Urgent without being red.
+      </div>
+    </div>
+    <div class="accent-chip-big" style="background:rgba(255,90,60,0.12); color:#FF5A3C;">
+      <div class="accent-dot" style="background:#FF5A3C;"></div>
+      #FF5A3C · Coral
+    </div>
+  </div>
+
+  <div class="full-palette">
+    <div class="fp-swatch" style="background:#0E1214;">
+      <div class="fp-name" style="color:rgba(248,250,242,0.7);">Obsidian</div>
+      <div class="fp-hex" style="color:rgba(248,250,242,0.4);">#0E1214</div>
+      <div class="fp-tag" style="color:rgba(248,250,242,0.3);">Background</div>
+    </div>
+    <div class="fp-swatch" style="background:#1C2B1A;">
+      <div class="fp-name" style="color:rgba(248,250,242,0.7);">Deep Field</div>
+      <div class="fp-hex" style="color:rgba(248,250,242,0.4);">#1C2B1A</div>
+      <div class="fp-tag" style="color:rgba(248,250,242,0.3);">Surface</div>
+    </div>
+    <div class="fp-swatch" style="background:#B8F000;">
+      <div class="fp-name" style="color:rgba(14,18,20,0.8);">Charge</div>
+      <div class="fp-hex" style="color:rgba(14,18,20,0.5);">#B8F000</div>
+      <div class="fp-tag" style="color:rgba(14,18,20,0.4);">Primary CTA</div>
+    </div>
+    <div class="fp-swatch" style="background:#FF5A3C;">
+      <div class="fp-name" style="color:rgba(248,250,242,0.9);">Coral</div>
+      <div class="fp-hex" style="color:rgba(248,250,242,0.6);">#FF5A3C</div>
+      <div class="fp-tag" style="color:rgba(248,250,242,0.5);">← NEW ACCENT</div>
+    </div>
+    <div class="fp-swatch" style="background:#D6F566;">
+      <div class="fp-name" style="color:rgba(14,18,20,0.7);">Pulse</div>
+      <div class="fp-hex" style="color:rgba(14,18,20,0.5);">#D6F566</div>
+      <div class="fp-tag" style="color:rgba(14,18,20,0.4);">Highlight</div>
+    </div>
+    <div class="fp-swatch" style="background:#EDF5D0;">
+      <div class="fp-name" style="color:rgba(14,18,20,0.6);">Field</div>
+      <div class="fp-hex" style="color:rgba(14,18,20,0.4);">#EDF5D0</div>
+      <div class="fp-tag" style="color:rgba(14,18,20,0.3);">Tag BG</div>
+    </div>
+    <div class="fp-swatch" style="background:#F8FAF2;">
+      <div class="fp-name" style="color:rgba(14,18,20,0.6);">Bone</div>
+      <div class="fp-hex" style="color:rgba(14,18,20,0.4);">#F8FAF2</div>
+      <div class="fp-tag" style="color:rgba(14,18,20,0.3);">Body Text BG</div>
+    </div>
+  </div>
+
+  <div class="logo-in-context">
+    <div class="lic-tile" style="background:#0E1214;">
+      <div class="logo-mark">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity="0.35"/>
+          <circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity="0.7"/>
+          <circle cx="24" cy="24" r="4" fill="#FF5A3C"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="12.7" y1="12.7" x2="17.8" y2="17.8" stroke="#FF5A3C" stroke-width="1.2" opacity="0.7" stroke-linecap="round"/>
+          <line x1="30.2" y1="30.2" x2="35.3" y2="35.3" stroke="#FF5A3C" stroke-width="1.2" opacity="0.7" stroke-linecap="round"/>
+        </svg>
+        <div class="lw">
+          <div class="lw-line1"><span style="color:#F8FAF2;">Epi</span><span style="color:#B8F000;">Gen</span><span style="color:#FF5A3C; font-style:italic;">IQ</span></div>
+          <div class="lw-line2" style="color:rgba(184,240,0,0.4);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="lic-label">Primary · Dark</div>
+    </div>
+    <div class="lic-tile" style="background:#1C2B1A;">
+      <div class="logo-mark">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity="0.3"/>
+          <circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="24" cy="24" r="4" fill="#FF5A3C"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="lw">
+          <div class="lw-line1"><span style="color:#F8FAF2;">Epi</span><span style="color:#B8F000;">Gen</span><span style="color:#FF5A3C; font-style:italic;">IQ</span></div>
+          <div class="lw-line2" style="color:rgba(184,240,0,0.3);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="lic-label">Surface · Field</div>
+    </div>
+    <div class="lic-tile" style="background:#F8FAF2;">
+      <div class="logo-mark">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#1C2B1A" stroke-width="1" stroke-dasharray="4 2" opacity="0.2"/>
+          <circle cx="24" cy="24" r="16" stroke="#1C2B1A" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="24" cy="24" r="4" fill="#FF5A3C"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="lw">
+          <div class="lw-line1"><span style="color:#0E1214;">Epi</span><span style="color:#1C2B1A;">Gen</span><span style="color:#FF5A3C; font-style:italic;">IQ</span></div>
+          <div class="lw-line2" style="color:rgba(28,43,26,0.35);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="lic-label">Reverse · Light</div>
+    </div>
+  </div>
+
+  <div class="ui-mockup" style="background:#111518;">
+    <span class="ui-label">UI Preview →</span>
+    <button class="btn-primary" style="background:#B8F000; color:#0E1214;">Scan Now</button>
+    <button class="btn-secondary" style="background:transparent; border:1px solid #B8F000; color:#B8F000;">Learn More</button>
+    <span class="score-badge" style="background:#FF5A3C; color:white;">Score: 74</span>
+    <span class="tag-chip" style="background:rgba(255,90,60,0.12); color:#FF5A3C; border:1px solid rgba(255,90,60,0.3);">Carotenoid Low</span>
+    <span class="tag-chip" style="background:rgba(184,240,0,0.1); color:#B8F000; border:1px solid rgba(184,240,0,0.3);">AI Analysis</span>
+    <div class="headline-preview" style="color:#F8FAF2;">Your biology has<br><span style="color:#B8F000;">a score.</span> <span style="color:#FF5A3C;">Now read it.</span></div>
+  </div>
+  <div class="rec-strip" style="background:#0a0d0f;">
+    <span class="rec-label">Use Coral for →</span>
+    <span class="rec-text">Score indicators · Alerts · "Low" readings · Urgency CTAs · The center dot of the icon mark</span>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- ACCENT B: ELECTRIC VIOLET -->
+<!-- ============================================================ -->
+<div class="accent-block winner" style="position:relative;">
+  <div class="winner-tag">★ Recommended</div>
+  <div class="accent-header" style="background:#111518;">
+    <div>
+      <div class="accent-num">Accent B</div>
+      <div class="accent-name">Electric Violet</div>
+      <div class="accent-rationale">
+        A vivid, saturated violet — not the deep plum of HealthStartz,
+        but a high-energy electric tone that sits opposite chartreuse
+        on the spectrum. Creates a sci-fi precision aesthetic. Feels
+        like a readout from a scanning instrument. The chartreuse
+        is biology; the violet is intelligence. Together they tell
+        the whole EpiGenIQ story visually.
+      </div>
+    </div>
+    <div class="accent-chip-big" style="background:rgba(138,43,226,0.15); color:#A855F7;">
+      <div class="accent-dot" style="background:#A855F7;"></div>
+      #A855F7 · Violet
+    </div>
+  </div>
+
+  <div class="full-palette">
+    <div class="fp-swatch" style="background:#0E1214;">
+      <div class="fp-name" style="color:rgba(248,250,242,0.7);">Obsidian</div>
+      <div class="fp-hex" style="color:rgba(248,250,242,0.4);">#0E1214</div>
+      <div class="fp-tag" style="color:rgba(248,250,242,0.3);">Background</div>
+    </div>
+    <div class="fp-swatch" style="background:#1C2B1A;">
+      <div class="fp-name" style="color:rgba(248,250,242,0.7);">Deep Field</div>
+      <div class="fp-hex" style="color:rgba(248,250,242,0.4);">#1C2B1A</div>
+      <div class="fp-tag" style="color:rgba(248,250,242,0.3);">Surface</div>
+    </div>
+    <div class="fp-swatch" style="background:#B8F000;">
+      <div class="fp-name" style="color:rgba(14,18,20,0.8);">Charge</div>
+      <div class="fp-hex" style="color:rgba(14,18,20,0.5);">#B8F000</div>
+      <div class="fp-tag" style="color:rgba(14,18,20,0.4);">Primary CTA</div>
+    </div>
+    <div class="fp-swatch" style="background:#A855F7;">
+      <div class="fp-name" style="color:rgba(248,250,242,0.9);">Violet</div>
+      <div class="fp-hex" style="color:rgba(248,250,242,0.6);">#A855F7</div>
+      <div class="fp-tag" style="color:rgba(248,250,242,0.5);">← NEW ACCENT</div>
+    </div>
+    <div class="fp-swatch" style="background:#D6F566;">
+      <div class="fp-name" style="color:rgba(14,18,20,0.7);">Pulse</div>
+      <div class="fp-hex" style="color:rgba(14,18,20,0.5);">#D6F566</div>
+      <div class="fp-tag" style="color:rgba(14,18,20,0.4);">Highlight</div>
+    </div>
+    <div class="fp-swatch" style="background:#EDF5D0;">
+      <div class="fp-name" style="color:rgba(14,18,20,0.6);">Field</div>
+      <div class="fp-hex" style="color:rgba(14,18,20,0.4);">#EDF5D0</div>
+      <div class="fp-tag" style="color:rgba(14,18,20,0.3);">Tag BG</div>
+    </div>
+    <div class="fp-swatch" style="background:#F8FAF2;">
+      <div class="fp-name" style="color:rgba(14,18,20,0.6);">Bone</div>
+      <div class="fp-hex" style="color:rgba(14,18,20,0.4);">#F8FAF2</div>
+      <div class="fp-tag" style="color:rgba(14,18,20,0.3);">Body Text BG</div>
+    </div>
+  </div>
+
+  <div class="logo-in-context">
+    <div class="lic-tile" style="background:#0E1214;">
+      <div class="logo-mark">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity="0.35"/>
+          <circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity="0.7"/>
+          <circle cx="24" cy="24" r="4" fill="#A855F7"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="12.7" y1="12.7" x2="17.8" y2="17.8" stroke="#A855F7" stroke-width="1.2" opacity="0.8" stroke-linecap="round"/>
+          <line x1="30.2" y1="30.2" x2="35.3" y2="35.3" stroke="#A855F7" stroke-width="1.2" opacity="0.8" stroke-linecap="round"/>
+        </svg>
+        <div class="lw">
+          <div class="lw-line1"><span style="color:#F8FAF2;">Epi</span><span style="color:#B8F000;">Gen</span><span style="color:#A855F7; font-style:italic;">IQ</span></div>
+          <div class="lw-line2" style="color:rgba(184,240,0,0.4);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="lic-label">Primary · Dark</div>
+    </div>
+    <div class="lic-tile" style="background:#1C2B1A;">
+      <div class="logo-mark">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity="0.3"/>
+          <circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="24" cy="24" r="4" fill="#A855F7"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="lw">
+          <div class="lw-line1"><span style="color:#F8FAF2;">Epi</span><span style="color:#B8F000;">Gen</span><span style="color:#A855F7; font-style:italic;">IQ</span></div>
+          <div class="lw-line2" style="color:rgba(184,240,0,0.3);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="lic-label">Surface · Field</div>
+    </div>
+    <div class="lic-tile" style="background:#F8FAF2;">
+      <div class="logo-mark">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#1C2B1A" stroke-width="1" stroke-dasharray="4 2" opacity="0.2"/>
+          <circle cx="24" cy="24" r="16" stroke="#1C2B1A" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="24" cy="24" r="4" fill="#A855F7"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="lw">
+          <div class="lw-line1"><span style="color:#0E1214;">Epi</span><span style="color:#1C2B1A;">Gen</span><span style="color:#A855F7; font-style:italic;">IQ</span></div>
+          <div class="lw-line2" style="color:rgba(28,43,26,0.35);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="lic-label">Reverse · Light</div>
+    </div>
+  </div>
+
+  <div class="ui-mockup" style="background:#111518;">
+    <span class="ui-label">UI Preview →</span>
+    <button class="btn-primary" style="background:#B8F000; color:#0E1214;">Scan Now</button>
+    <button class="btn-secondary" style="background:transparent; border:1px solid #A855F7; color:#A855F7;">View Intelligence</button>
+    <span class="score-badge" style="background:rgba(168,85,247,0.15); color:#A855F7; border:1px solid rgba(168,85,247,0.4);">Score: 74</span>
+    <span class="tag-chip" style="background:rgba(168,85,247,0.1); color:#A855F7; border:1px solid rgba(168,85,247,0.25);">Epigenetic Data</span>
+    <span class="tag-chip" style="background:rgba(184,240,0,0.1); color:#B8F000; border:1px solid rgba(184,240,0,0.3);">AI Optimized</span>
+    <div class="headline-preview" style="color:#F8FAF2;">Biology meets <span style="color:#B8F000;">intelligence.</span><br><span style="color:#A855F7; font-style:italic;">Your score is waiting.</span></div>
+  </div>
+  <div class="rec-strip" style="background:#0a0d0f;">
+    <span class="rec-label">Use Violet for →</span>
+    <span class="rec-text">Intelligence layer · AI outputs · Score display · The IQ element of the wordmark · Data cards · "Optimize" actions · The icon mark center dot</span>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- ACCENT C: SIGNAL ORANGE -->
+<!-- ============================================================ -->
+<div class="accent-block" style="position:relative;">
+  <div class="accent-header" style="background:#111518;">
+    <div>
+      <div class="accent-num">Accent C</div>
+      <div class="accent-name">Signal Orange</div>
+      <div class="accent-rationale">
+        A pure, saturated signal orange — high-visibility, high-energy.
+        References the carotenoid pigments literally (beta-carotene is orange).
+        Creates the strongest contrast against the deep field background.
+        Most accessible for data visualization. Most memorable at small sizes.
+        The "alert" color that makes your score unmissable.
+      </div>
+    </div>
+    <div class="accent-chip-big" style="background:rgba(255,140,0,0.12); color:#FF8C00;">
+      <div class="accent-dot" style="background:#FF8C00;"></div>
+      #FF8C00 · Signal
+    </div>
+  </div>
+
+  <div class="full-palette">
+    <div class="fp-swatch" style="background:#0E1214;">
+      <div class="fp-name" style="color:rgba(248,250,242,0.7);">Obsidian</div>
+      <div class="fp-hex" style="color:rgba(248,250,242,0.4);">#0E1214</div>
+      <div class="fp-tag" style="color:rgba(248,250,242,0.3);">Background</div>
+    </div>
+    <div class="fp-swatch" style="background:#1C2B1A;">
+      <div class="fp-name" style="color:rgba(248,250,242,0.7);">Deep Field</div>
+      <div class="fp-hex" style="color:rgba(248,250,242,0.4);">#1C2B1A</div>
+      <div class="fp-tag" style="color:rgba(248,250,242,0.3);">Surface</div>
+    </div>
+    <div class="fp-swatch" style="background:#B8F000;">
+      <div class="fp-name" style="color:rgba(14,18,20,0.8);">Charge</div>
+      <div class="fp-hex" style="color:rgba(14,18,20,0.5);">#B8F000</div>
+      <div class="fp-tag" style="color:rgba(14,18,20,0.4);">Primary CTA</div>
+    </div>
+    <div class="fp-swatch" style="background:#FF8C00;">
+      <div class="fp-name" style="color:rgba(248,250,242,0.9);">Signal</div>
+      <div class="fp-hex" style="color:rgba(248,250,242,0.6);">#FF8C00</div>
+      <div class="fp-tag" style="color:rgba(248,250,242,0.5);">← NEW ACCENT</div>
+    </div>
+    <div class="fp-swatch" style="background:#D6F566;">
+      <div class="fp-name" style="color:rgba(14,18,20,0.7);">Pulse</div>
+      <div class="fp-hex" style="color:rgba(14,18,20,0.5);">#D6F566</div>
+      <div class="fp-tag" style="color:rgba(14,18,20,0.4);">Highlight</div>
+    </div>
+    <div class="fp-swatch" style="background:#EDF5D0;">
+      <div class="fp-name" style="color:rgba(14,18,20,0.6);">Field</div>
+      <div class="fp-hex" style="color:rgba(14,18,20,0.4);">#EDF5D0</div>
+      <div class="fp-tag" style="color:rgba(14,18,20,0.3);">Tag BG</div>
+    </div>
+    <div class="fp-swatch" style="background:#F8FAF2;">
+      <div class="fp-name" style="color:rgba(14,18,20,0.6);">Bone</div>
+      <div class="fp-hex" style="color:rgba(14,18,20,0.4);">#F8FAF2</div>
+      <div class="fp-tag" style="color:rgba(14,18,20,0.3);">Body Text BG</div>
+    </div>
+  </div>
+
+  <div class="logo-in-context">
+    <div class="lic-tile" style="background:#0E1214;">
+      <div class="logo-mark">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity="0.35"/>
+          <circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity="0.7"/>
+          <circle cx="24" cy="24" r="4" fill="#FF8C00"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="12.7" y1="12.7" x2="17.8" y2="17.8" stroke="#FF8C00" stroke-width="1.2" opacity="0.8" stroke-linecap="round"/>
+          <line x1="30.2" y1="30.2" x2="35.3" y2="35.3" stroke="#FF8C00" stroke-width="1.2" opacity="0.8" stroke-linecap="round"/>
+        </svg>
+        <div class="lw">
+          <div class="lw-line1"><span style="color:#F8FAF2;">Epi</span><span style="color:#B8F000;">Gen</span><span style="color:#FF8C00; font-style:italic;">IQ</span></div>
+          <div class="lw-line2" style="color:rgba(184,240,0,0.4);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="lic-label">Primary · Dark</div>
+    </div>
+    <div class="lic-tile" style="background:#1C2B1A;">
+      <div class="logo-mark">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#B8F000" stroke-width="1" stroke-dasharray="4 2" opacity="0.3"/>
+          <circle cx="24" cy="24" r="16" stroke="#B8F000" stroke-width="1.5" opacity="0.6"/>
+          <circle cx="24" cy="24" r="4" fill="#FF8C00"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#B8F000" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="lw">
+          <div class="lw-line1"><span style="color:#F8FAF2;">Epi</span><span style="color:#B8F000;">Gen</span><span style="color:#FF8C00; font-style:italic;">IQ</span></div>
+          <div class="lw-line2" style="color:rgba(184,240,0,0.3);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="lic-label">Surface · Field</div>
+    </div>
+    <div class="lic-tile" style="background:#F8FAF2;">
+      <div class="logo-mark">
+        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="#1C2B1A" stroke-width="1" stroke-dasharray="4 2" opacity="0.2"/>
+          <circle cx="24" cy="24" r="16" stroke="#1C2B1A" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="24" cy="24" r="4" fill="#FF8C00"/>
+          <line x1="8" y1="24" x2="16" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="32" y1="24" x2="40" y2="24" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="8" x2="24" y2="16" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="24" y1="32" x2="24" y2="40" stroke="#1C2B1A" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="lw">
+          <div class="lw-line1"><span style="color:#0E1214;">Epi</span><span style="color:#1C2B1A;">Gen</span><span style="color:#FF8C00; font-style:italic;">IQ</span></div>
+          <div class="lw-line2" style="color:rgba(28,43,26,0.35);">Wellbeing Score</div>
+        </div>
+      </div>
+      <div class="lic-label">Reverse · Light</div>
+    </div>
+  </div>
+
+  <div class="ui-mockup" style="background:#111518;">
+    <span class="ui-label">UI Preview →</span>
+    <button class="btn-primary" style="background:#B8F000; color:#0E1214;">Scan Now</button>
+    <button class="btn-secondary" style="background:transparent; border:1px solid #FF8C00; color:#FF8C00;">View Score</button>
+    <span class="score-badge" style="background:#FF8C00; color:#0E1214; font-weight:800;">Score: 74</span>
+    <span class="tag-chip" style="background:rgba(255,140,0,0.12); color:#FF8C00; border:1px solid rgba(255,140,0,0.3);">Beta-Carotene</span>
+    <span class="tag-chip" style="background:rgba(184,240,0,0.1); color:#B8F000; border:1px solid rgba(184,240,0,0.3);">Optimize</span>
+    <div class="headline-preview" style="color:#F8FAF2;">Your carotenoids<br>are <span style="color:#FF8C00;">speaking.</span> <span style="color:#B8F000;">Are you listening?</span></div>
+  </div>
+  <div class="rec-strip" style="background:#0a0d0f;">
+    <span class="rec-label">Use Signal for →</span>
+    <span class="rec-text">Score numbers · Carotenoid data · Scan results · Product badges · "Improve" actions · Data visualization highlights · The icon mark center dot</span>
+  </div>
+</div>
+
+<p style="text-align:center; font-size:11px; color:rgba(248,250,242,0.2); margin-top:48px; font-family:'DM Sans',sans-serif; letter-spacing:1px; text-transform:uppercase;">
+  EpiGenIQ™ · HealthStartz SubCo · Kelly O'Neill · 2026
+</p>
+
+</body>
+</html>
