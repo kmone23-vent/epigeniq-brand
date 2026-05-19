@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EpiGenIQ · Cellular Wellbeing Assessment</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --obsidian: #0E1214;
+  --deepfield: #1C2B1A;
+  --charge: #B2F000;
+  --violet: #A855F7;
+  --pulse: #D6F566;
+  --fieldlight: #EDF5D0;
+  --bone: #F8FAF2;
+  --error: #EF4444;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif; font-weight: 300;
+  background: var(--bone); color: var(--obsidian);
+  min-height: 100vh; font-size: 16px; line-height: 1.65;
+}
+
+/* PASSWORD GATE */
+#pwGate {
+  position: fixed; inset: 0; background: var(--obsidian);
+  display: flex; align-items: center; justify-content: center; z-index: 9999;
+}
+.pw-modal {
+  background: var(--deepfield); border: 1px solid rgba(178,240,0,0.2);
+  border-radius: 4px; padding: 48px 40px; width: 100%; max-width: 400px;
+  text-align: center;
+}
+.pw-modal h1 {
+  font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px;
+  color: var(--charge); letter-spacing: -0.5px; margin-bottom: 6px;
+}
+.pw-modal p { color: var(--fieldlight); font-size: 13px; letter-spacing: 0.5px; margin-bottom: 32px; opacity: 0.7; }
+.pw-input {
+  width: 100%; background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(178,240,0,0.25); color: var(--bone);
+  font-family: 'Space Mono', monospace; font-size: 14px;
+  padding: 12px 16px; border-radius: 2px; outline: none; margin-bottom: 12px;
+}
+.pw-input:focus { border-color: rgba(178,240,0,0.5); }
+.pw-btn {
+  width: 100%; font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 13px; text-transform: uppercase; letter-spacing: 0.8px;
+  background: var(--charge); color: var(--obsidian); border: none;
+  padding: 13px; border-radius: 2px; cursor: pointer; transition: all .2s;
+}
+.pw-btn:hover { background: var(--pulse); transform: translateY(-1px); }
+.pw-error { color: var(--error); font-size: 11px; margin-top: 10px; font-family: 'Space Mono', monospace; display: none; }
+.pw-error.show { display: block; }
+
+#mainApp { display: none; }
+
+.site-header {
+  background: var(--obsidian); padding: 20px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 2px solid var(--charge);
+}
+.brand { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; color: var(--charge); letter-spacing: -0.3px; }
+.brand span { color: var(--bone); font-weight: 400; }
+.badge { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--violet); letter-spacing: 1px; text-transform: uppercase; }
+
+.hero {
+  background: var(--deepfield); padding: 64px 40px 56px;
+  text-align: center; border-bottom: 1px solid rgba(178,240,0,0.1);
+}
+.hero h2 {
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: clamp(28px, 5vw, 44px); color: var(--bone);
+  letter-spacing: -1px; line-height: 1.1; margin-bottom: 16px;
+}
+.hero h2 em { color: var(--charge); font-style: normal; }
+.hero p { color: var(--fieldlight); font-size: 16px; max-width: 560px; margin: 0 auto 32px; opacity: 0.8; }
+.hero-meta { display: flex; align-items: center; justify-content: center; gap: 32px; flex-wrap: wrap; }
+.hero-meta span { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--charge); letter-spacing: 0.5px; opacity: 0.8; }
+
+.progress-wrap {
+  background: var(--obsidian); padding: 16px 40px;
+  border-bottom: 1px solid rgba(178,240,0,0.08); position: sticky; top: 0; z-index: 100;
+}
+.progress-label { display: flex; justify-content: space-between; font-family: 'Space Mono', monospace; font-size: 10px; color: var(--fieldlight); letter-spacing: 0.5px; margin-bottom: 8px; opacity: 0.6; }
+.progress-bar { height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--charge); border-radius: 2px; transition: width 0.4s ease; width: 0%; }
+
+.assessment { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+
+.pillar-header { margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(14,18,20,0.1); }
+.pillar-tag {
+  display: inline-block; font-family: 'Space Mono', monospace; font-size: 10px;
+  letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; margin-bottom: 12px;
+}
+.pillar-tag.biology, .pillar-tag.nutrition, .pillar-tag.movement { background: rgba(178,240,0,0.12); color: #6B8B00; }
+.pillar-tag.sleep, .pillar-tag.stress, .pillar-tag.mindset { background: rgba(168,85,247,0.12); color: var(--violet); }
+.pillar-header h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 22px; color: var(--obsidian); letter-spacing: -0.3px; margin-bottom: 6px; }
+.pillar-header p { font-size: 14px; color: #4A5568; font-style: italic; }
+
+.question-block {
+  background: #fff; border: 1px solid rgba(14,18,20,0.08);
+  border-left: 3px solid var(--charge); border-radius: 0 4px 4px 0;
+  padding: 28px 28px 24px; margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(14,18,20,0.04); transition: box-shadow 0.2s;
+}
+.question-block:hover { box-shadow: 0 4px 16px rgba(14,18,20,0.08); }
+.question-block.violet-accent { border-left-color: var(--violet); }
+.q-number { font-family: 'Space Mono', monospace; font-size: 10px; color: #9CA3AF; letter-spacing: 0.5px; margin-bottom: 8px; }
+.q-text { font-size: 15px; color: var(--obsidian); line-height: 1.55; margin-bottom: 20px; }
+
+.scale-labels { display: flex; justify-content: space-between; font-family: 'Space Mono', monospace; font-size: 9px; color: #9CA3AF; margin-bottom: 8px; }
+.scale-options { display: flex; gap: 8px; }
+.scale-option { flex: 1; text-align: center; }
+.scale-option input[type="radio"] { display: none; }
+.scale-option label {
+  display: flex; align-items: center; justify-content: center; height: 44px;
+  border: 1.5px solid rgba(14,18,20,0.12); border-radius: 2px;
+  font-family: 'Syne', sans-serif; font-weight: 600; font-size: 14px;
+  color: #6B7280; cursor: pointer; transition: all 0.15s; user-select: none;
+}
+.scale-option label:hover { border-color: var(--charge); color: var(--obsidian); background: rgba(178,240,0,0.06); }
+.scale-option input:checked + label { background: var(--charge); border-color: var(--charge); color: var(--obsidian); }
+.question-block.violet-accent .scale-option label:hover { border-color: var(--violet); background: rgba(168,85,247,0.06); }
+.question-block.violet-accent .scale-option input:checked + label { background: var(--violet); border-color: var(--violet); color: #fff; }
+
+.nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; gap: 16px; }
+.btn-back {
+  font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px;
+  letter-spacing: 0.5px; text-transform: uppercase; color: #6B7280;
+  background: none; border: 1.5px solid rgba(14,18,20,0.15);
+  padding: 12px 24px; border-radius: 2px; cursor: pointer; transition: all .2s;
+}
+.btn-back:hover { color: var(--obsidian); border-color: var(--obsidian); }
+.btn-next {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
+  letter-spacing: 0.8px; text-transform: uppercase;
+  background: var(--charge); color: var(--obsidian); border: none;
+  padding: 14px 36px; border-radius: 2px; cursor: pointer;
+  transition: all .2s; flex: 1; max-width: 280px;
+}
+.btn-next:hover { background: var(--pulse); transform: translateY(-1px); }
+
+.lead-section { background: var(--deepfield); padding: 56px 40px; text-align: center; }
+.lead-section h3 { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 28px; color: var(--bone); letter-spacing: -0.5px; margin-bottom: 12px; }
+.lead-section p { color: var(--fieldlight); font-size: 15px; max-width: 480px; margin: 0 auto 36px; opacity: 0.8; }
+.lead-form { max-width: 440px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.lead-input {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(178,240,0,0.2);
+  color: var(--bone); font-family: 'DM Sans', sans-serif; font-size: 16px;
+  padding: 14px 16px; border-radius: 2px; outline: none;
+}
+.lead-input::placeholder { color: rgba(255,255,255,0.3); }
+.lead-input:focus { border-color: rgba(178,240,0,0.5); }
+.lead-submit {
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px;
+  letter-spacing: 0.8px; text-transform: uppercase;
+  background: var(--charge); color: var(--obsidian); border: none;
+  padding: 16px; border-radius: 2px; cursor: pointer; transition: all .2s; margin-top: 4px;
+}
+.lead-submit:hover { background: var(--pulse); transform: translateY(-1px); }
+.lead-disclaimer { font-size: 11px; color: var(--fieldlight); opacity: 0.4; font-family: 'Space Mono', monospace; margin-top: 8px; }
+
+footer { background: var(--obsidian); padding: 32px 40px; text-align: center; border-top: 1px solid rgba(178,240,0,0.08); }
+footer p { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--fieldlight); opacity: 0.4; line-height: 1.8; letter-spacing: 0.3px; }
+
+@media (max-width: 768px) {
+  .site-header { padding: 16px 20px; }
+  .hero { padding: 40px 20px 36px; }
+  .progress-wrap { padding: 12px 20px; }
+  .assessment { padding: 32px 16px 64px; }
+  .question-block { padding: 20px 18px 18px; }
+  .scale-options { gap: 4px; }
+  .scale-option label { height: 40px; font-size: 13px; }
+  .nav-row { flex-direction: column-reverse; }
+  .btn-next { max-width: 100%; }
+  .btn-back { width: 100%; }
+  .lead-section { padding: 40px 20px; }
+  footer { padding: 24px 20px; }
+}
+</style>
+</head>
+<body>
+
+<div id="pwGate">
+  <div class="pw-modal">
+    <h1>EpiGenIQ</h1>
+    <p>Cellular Wellbeing Score · POC v1.0</p>
+    <input class="pw-input" id="pwInput" type="password" placeholder="Enter access code" autocomplete="off">
+    <button class="pw-btn" onclick="checkPassword()">Unlock Assessment →</button>
+    <div class="pw-error" id="pwError">Incorrect access code</div>
+  </div>
+</div>
+
+<div id="mainApp">
+  <header class="site-header">
+    <div class="brand">EpiGenIQ <span>· Cellular Intelligence</span></div>
+    <div class="badge">POC v1.0 · Beta</div>
+  </header>
+
+  <div id="heroSection">
+    <div class="hero">
+      <h2>Your <em>Cellular Wellbeing</em><br>Score Awaits</h2>
+      <p>18 evidence-informed questions across 6 biological pillars. Understand where your cells are thriving — and where they're asking for support.</p>
+      <div class="hero-meta">
+        <span>⏱ 4–6 minutes</span>
+        <span>🔬 6 Pillars</span>
+        <span>🧬 18 Questions</span>
+        <span>🔒 No health data stored</span>
+      </div>
+    </div>
+    <div style="text-align:center; padding: 40px 20px;">
+      <button class="btn-next" style="max-width:320px; padding: 18px 40px; font-size:15px;" onclick="startAssessment()">Begin Assessment →</button>
+    </div>
+  </div>
+
+  <div id="assessmentSection" style="display:none;">
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="progressLabel">Pillar 1 of 6 · Biology Foundation</span>
+        <span id="progressPct">0%</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div class="assessment" id="questionContainer"></div>
+  </div>
+
+  <div id="leadSection" style="display:none;">
+    <div class="lead-section">
+      <h3>Your Score is Ready</h3>
+      <p>Enter your details to reveal your personalized Cellular Wellbeing Score and AI-generated cellular intelligence narrative.</p>
+      <div class="lead-form">
+        <input class="lead-input" id="leadName" type="text" placeholder="Full Name" autocomplete="name">
+        <input class="lead-input" id="leadEmail" type="email" placeholder="Email Address" autocomplete="email">
+        <input class="lead-input" id="leadRole" type="text" placeholder="Role / Profession (e.g. Physician, Entrepreneur)" autocomplete="off">
+        <button class="lead-submit" onclick="submitLead()">Reveal My Score →</button>
+        <p class="lead-disclaimer">#NSBrandAffiliate · Kelly O'Neill · Independent Brand Affiliate of Nu Skin · Not medical advice</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>
+      Independent Brand Affiliate Produced Website — Not produced or approved by Nu Skin Enterprises, Inc. or its affiliated companies.<br>
+      Kelly O'Neill is an Independent Brand Affiliate of Nu Skin (#NSBrandAffiliate). Not medical advice. Results may vary.<br>
+      © 2026 EpiGenIQ · A HealthStartz Editorial Brand · hello@epigeniq.tech
+    </p>
+  </footer>
+</div>
+
+<script>
+const PASSWORD = 'epigeniq2026';
+
+function checkPassword() {
+  const val = document.getElementById('pwInput').value;
+  const err = document.getElementById('pwError');
+  if (val === PASSWORD) {
+    document.getElementById('pwGate').style.display = 'none';
+    document.getElementById('mainApp').style.display = 'block';
+  } else {
+    err.classList.add('show');
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('pwInput').addEventListener('keypress', e => {
+    if (e.key === 'Enter') checkPassword();
+  });
+});
+
+const PILLARS = [
+  { id:'biology', name:'Biology Foundation', tag:'biology', desc:'Your baseline cellular health habits and antioxidant awareness.', accent:'charge', questions:[
+    { id:'b1', text:'How consistently do you consume dark leafy greens, colorful vegetables, or carotenoid-rich foods (carrots, tomatoes, spinach) daily?' },
+    { id:'b2', text:'How aware are you of your body\'s cellular antioxidant status or oxidative stress levels?' },
+    { id:'b3', text:'How often do you feel physically energized and mentally clear throughout the day without relying on stimulants?' }
+  ]},
+  { id:'nutrition', name:'Nutritional Intelligence', tag:'nutrition', desc:'The quality and intentionality of your nutritional approach.', accent:'charge', questions:[
+    { id:'n1', text:'How intentional are you about optimizing your nutritional intake for long-term cellular health rather than short-term energy?' },
+    { id:'n2', text:'How consistently do you use high-quality dietary supplements to support antioxidant defense and cellular function?' },
+    { id:'n3', text:'How aligned is your current nutrition strategy with the latest evidence in nutritional science and longevity research?' }
+  ]},
+  { id:'sleep', name:'Recovery & Sleep', tag:'sleep', desc:'Sleep quality and recovery as a cellular regeneration strategy.', accent:'violet', questions:[
+    { id:'s1', text:'How consistently do you get 7–9 hours of quality, uninterrupted sleep that leaves you feeling genuinely restored?' },
+    { id:'s2', text:'How deliberately do you protect your sleep environment and pre-sleep routine as a cellular recovery tool?' },
+    { id:'s3', text:'How often do you wake up feeling that your body has fully recovered and your cognitive clarity is sharp?' }
+  ]},
+  { id:'stress', name:'Stress & Inflammation', tag:'stress', desc:'Your relationship with chronic stress and its biological impact.', accent:'violet', questions:[
+    { id:'st1', text:'How effectively do you manage chronic stress before it manifests as physical symptoms or reduced performance?' },
+    { id:'st2', text:'How intentional are you about daily practices (breathwork, meditation, nature exposure) that downregulate your inflammatory response?' },
+    { id:'st3', text:'How well do you recognize the connection between your mental/emotional state and your cellular biology?' }
+  ]},
+  { id:'movement', name:'Movement & Vitality', tag:'movement', desc:'Physical movement as a driver of cellular resilience.', accent:'charge', questions:[
+    { id:'m1', text:'How consistently do you engage in purposeful physical movement (strength, cardio, or mobility) that challenges your cellular systems?' },
+    { id:'m2', text:'How connected do you feel to your body\'s physical signals as indicators of your internal biology?' },
+    { id:'m3', text:'How balanced is your movement practice in supporting both physical performance and long-term cellular longevity?' }
+  ]},
+  { id:'mindset', name:'Epigenetic Mindset', tag:'mindset', desc:'Your beliefs about your ability to influence your own biology.', accent:'violet', questions:[
+    { id:'ms1', text:'How strongly do you believe that your daily choices — nutrition, sleep, movement, mindset — meaningfully influence your gene expression?' },
+    { id:'ms2', text:'How actively do you invest in learning about epigenetics, longevity science, or cellular health optimization?' },
+    { id:'ms3', text:'How aligned is your identity with being someone who proactively shapes their health rather than reacting to decline?' }
+  ]}
+];
+
+let currentPillar = 0;
+let answers = {};
+
+function startAssessment() {
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('assessmentSection').style.display = 'block';
+  renderPillar(0);
+}
+
+function renderPillar(idx) {
+  const p = PILLARS[idx];
+  const isLast = idx === PILLARS.length - 1;
+  const pct = Math.round((idx / PILLARS.length) * 100);
+  document.getElementById('progressLabel').textContent = `Pillar ${idx + 1} of ${PILLARS.length} · ${p.name}`;
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+
+  let html = `
+    <div class="pillar-header">
+      <div class="pillar-tag ${p.tag}">Pillar ${idx + 1} · ${p.name}</div>
+      <h3>${p.name}</h3>
+      <p>${p.desc}</p>
+    </div>`;
+  p.questions.forEach((q, qi) => {
+    const saved = answers[q.id] || null;
+    const isViolet = p.accent === 'violet';
+    html += `
+      <div class="question-block${isViolet ? ' violet-accent' : ''}">
+        <div class="q-number">Q${idx * 3 + qi + 1} of 18</div>
+        <div class="q-text">${q.text}</div>
+        <div class="scale-labels"><span>1 · Never</span><span>5 · Always</span></div>
+        <div class="scale-options">
+          ${[1,2,3,4,5].map(v => `
+            <div class="scale-option">
+              <input type="radio" name="${q.id}" id="${q.id}_${v}" value="${v}" ${saved == v ? 'checked' : ''}>
+              <label for="${q.id}_${v}">${v}</label>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  });
+  html += `
+    <div class="nav-row">
+      ${idx > 0 ? `<button class="btn-back" onclick="goBack()">← Back</button>` : '<div></div>'}
+      <button class="btn-next" onclick="goNext()">${isLast ? 'See My Score →' : 'Next Pillar →'}</button>
+    </div>`;
+  document.getElementById('questionContainer').innerHTML = html;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function saveCurrentAnswers() {
+  PILLARS[currentPillar].questions.forEach(q => {
+    const sel = document.querySelector(`input[name="${q.id}"]:checked`);
+    if (sel) answers[q.id] = parseInt(sel.value);
+  });
+}
+
+function goNext() {
+  saveCurrentAnswers();
+  const p = PILLARS[currentPillar];
+  if (p.questions.some(q => !answers[q.id])) {
+    alert('Please answer all questions before continuing.');
+    return;
+  }
+  if (currentPillar < PILLARS.length - 1) {
+    currentPillar++;
+    renderPillar(currentPillar);
+  } else {
+    document.getElementById('assessmentSection').style.display = 'none';
+    document.getElementById('leadSection').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function goBack() {
+  saveCurrentAnswers();
+  if (currentPillar > 0) {
+    currentPillar--;
+    renderPillar(currentPillar);
+  }
+}
+
+function submitLead() {
+  const name = document.getElementById('leadName').value.trim();
+  const email = document.getElementById('leadEmail').value.trim();
+  const role = document.getElementById('leadRole').value.trim();
+  if (!name || !email) { alert('Please enter your name and email.'); return; }
+  if (!/\S+@\S+\.\S+/.test(email)) { alert('Please enter a valid email.'); return; }
+
+  const params = new URLSearchParams({
+    name, email, role,
+    answers: btoa(JSON.stringify(answers))
+  });
+  window.location.href = `results.html?${params.toString()}`;
+}
+</script>
+</body>
+</html>
